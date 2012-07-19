@@ -1,0 +1,74 @@
+\documentclass{manual}
+
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\newcommand{\titleref}{\ref}
+
+\newcommand{\attr}[1]{\texttt{#1}}
+\newcommand{\namespace}[1]{\texttt{#1:}}
+\newcommand{\optval}[1]{\textrm{\textit{#1}}}
+\newcommand{\macro}[1]{\textbackslash\texttt{#1}}
+\newcommand{\environment}[1]{\texttt{#1}}
+\newcommand{\question}{\subsection}
+\newcommand{\LaTeXtohtml}{{\LaTeX}2html}
+\newcommand{\plasTeX}{plas\TeX}
+\newcommand{\configkeys}[2]{\texttt{#1:#2}}
+\newenvironment{configuration}[1]{%
+    \newcommand{\default}[1]{\textbf{Default:} ##1\\}%
+    \newcommand{\config}[2]{\textbf{Config File:} [ ##1 ] ##2\\}%
+    \newcommand{\options}[1]{\textbf{Command-Line Options:} %
+                                     \texttt{##1}\\}%
+    \begin{description}
+    \item[\textbf{#1}] \hfill\\
+}{\end{description}}
+
+\title{plasTeX --- A Python Framework for Processing LaTeX Documents}
+\author{Kevin D. Smith}
+\authoraddress{\strong{SAS}\\Email: \email{Kevin.Smith@sas.com}}
+\date{20 November 2006}
+
+\makeindex
+\makemodindex
+
+\begin{document}
+
+\maketitle
+\cleardoublepage
+\tableofcontents
+
+\input{intro}
+
+\input{command}
+
+\input{document}
+
+\input{macros}
+
+\input{renderers}
+
+
+\chapter{\plasTeX\ Frameworks and APIs}
+
+\input{macros-api}
+\input{config-api}
+\input{dom-api}
+\input{tex-api}
+\input{context-api}
+\input{renderer-api}
+\input{imager-api}
+
+\appendix
+
+\chapter{About This Document}
+
+\input{about}
+
+\chapter{Frequently Asked Questions}
+
+\input{parsing-faq}
+
+\input{plastex.ind}
+
+\end{document}

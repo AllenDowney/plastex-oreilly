@@ -1,0 +1,23 @@
+Parsing
+-------
+- Performance, performance, performance
+
+Document Object
+---------------
+- XPath (?)
+- Pickling
+
+Rendering
+---------
+- More themes
+
+General
+-------
+- Logging needs to be entirely reworked
+- Multiple renderers for one parse step
+
+Configuration
+-------------
+- Merging of config files and command-line options
+- Renderer specific config files
+- Theme specific config files
