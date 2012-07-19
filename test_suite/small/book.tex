@@ -1,0 +1,176 @@
+% LaTeX source for ``Think Stats:
+% Probability and Statistics for Programmers''
+% Copyright 2011  Allen B. Downey.
+
+% License: Creative Commons Attribution-NonCommercial 3.0 Unported License.
+% http://creativecommons.org/licenses/by-nc/3.0/
+%
+
+%\documentclass[10pt,b5paper]{book}
+\documentclass[12pt]{book}
+\usepackage[width=5.5in,height=8.5in,
+  hmarginratio=3:2,vmarginratio=1:1]{geometry}
+
+% for some of these packages, you might have to install
+% texlive-latex-extra (in Ubuntu)
+
+\usepackage{pslatex}
+\usepackage{url}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{amsmath}
+\usepackage{amsthm}
+%\usepackage{amssymb}
+\usepackage{makeidx}
+\usepackage{setspace}
+\usepackage{hevea}                           
+\usepackage{upquote}
+
+\title{Think Stats}
+\author{Allen B. Downey}
+
+\newcommand{\thetitle}{Think Stats: Probability and Statistics for Programmers}
+\newcommand{\theversion}{1.4.6}
+
+\makeindex
+
+\newif\ifplastex
+\plastexfalse
+
+\begin{document}
+
+\frontmatter
+
+
+\ifplastex
+    \usepackage{localdef}
+    \maketitle
+
+\newcount\anchorcnt
+\newcommand*{\Anchor}[1]{%
+  \@bsphack%
+    \Hy@GlobalStepCount\anchorcnt%
+    \edef\@currentHref{anchor.\the\anchorcnt}% 
+    \Hy@raisedlink{\hyper@anchorstart{\@currentHref}\hyper@anchorend}% 
+    \label{#1}% 
+    \@esphack%
+}
+
+
+\else
+
+\fi
+
+\chapter{Preface}
+\label{preface}
+
+
+\begin{exercise}
+\ifplastex
+    \Anchor{relay}
+\else
+    \label{relay}
+\fi
+In most foot races, everyone starts at the same time.  If you are a
+fast runner, you usually pass a lot of people at the beginning of the
+race, but after a few miles everyone around you is going at the same
+speed.
+\index{relay race}
+\index{bias!oversampling}
+\index{oversampling}
+
+When I ran a long-distance (209 miles) relay race for the first
+time, I noticed an odd phenomenon: when I overtook another runner, I
+was usually much faster, and when another runner overtook me, he was
+usually much faster.
+
+At first I thought that the distribution of speeds might be bimodal;
+that is, there were many slow runners and many fast runners, but few
+at my speed.
+
+Then I realized that I was the victim of selection bias.  The race
+was unusual in two ways: it used a staggered start, so teams started
+at different times; also, many teams included runners at different
+levels of ability.
+\index{bias!selection}
+\index{selection bias}
+
+As a result, runners were spread out along the course with little
+relationship between speed and location.  When I started running my
+leg, the runners near me were (pretty much) a random sample of the
+runners in the race.
+
+So where does the bias come from?  During my time on the course, the
+chance of overtaking a runner, or being overtaken, is proportional to
+the difference in our speeds.  To see why, think about the extremes.
+If another runner is going at the same speed as me, neither of us will
+overtake the other.  If someone is going so fast that they cover the
+entire course while I am running, they are certain to overtake me.
+
+Write a function called {\tt BiasPmf} that takes a Pmf representing
+the actual distribution of runners' speeds, and the speed of a running
+observer, and returns a new Pmf representing the distribution of
+runners' speeds as seen by the observer.
+
+To test your function, get the distribution of speeds from a
+normal road race (not a relay).  I wrote a program that reads the
+results from the James Joyce Ramble 10K in Dedham MA and converts the
+pace of each runner to MPH.  Download it from
+\url{thinkstats.com/relay.py}.  Run it and look at the PMF of
+speeds.
+\index{{\tt relay.py}}
+\index{{\tt relay\_soln.py}}
+
+Now compute the distribution of speeds you would observe if you ran a
+relay race at 7.5 MPH with this group of runners.  You can download a
+solution from \url{thinkstats.com/relay_soln.py}
+
+\end{exercise}
+
+
+\printindex
+
+\clearemptydoublepage
+%\blankpage
+%\blankpage
+%\blankpage
+
+
+\end{document}
+
+%Chapter 10: time series
+
+%serial correlation
+
+%auto-correlation function
+
+%generating random series with correlation
+
+%violating the CLT and see if the sum of correlated normals is lognormal
+
+%If so, maybe that explains adult weight distribution.
+
+
+
+
+% Topics to consider in the future:
+
+% Time series
+
+% Correlation of adjacent elements
+
+% Autocorrelation function
+
+% Information theory: Paul Revere example
+
+% Gelman's paradox
+% \url{http://www.iq.harvard.edu/blog/sss/archives/2008/04/gelmans_paradox.shtml}
+
+% regression to the mean experiment
+
+% Poisson distribution
+
+% example using csvDictReader
+
+
