@@ -2,9 +2,10 @@
 
 import new
 from plasTeX.Base import Command, verb
+from plasTeX.Packages import hyperref
 
-class url(Command):
-    args = 'url:url'
+class url(hyperref.url):
+   pass
 
 class urldef(Command):
     args = 'name:cs type:cs'

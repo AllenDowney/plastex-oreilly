@@ -32,6 +32,8 @@ def ProcessOptions(options, document):
 
     context.newcounter('equation', resetby='chapter',
                        format='${thechapter}.${equation}')
+    context.newcounter('exercise', resetby='chapter',
+                       format='${thechapter}.${exercise}')
 
     context.newcounter('secnumdepth')
     context.newcounter('tocdepth')

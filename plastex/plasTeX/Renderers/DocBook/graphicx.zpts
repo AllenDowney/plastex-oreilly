@@ -1,8 +1,9 @@
 name: includegraphics rotatebox scalebox reflectbox resizebox
-<imageobject remap="includegraphics">
-  <imagedata tal:attributes="fileref self/image/url;contentwidth self/image/width/px;contentdepth self/image/height/px" />
-  <textobject>
-    <phrase tal:content="text self/source"></phrase>
-  </textobject>
-</imageobject>
+<title tal:content="self/title"></title>
+<mediaobject>
+  <imageobject remap="includegraphics">
+    <imagedata tal:attributes="fileref self/attributes/file; scale self/attributes/scale" />
+  </imageobject>
+</mediaobject>
+
 name: DeclareGraphicsExtensions graphicspath

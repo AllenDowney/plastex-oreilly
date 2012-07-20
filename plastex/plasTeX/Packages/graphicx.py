@@ -13,7 +13,11 @@ class includegraphics(Command):
     def invoke(self, tex):
         res = Command.invoke(self, tex)
 
+        # TODO(downey): there is a bug somewhere that causes this 
+        # attribute to be the string representation of a TexFragment object
+        # sometimes.
         f = self.attributes['file']
+
         ext = self.ownerDocument.userdata.getPath(
                       'packages/%s/extensions' % self.packageName, 
                       ['.png','.jpg','.jpeg','.gif','.pdf','.ps','.eps'])
@@ -43,14 +47,20 @@ class includegraphics(Command):
         options = self.attributes['options']
 
         if options is not None:
-            
             scale = options.get('scale')
             if scale is not None:
                 scale = float(scale)
-                from PIL import Image
-                w, h = Image.open(img).size
-                self.style['width'] = '%spx' % (w * scale)
-                self.style['height'] = '%spx' % (h * scale)
+
+                # TODO(downey): this does not work for PDFs.
+                # as a workaround, I am passing the scale parameter
+                # through as an attribute
+                try:
+                    from PIL import Image
+                    w, h = Image.open(img).size
+                    self.style['width'] = '%spx' % (w * scale)
+                    self.style['height'] = '%spx' % (h * scale)
+                except:
+                    self.attributes['scale'] = int(scale*100)
                 
             height = options.get('height')
             if height is not None:
