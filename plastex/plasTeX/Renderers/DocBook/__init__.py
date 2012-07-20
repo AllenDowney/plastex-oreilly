@@ -38,7 +38,7 @@ class DocBook(_Renderer):
         s = re.sub(r' <indexterm', r'<indexterm', s)
         s = re.sub(r'indexterm> ', r'indexterm>', s)
 
-        s = re.sub(r'<para>\s*(<bookinfo)', r'\1', s)
+        s = re.sub(r'<para>\s*(<bookinfo>)', r'\1', s)
         s = re.sub(r'(</bookinfo>)\s*</para>', r'\1', s)
 
         s = re.sub(r'<para>\s*(<figure)', r'\1', s)

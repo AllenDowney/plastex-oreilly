@@ -49,7 +49,7 @@ name: title author date thanks
 name: maketitle
 type:xml
 <span tal:omit-tag="" tal:define="metadata self/ownerDocument/userdata">
-<articleinfo>
+<bookinfo>
   <title tal:content="metadata/title"></title>
   <authorgroup>
     <author tal:repeat="auth metadata/author">
@@ -58,7 +58,7 @@ type:xml
   </authorgroup>
   <date tal:condition="metadata/date" tal:content="metadata/date"></date>
   <othercredit tal:condition="metadata/thanks" tal:content="metadata/thanks"></othercredit>
-</articleinfo>
+</bookinfo>
 </span>
 
 name: document
