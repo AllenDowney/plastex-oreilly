@@ -473,10 +473,12 @@ class Renderer(dict):
             unicode(document)
 
         # Finish rendering images
+        status.info('Rendering images.  This may take a long time...')
         self.imager.close()
         self.vectorImager.close()
 
         # Run any cleanup activities
+        status.info('Postprocessing...')
         self.cleanup(document, self.files.values(), postProcess=postProcess)
 
         # Write out auxilliary information
