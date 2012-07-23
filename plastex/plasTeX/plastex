@@ -53,6 +53,11 @@ def main(argv):
     # Parse the document
     tex.parse()
 
+    # TODO(downey): where is the right place to add this hook?
+    # Are these changes right for all Renderers, or are they DocBook
+    # specific?
+    cleaner = TreeCleaner(tex, document)
+
     # Set up TEXINPUTS to include the current directory for the renderer
     os.environ['TEXINPUTS'] = '%s%s%s%s' % (os.getcwd(), os.pathsep,
                                          os.environ.get('TEXINPUTS',''), os.pathsep)
@@ -86,6 +91,132 @@ def main(argv):
     Renderer().render(document)
 
     print
+
+
+class TreeCleaner(object):
+    def __init__(self, tex, document):
+        self.tex = tex
+        self.document = document
+        self.clean()
+
+    def clean(self):
+        """Walk the node tree fixing problems.
+
+        tex:
+        document: TeXDocument
+        """
+        fp = codecs.open('plastex.before', 'w', encoding='utf-8')
+        fp.write(self.document.toXML())
+        fp.close()
+
+        print '-----------------------'
+        self.walk(self.document, self.test_node)
+        print '-----------------------'
+
+        fp = codecs.open('plastex.after', 'w', encoding='utf-8')
+        fp.write(self.document.toXML())
+        fp.close()
+
+    def walk(self, node, func):
+        """Walks a node tree and invokes a function on each node.
+
+        node: Node
+        func: function object
+        """
+        for child in node.childNodes:
+            self.walk(child, func)
+        func(node)
+
+    def test_node(self, node):
+        """Checks for problems and fixes them.
+
+        Checks for things that should not be embedded in par.
+
+        node: Node
+        """
+        self.test_par(node)
+        self.test_quote(node)
+        # self.test_figure(node)
+
+    def test_figure(self, node):
+        """Checks for ...
+
+        node: Node
+        """
+        if node.nodeName != 'figure':
+            return
+
+        print 'figure'
+        child = node.firstChild
+
+        grand_children = child.childNodes
+        for grand_child in grand_children:
+            print '  ', grand_child.nodeName 
+
+    def test_quote(self, node):
+        """Checks for ...
+
+        node: Node
+        """
+        if node.nodeName != 'quote':
+            return
+
+        children = node.childNodes
+        if len(children) != 1:
+            return
+
+        child = children[0]
+        if child.nodeName != '#text':
+            return
+
+        par = self.document.createElement('par')
+        par.append(child)
+        node[0] = par
+
+    def test_par(self, node):
+        """Checks for things that should not be embedded in par.
+
+        node: Node
+        """
+        if node.nodeName != 'par':
+            return
+
+        children = node.childNodes
+        if len(children) == 0:
+            return
+
+        first = children[0]
+        if first.nodeName == '#text':
+            return
+
+        # list of nodeNames that should not be embedded in par
+        bad_names = set(['itemize', 'description', 'enumerate', 'quote',
+                         'verbatim', 'par', 'figure', 'centerline', 'label'])
+
+        if first.nodeName not in bad_names:
+            print 'Allowing embedded', first.nodeName
+            return
+
+        self.replace(node, children)
+
+    def replace(self, child, replacements):
+        """Replaces a node with another.
+
+        Modifies the parent of child.
+
+        child: Node
+        replacement: list of Nodes
+        """
+        parent = child.parentNode
+        for i, node in enumerate(parent):
+            if node == child:
+                parent.pop(i)
+                for j, replacement in enumerate(replacements):
+                    parent.insert(i+j, replacement)
+                return
+        raise ValueError('Child not found.')
+
+
 
 def info(type, value, tb):
    if hasattr(sys, 'ps1') or not sys.stderr.isatty():

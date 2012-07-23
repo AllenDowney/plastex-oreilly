@@ -1,15 +1,12 @@
 name: quote
-<blockquote remap="quote">
-  <para tal:content="self"></para>
+<blockquote remap="quote" tal:content="self">
 </blockquote>
 
 name: quotation
-<blockquote remap="quotation">
-  <para tal:content="self"></para>
+<blockquote remap="quotation" tal:content="self">
 </blockquote>
 
 name: verse
-<blockquote remap="verse">
-  <para tal:content="self"></para>
+<blockquote remap="verse" tal:content="self">
 </blockquote>
 
