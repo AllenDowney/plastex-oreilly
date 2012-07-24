@@ -44,6 +44,9 @@ class DocBook(_Renderer):
         s = re.sub(r'<para>\s*(<bookinfo>)', r'\1', s)
         s = re.sub(r'(</bookinfo>)\s*</para>', r'\1', s)
 
+        # remove pointless anchors
+        s = re.sub(r'<para>\s*(<anchor[^>]*>)\s*</para>', r'',s)
+
         return s
     
 def or_terms(t):

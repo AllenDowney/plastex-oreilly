@@ -147,11 +147,11 @@ class TreeCleaner(object):
             return
 
         print 'figure'
-        child = node.firstChild
 
-        grand_children = child.childNodes
-        for grand_child in grand_children:
-            print '  ', grand_child.nodeName 
+        for child in node:
+            print '    ', child.nodeName
+            if child.nodeName == 'par':
+                print '      ', child.firstChild.nodeName
 
     def test_quote(self, node):
         """Checks for ...
@@ -161,17 +161,23 @@ class TreeCleaner(object):
         if node.nodeName != 'quote':
             return
 
+        print 'quote'
         children = node.childNodes
-        if len(children) != 1:
-            return
+        for child in children:
+            print '    ', child
 
         child = children[0]
-        if child.nodeName != '#text':
+        if child.nodeName == 'par':
             return
 
+        # if the quote contains bare text, wrap it in a par
         par = self.document.createElement('par')
-        par.append(child)
-        node[0] = par
+        par.extend(children)
+        while node.childNodes:
+            node.pop(-1)
+        print 'before', node.childNodes
+        node.insert(0, par)
+        print 'after', node.childNodes
 
     def test_par(self, node):
         """Checks for things that should not be embedded in par.
