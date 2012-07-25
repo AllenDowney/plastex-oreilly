@@ -136,36 +136,32 @@ class TreeCleaner(object):
         """
         self.test_par(node)
         self.test_quote(node)
-        # self.test_figure(node)
+        self.test_figure(node)
 
     def test_figure(self, node):
-        """Checks for ...
+        """Checks for bad paragraphs inside figures.
 
         node: Node
         """
         if node.nodeName != 'figure':
             return
 
-        print 'figure'
+        # if the first node is a par, unpack it
+        child = node.firstChild
+        if child.nodeName != 'par':
+            return
 
-        for child in node:
-            print '    ', child.nodeName
-            if child.nodeName == 'par':
-                print '      ', child.firstChild.nodeName
+        self.unpack(child)
 
     def test_quote(self, node):
-        """Checks for ...
+        """Checks for quote text not wrapped in a paragraph.
 
         node: Node
         """
         if node.nodeName != 'quote':
             return
 
-        print 'quote'
         children = node.childNodes
-        for child in children:
-            print '    ', child
-
         child = children[0]
         if child.nodeName == 'par':
             return
@@ -175,9 +171,7 @@ class TreeCleaner(object):
         par.extend(children)
         while node.childNodes:
             node.pop(-1)
-        print 'before', node.childNodes
         node.insert(0, par)
-        print 'after', node.childNodes
 
     def test_par(self, node):
         """Checks for things that should not be embedded in par.
@@ -204,6 +198,13 @@ class TreeCleaner(object):
             return
 
         self.replace(node, children)
+
+    def unpack(self, node):
+        """Replaces a node with its children.
+
+        node: Node
+        """
+        self.replace(node, node.childNodes)
 
     def replace(self, child, replacements):
         """Replaces a node with another.

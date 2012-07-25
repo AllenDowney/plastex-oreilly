@@ -29,3 +29,12 @@ pip-log.txt
 # emacs backups
 *~
 *.paux
+*.aux
+*.idx
+*.log
+*.pdf
+*.toc
+.svn
+plastex.before
+plastex.after
+book

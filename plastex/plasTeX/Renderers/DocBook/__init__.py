@@ -35,17 +35,17 @@ class DocBook(_Renderer):
         s = re.sub(r'\s*(<programlisting>)\n', r'\1', s)
         s = re.sub(r'\n(</programlisting>)\s*', r'\1', s)
 
-        # get rid of empty paragraphs
-        s = re.sub(r'\s*<para>\s*</para>\s*',  r'', s)
-        s = re.sub(r'\s*<para>\s*</para>\s*',  r'', s)
-        s = re.sub(r'\s*<para>\s*</para>\s*',  r'', s)
-
         # remove para around bookinfo
         s = re.sub(r'<para>\s*(<bookinfo>)', r'\1', s)
         s = re.sub(r'(</bookinfo>)\s*</para>', r'\1', s)
 
         # remove pointless anchors
-        s = re.sub(r'<para>\s*(<anchor[^>]*>)\s*</para>', r'',s)
+        s = re.sub(r'\s*(<anchor[^>]*>)\s*', r'',s)
+
+        # get rid of empty paragraphs
+        s = re.sub(r'\s*<para>\s*</para>\s*',  r'', s)
+        s = re.sub(r'\s*<para>\s*</para>\s*',  r'', s)
+        s = re.sub(r'\s*<para>\s*</para>\s*',  r'', s)
 
         return s
     
