@@ -32,6 +32,7 @@
 \usepackage{hevea}                           
 \usepackage{upquote}
 
+
 \title{Think Stats}
 \author{Allen B. Downey}
 
@@ -59,160 +60,12 @@
 \frontmatter
 
 \ifplastex
-    \newcommand{\dd}{\mathit{d}}
-    \newcommand{\e}{\mathit{e}}
-    \newcommand{\f}{\mathit{f}}
-    \newcommand{\gee}{\mathit{g}}
-    \newcommand{\ii}{\mathit{i}}
-    \newcommand{\kk}{\mathit{k}}
-    \newcommand{\n}{\mathit{n}}
-    \newcommand{\m}{\mathit{m}}
-    \newcommand{\w}{\mathit{w}}
-    \newcommand{\p}{\mathit{p}}
-    \newcommand{\s}{\mathit{s}}
-    \newcommand{\x}{\mathit{x}}
-    \newcommand{\X}{\mathit{X}}
-    \newcommand{\y}{\mathit{y}}
-    \newcommand{\Y}{\mathit{Y}}
-    \newcommand{\z}{\mathit{z}}
-    \newcommand{\Z}{\mathit{Z}}
-    \newcommand{\E}{\mathit{E}}
-    \newcommand{\OO}{\mathit{O}}
-    \newcommand{\HH}{\mathit{H}}
-    \newcommand{\A}{\mathit{A}}
-    \newcommand{\B}{\mathit{B}}
-    \newcommand{\D}{\mathit{D}}
-    \newcommand{\N}{\mathit{N}}
-    \newcommand{\R}{\mathit{R}}
-    \newcommand{\Ssq}{$S^2$}
-    \newcommand{\Snsq}{$S_{n-1}^2$}
-    \newcommand{\mya}{\mathit{a}}
-    \newcommand{\myb}{\mathit{b}}
-    \newcommand{\Prob}{\mathit{P}}
-    \newcommand{\xsubi}{\mathit{x}\sub{i}}
-    \newcommand{\psubi}{\mathit{p}\sub{i}}
-    \newcommand{\mymu}{\mathit{\mu}}
-    \newcommand{\mychi}{\mathit{\chi}}
-    \newcommand{\myalpha}{\mathit{\alpha}}
-    \newcommand{\mysigma}{\mathit{\sigma}}
-    \newcommand{\myrho}{\mathit{\rho}}
-    \newcommand{\mylambda}{\mathit{\lambda}}
-    \newcommand{\mydelta}{\mathit{\delta}}
-    \newcommand{\sigmasq}{\mathit{\sigma}\super{2}}
-
-    \newcommand{\plus}{+}
-    \newcommand{\mytimes}{\times}
-    \newcommand{\mydivide}{/}
-    \newcommand{\mystar}{\lowast}
-    \newcommand{\mysim}{\sim}
-    \newcommand{\myapprox}{\approx}
-    \newcommand{\mynormal}{$\mathcal{N}$}
-
-    \newcommand{\myslope}{\mathit{\beta}}
-    \newcommand{\myinter}{\mathit{\alpha}}
-
-    \newcommand{\myeps}{\mathit{\varepsilon}}
-    \newcommand{\myxbar}{\uxbar}
-    \newcommand{\myybar}{\uybar}
-    \newcommand{\mynhat}{$\nhat$}
-    \newcommand{\myle}{\ule}
-\else
-    \newcommand{\dd}{$d$}
-    \newcommand{\e}{$e$}
-    \newcommand{\f}{$f$}
-    \newcommand{\gee}{$g$}
-    \newcommand{\ii}{$i$}
-    \newcommand{\kk}{$k$}
-    \newcommand{\n}{$n$}
-    \newcommand{\m}{$m$}
-    \newcommand{\w}{$w$}
-    \newcommand{\p}{$p$}
-    \newcommand{\s}{$s$}
-    \newcommand{\x}{$x$}
-    \newcommand{\X}{$X$}
-    \newcommand{\y}{$y$}
-    \newcommand{\Y}{$Y$}
-    \newcommand{\z}{$z$}
-    \newcommand{\Z}{$Z$}
-    \newcommand{\E}{$E$}
-    \newcommand{\OO}{$O$}
-    \newcommand{\HH}{$H$}
-    \newcommand{\A}{$A$}
-    \newcommand{\B}{$B$}
-    \newcommand{\D}{$D$}
-    \newcommand{\N}{$N$}
-    \newcommand{\R}{$R$}
-    \newcommand{\Ssq}{$S^2$}
-    \newcommand{\Snsq}{$S_{n-1}^2$}
-    \newcommand{\mya}{$a$}
-    \newcommand{\myb}{$b$}
-    \newcommand{\Prob}{$P$}
-    \newcommand{\xsubi}{$x_i$}
-    \newcommand{\psubi}{$p_i$}
-    \newcommand{\mymu}{$\mu$}
-    \newcommand{\mychi}{$\chi$}
-    \newcommand{\myalpha}{$\alpha$}
-    \newcommand{\mysigma}{$\sigma$}
-    \newcommand{\myrho}{$\rho$}
-    \newcommand{\mylambda}{$\lambda$}
-    \newcommand{\mydelta}{$\delta$}
-    \newcommand{\sigmasq}{$\sigma^2$}
-
-    \newcommand{\plus}{$+$}
-    \newcommand{\minus}{$-$}
-    \newcommand{\mytimes}{$\times$}
-    \newcommand{\mydivide}{$/$}
-
-    \newcommand{\sub}[1]{$_{#1}$}
-    \newcommand{\super}[1]{$^{#1}$}
-    \newcommand{\mystar}{$\star$}
-    \newcommand{\mysim}{$\sim$}
-    \newcommand{\myapprox}{$\approx$}
-    \newcommand{\normal}{\mathcal{N}}
-    \newcommand{\mynormal}{$\mathcal{N}$}
-
-    \newcommand{\myslope}{$\beta$}
-    \newcommand{\myinter}{$\alpha$}
-
-    \newcommand{\myeps}{$\varepsilon$}
-
-    \newcommand{\myxbar}{$\xbar$}
-    \newcommand{\myybar}{$\ybar$}
-    \newcommand{\mynhat}{$\nhat$}
-    \newcommand{\myle}{$\le$}
-    \newcommand{\Eqn}[1]{\quad #1}
-\fi
-
-\newcommand{\Erdos}{Erd\H{o}s}
-\newcommand{\nhat}{\hat{N}}
-\newcommand{\eps}{\varepsilon}
-\newcommand{\slope}{\beta}
-\newcommand{\inter}{\alpha}
-\newcommand{\xbar}{\bar{x}}
-\newcommand{\ybar}{\bar{y}}
-\newcommand{\PMF}{\mathrm{PMF}}
-\newcommand{\PDF}{\mathrm{PDF}}
-\newcommand{\CDF}{\mathrm{CDF}}
-\newcommand{\ICDF}{\mathrm{ICDF}}
-
-\ifplastex
     \usepackage{localdef}
     \maketitle
 
-\newcount\anchorcnt
-\newcommand*{\Anchor}[1]{%
-  \@bsphack%
-    \Hy@GlobalStepCount\anchorcnt%
-    \edef\@currentHref{anchor.\the\anchorcnt}% 
-    \Hy@raisedlink{\hyper@anchorstart{\@currentHref}\hyper@anchorend}% 
-    \M@gettitle{}\label{#1}% 
-    \@esphack%
-}
-
-
 \else
 
-%%% EXERCISE
+\input{latexonly}
 
 \newtheoremstyle{exercise}% name of the style to be used
   {\topsep}% measure of space to leave above the theorem. E.g.: 3pt
@@ -227,154 +80,8 @@
 \theoremstyle{exercise}
 \newtheorem{exercise}{Exercise}[chapter]
 
-%\newcounter{exercise}[chapter]
-%\newcommand{\nextexercise}{\refstepcounter{exercise}}
-
-%\newenvironment{exercise}{\nextexercise \noindent \textbf{Exercise \thechapter.\theexercise} \begin{itshape} \noindent}{\end{itshape}}
-
-\input{latexonly}
-
-\begin{latexonly}
-
-\renewcommand{\blankpage}{\thispagestyle{empty} \quad \newpage}
-
-%\blankpage
-%\blankpage
-
-% TITLE PAGES FOR LATEX VERSION
-
-%-half title--------------------------------------------------
-\thispagestyle{empty}
-
-\begin{flushright}
-\vspace*{2.0in}
-
-\begin{spacing}{3}
-{\huge Think Stats: Probability and Statistics for Programmers}\\
-{\Large }
-\end{spacing}
-
-\vspace{0.25in}
-
-Version \theversion
-
-\vfill
-
-\end{flushright}
-
-%--verso------------------------------------------------------
-
-\blankpage
-\blankpage
-%\clearemptydoublepage
-%\pagebreak
-%\thispagestyle{empty}
-%\vspace*{6in}
-
-%--title page--------------------------------------------------
-\pagebreak
-\thispagestyle{empty}
-
-\begin{flushright}
-\vspace*{2.0in}
-
-\begin{spacing}{3}
-{\huge Think Stats}\\
-{\Large Probability and Statistics for Programmers}
-\end{spacing}
-
-\vspace{0.25in}
-
-Version \theversion
-
-\vspace{1in}
-
-
-{\Large
-Allen B. Downey\\
-}
-
-
-\vspace{0.5in}
-
-{\Large Green Tea Press}
-
-{\small Needham, Massachusetts}
-
-%\includegraphics[width=1in]{figs/logo1.eps}
-\vfill
-
-\end{flushright}
-
-
-%--copyright--------------------------------------------------
-\pagebreak
-\thispagestyle{empty}
-
-{\small
-Copyright \copyright ~2011 Allen B. Downey.
-
-
-\vspace{0.2in}
-
-\begin{flushleft}
-Green Tea Press       \\
-9 Washburn Ave \\
-Needham MA 02492
-\end{flushleft}
-
-Permission is granted to copy, distribute, and/or modify this document
-under the terms of the Creative Commons Attribution-NonCommercial 3.0 Unported
-License, which is available at \url{http://creativecommons.org/licenses/by-nc/3.0/}.
-
-The original form of this book is \LaTeX\ source code.  Compiling this
-code has the effect of generating a device-independent representation
-of a textbook, which can be converted to other formats and printed.
-
-The \LaTeX\ source for this book is available from
-\url{http://thinkstats.com}.
-
-The cover for this book is based on a photo by Paul Friel
-(\url{http://flickr.com/people/frielp/}), who made it available under
-the Creative Commons Attribution license.  The original photo
-is at \url{http://flickr.com/photos/frielp/11999738/}.
-
-\vspace{0.2in}
-
-} % end small
-
-\end{latexonly}
-
-
-% HTMLONLY
-
-\begin{htmlonly}
-
-% TITLE PAGE FOR HTML VERSION
-
-{\Large \thetitle}
-
-{\large Allen B. Downey}
-
-Version \theversion
-
-\vspace{0.25in}
-
-Copyright 2011 Allen B. Downey
-
-\vspace{0.25in}
-
-Permission is granted to copy, distribute, and/or modify this document
-under the terms of the Creative Commons Attribution-NonCommercial 3.0
-Unported License, which is available at
-\url{http://creativecommons.org/licenses/by-nc/3.0/}.
-
-\setcounter{chapter}{-1}
-
-\end{htmlonly}
-
 \fi
-% END OF THE PART WE SKIP FOR PLASTEX
+
 
 \chapter{Preface}
 \label{preface}
@@ -503,11 +210,6 @@ Needham MA \\*
 
 Allen B. Downey is a Professor of Computer Science at 
 the Franklin W. Olin College of Engineering.
-
-
-
-
-%\section*{Acknowledgements}
 
 
 
@@ -1199,7 +901,7 @@ we go any farther, let's take care of that.
 \index{descriptive statistics}
 \index{summary statistics}
 
-If you have a sample of \n~values, \xsubi, the mean, \mymu, is
+If you have a sample of $n$ values, $x_i$, the mean, $\mu$, is
 the sum of the values divided by the number of values; in other words
 %
 \[ \mu = \frac{1}{n} \sum_i x_i \]
@@ -1250,9 +952,9 @@ The variance of a set of values is
 %
 \[ \sigma^2 = \frac{1}{n} \sum_i (x_i - \mu)^2 \]
 %
-The term \xsubi-\mymu~is called the ``deviation from the mean,'' so
+The term $x_i - \mu$ is called the ``deviation from the mean,'' so
 variance is the mean squared deviation, which is why it is denoted
-\sigmasq.  The square root of variance, \mysigma, is called the {\bf
+$\sigma^2$.  The square root of variance, $\sigma$, is called the {\bf
   standard deviation}.
 \index{deviation}
 \index{standard deviation}
@@ -1288,7 +990,7 @@ significance of the difference?
 \end{exercise}
 
 If you have prior experience, you might have seen a formula for
-variance with \n~\minus~1 in the denominator, rather than \n.  This
+variance with $n-1$ in the denominator, rather than $n$.  This
 statistic is called the ``sample variance,'' and it is used to
 estimate the variance in a population using a sample.  We will come
 back to this in Chapter X.  \index{sample variance}
@@ -1308,7 +1010,7 @@ of each value.\index{histogram}
 In this context, {\bf frequency} means the number of times a value
 appears in a dataset---it has nothing to do with the pitch of a sound
 or tuning of a radio signal.  A {\bf probability} is a frequency expressed
-as a fraction of the sample size, \n.
+as a fraction of the sample size, $n$.
 \index{frequency}
 \index{probability}
 \index{dictionary}
@@ -1323,7 +1025,7 @@ for x in t:
 \end{verbatim}
 
 The result is a dictionary that maps from values to frequencies.
-To get from frequencies to probabilities, we divide through by \n,
+To get from frequencies to probabilities, we divide through by $n$,
 which is called {\bf normalization}:\index{normalization}
 %
 \begin{verbatim}
@@ -1613,12 +1315,12 @@ the distribution of remaining lifetimes.
 \index{PMF}
 %
 In Section~\ref{mean} we computed the mean of a sample by adding up
-the elements and dividing by \n.  If you are given a PMF, you can
+the elements and dividing by $n$.  If you are given a PMF, you can
 still compute the mean, but the process is slightly different:
 %
 \[ \mu = \sum_i p_i x_i \]
 %
-where the \xsubi~are the unique values in the PMF and \psubi=PMF(\xsubi).
+where the $x_i$ are the unique values in the PMF and $p_i = PMF(x_i)$.
 Similarly, you can compute variance like this:
 %
 \[ \sigma^2 = \sum_i p_i (x_i - \mu)^2\]
@@ -1820,8 +1522,8 @@ Here's one way to do it:
 \begin{enumerate}
 
 \item Given a PMF, generate a fake cohort of 1000 pregnancies.
-For each number of weeks, \x, the number of pregnancies with
-duration \x~is 1000 PMF(\x).
+For each number of weeks, $x$, the number of pregnancies with
+duration $x$ is $1000 PMF(x)$.
 \index{cohort}
 
 \item Remove from the cohort all pregnancies with length less than 39.
@@ -1831,7 +1533,7 @@ duration \x~is 1000 PMF(\x).
 \item Compute the PMF of the remaining durations; the result is the
 conditional PMF.
 
-\item Evaluate the conditional PMF at \x~=~39 weeks.
+\item Evaluate the conditional PMF at $x = 39$ weeks.
 
 \end{enumerate}
 
@@ -1845,9 +1547,9 @@ computes the probability that a baby will be born during Week 39,
 given that it was not born prior to Week 39.
 
 Generalize the function to compute the
-probability that a baby will be born during Week \x, given that
-it was not born prior to Week \x, for all \x.
-Plot this value as a function of \x~for first babies and others.
+probability that a baby will be born during Week $x$, given that
+it was not born prior to Week $x$, for all $x$.
+Plot this value as a function of $x$ for first babies and others.
 
 You can download a solution to this problem from
 \url{http://thinkstats.com/conditional.py}.
@@ -2038,6 +1740,12 @@ Potentially offensive jokes on the Internet are sometimes encoded
 in ROT13.  If you are not easily offended, find and decode some
 of them.  Solution: \url{http://thinkpython.com/code/rotate.py}.
 \end{exercise}
+
+\chapter{Math}
+
+Here's an inline variable:  $x$.  Here's a display equation:
+
+\[ y = \log x \]
 
 
 \printindex

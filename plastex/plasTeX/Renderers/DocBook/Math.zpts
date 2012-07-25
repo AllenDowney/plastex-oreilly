@@ -82,4 +82,5 @@ type: xml
 </informaltable>
 
 
-
+name:mathphrase
+<mathphrase tal:content="self"></mathphrase>

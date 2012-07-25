@@ -49,7 +49,4 @@ class DocBook(_Renderer):
 
         return s
     
-def or_terms(t):
-    return '|'.join(['(%s)' % s for s in t])
-
 Renderer = DocBook

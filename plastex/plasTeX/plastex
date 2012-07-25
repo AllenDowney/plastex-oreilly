@@ -137,6 +137,30 @@ class TreeCleaner(object):
         self.test_par(node)
         self.test_quote(node)
         self.test_figure(node)
+        self.test_math(node)
+
+    def test_math(self, node):
+        """Checks for math tags we can convert to mathphrases.
+
+        node: Node
+        """
+        if node.nodeName != 'math':
+            return
+
+        print 'before'
+        self.print_tree(node, '')
+
+        children = node.childNodes
+
+        if len(children) == 1:
+            child = children[0]
+            if child.nodeName == '#text':
+                phrase = self.document.createElement('mathphrase')
+                phrase.append(child)
+                self.replace(node, [phrase])
+
+                print 'after'
+                self.print_tree(phrase, '')
 
     def test_figure(self, node):
         """Checks for bad paragraphs inside figures.
@@ -166,8 +190,6 @@ class TreeCleaner(object):
         if child.nodeName == 'par':
             return
 
-        self.print_node(node)
-
         # if the quote contains bare text, wrap it in a par
         par = self.document.createElement('par')
         par.extend(children)
@@ -175,12 +197,19 @@ class TreeCleaner(object):
             node.pop(-1)
         node.insert(0, par)
 
-        self.print_node(node)
-
     def print_node(self, node):
         print node.nodeName
         for child in node.childNodes:
             print '    ', child.nodeName
+
+    def print_tree(self, node, prefix):
+        if node.nodeName == '#text':
+            print prefix + node
+        else:
+            print prefix + node.nodeName
+
+        for child in node.childNodes:
+            self.print_tree(child, prefix + '   ')
 
     def test_par(self, node):
         """Checks for things that should not be embedded in par.
@@ -216,7 +245,7 @@ class TreeCleaner(object):
         self.replace(node, node.childNodes)
 
     def replace(self, child, replacements):
-        """Replaces a node with another.
+        """Replaces a node with a list of nodes.
 
         Modifies the parent of child.
 
