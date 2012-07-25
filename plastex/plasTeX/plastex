@@ -158,7 +158,7 @@ class TreeCleaner(object):
 
         node: Node
         """
-        if node.nodeName != 'quote':
+        if node.nodeName not in ['quote', 'quotation', 'exercise']:
             return
 
         children = node.childNodes
@@ -166,12 +166,21 @@ class TreeCleaner(object):
         if child.nodeName == 'par':
             return
 
+        self.print_node(node)
+
         # if the quote contains bare text, wrap it in a par
         par = self.document.createElement('par')
         par.extend(children)
         while node.childNodes:
             node.pop(-1)
         node.insert(0, par)
+
+        self.print_node(node)
+
+    def print_node(self, node):
+        print node.nodeName
+        for child in node.childNodes:
+            print '    ', child.nodeName
 
     def test_par(self, node):
         """Checks for things that should not be embedded in par.

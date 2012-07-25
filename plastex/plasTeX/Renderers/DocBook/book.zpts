@@ -8,7 +8,7 @@ name: index
 </indexterm>
 
 name:exercise
-<example tal:attributes="id self/id">
+<example role="exercise" tal:attributes="id self/id">
   <title></title>
   <div tal:replace="self"></div>
 </example>

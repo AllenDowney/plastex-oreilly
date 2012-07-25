@@ -14,7 +14,7 @@ type:xml
   </inlinemediaobject>
   <inlinemediaobject remap="math" tal:condition="not:self/renderer/vectorImager/enabled">
     <imageobject>
-      <imagedata role="math" scale="32" tal:attributes="fileref self/image/url;depth self/image/depth/px" />
+      <imagedata role="math" tal:attributes="fileref self/image/url;depth self/image/depth/px" />
     </imageobject>
   </inlinemediaobject>
 </inlineequation>
@@ -35,7 +35,7 @@ name: displaymath equation  equation*
         </mediaobject>
         <mediaobject remap="math" tal:condition="not:self/renderer/vectorImager/enabled">
           <imageobject>
-            <imagedata role="math" scale="32" valign="middle" tal:attributes="fileref self/image/url;depth self/image/depth/px" />
+            <imagedata role="math" valign="middle" tal:attributes="fileref self/image/url;depth self/image/depth/px" />
           </imageobject>
           <textobject role="tex">
             <phrase tal:content="text self/source"></phrase>
@@ -67,7 +67,7 @@ type: xml
     </mediaobject>
     <mediaobject remap="math" tal:condition="not:self/renderer/vectorImager/enabled">
     <imageobject>
-      <imagedata role="math" scale="32" valign="middle" tal:attributes="fileref cell/image/url;depth self/image/depth/px" />
+      <imagedata role="math" valign="middle" tal:attributes="fileref cell/image/url;depth self/image/depth/px" />
     </imageobject>
     <textobject role="tex">
       <phrase></phrase>

@@ -790,14 +790,12 @@ to draw conclusions about the general population based on statistics
 from the survey.  We will come back to this point later.
 
 \begin{exercise}
-
 Although the NSFG has been conducted seven times, it is not a
 longitudinal study.  Read the Wikipedia pages
 \url{http://wikipedia.org/wiki/Cross-sectional_study}
 and
 \url{http://wikipedia.org/wiki/Longitudinal_study}
 to make sure you understand why not.
-
 \end{exercise}
 
 \begin{exercise}
@@ -1971,6 +1969,76 @@ that is relevant in practice.
 \end{description}
 
 
+\begin{exercise}
+Draw a stack diagram for \verb"print_n" called with
+\verb"s = 'Hello'" and {\tt n=2}.
+\end{exercise}
+
+\begin{exercise}
+Write a function called \verb"do_n" that takes a function
+object and a number, {\tt n}, as arguments, and that calls
+the given function {\tt n} times.
+\end{exercise}
+
+\begin{exercise}
+\index{triangle}
+
+If you are given three sticks, you may or may not be able to arrange
+them in a triangle.  For example, if one of the sticks is 12 inches
+long and the other two are one inch long, it is clear that you will
+not be able to get the short sticks to meet in the middle.  For any
+three lengths, there is a simple test to see if it is possible to form
+a triangle:
+
+\begin{quotation}
+If any of the three lengths is greater than the sum of the other
+  two, then you cannot form a triangle.  Otherwise, you
+  can.  (If the sum of two lengths equals the third, they form
+    what is called a ``degenerate'' triangle.)
+\end{quotation}
+
+\begin{enumerate}
+
+\item Write a function named \verb"is_triangle" that takes three
+  integers as arguments, and that prints either ``Yes'' or ``No,'' depending
+  on whether you can or cannot form a triangle from sticks with the
+  given lengths.
+
+\item Write a function that prompts the user to input three stick
+  lengths, converts them to integers, and uses \verb"is_triangle" to
+  check whether sticks with the given lengths can form a triangle.
+
+\end{enumerate}
+
+\end{exercise}
+
+\begin{exercise}
+\label{exrotate}
+
+ROT13 is a weak form of encryption that involves ``rotating'' each
+letter in a word by 13 places.  To rotate a letter means
+to shift it through the alphabet, wrapping around to the beginning if
+necessary, so 'A' shifted by 3 is 'D' and 'Z' shifted by 1 is 'A'.
+\index{letter rotation}
+\index{rotation, letter}
+
+Write a function called \verb"rotate_word"
+that takes a string and an integer as parameters, and that returns
+a new string that contains the letters from the original string
+``rotated'' by the given amount.  
+
+For example, ``cheer'' rotated by 7 is ``jolly'' and ``melon'' rotated
+by -10 is ``cubed''.  
+
+You might want to use the built-in functions {\tt ord}, which converts
+a character to a numeric code, and {\tt chr}, which converts numeric
+codes to characters.
+
+Potentially offensive jokes on the Internet are sometimes encoded
+in ROT13.  If you are not easily offended, find and decode some
+of them.  Solution: \url{http://thinkpython.com/code/rotate.py}.
+\end{exercise}
+
 
 \printindex
 
@@ -1981,39 +2049,4 @@ that is relevant in practice.
 
 
 \end{document}
-
-%Chapter 10: time series
-
-%serial correlation
-
-%auto-correlation function
-
-%generating random series with correlation
-
-%violating the CLT and see if the sum of correlated normals is lognormal
-
-%If so, maybe that explains adult weight distribution.
-
-
-
-
-% Topics to consider in the future:
-
-% Time series
-
-% Correlation of adjacent elements
-
-% Autocorrelation function
-
-% Information theory: Paul Revere example
-
-% Gelman's paradox
-% \url{http://www.iq.harvard.edu/blog/sss/archives/2008/04/gelmans_paradox.shtml}
-
-% regression to the mean experiment
-
-% Poisson distribution
-
-% example using csvDictReader
-
 
