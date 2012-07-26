@@ -48,6 +48,22 @@ class math(MathEnvironment):
             return '$%s$' % sourceChildren(self)
         return '$'
 
+    def digest(self, tokens):
+        res = MathEnvironment.digest(self, tokens)
+        print 'math.digest'
+        print self, self.nodeName, type(self)
+
+        children = self.childNodes
+
+        if len(children) == 1:
+            child = children[0]
+            if child.nodeName == '#text':
+                self.nodeName = 'mathphrase'
+                print 'replaced'
+            else:
+                print 'unchanged'
+                print child.nodeName, child
+
 class displaymath(MathEnvironment):
     blockType = True
     @property
@@ -229,7 +245,7 @@ class theta(MathSymbol): unicode = unichr(952)
 class vartheta(MathSymbol): unicode = unichr(977)
 class iota(MathSymbol): unicode = unichr(953)
 class kappa(MathSymbol): unicode = unichr(954)
-class GreekLamda(MathSymbol):
+class GreekLambda(MathSymbol):
     macroName = 'lambda'
     unicode = unichr(955)
 class mu(MathSymbol): unicode = unichr(956)
@@ -621,6 +637,9 @@ class mathrm(Command):
     args = 'self'
 
 class mathit(Command):
+    args = 'self'
+
+class mathphrase(Command):
     args = 'self'
 
 class mathbf(Command):
