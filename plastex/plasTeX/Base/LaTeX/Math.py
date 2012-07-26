@@ -9,6 +9,7 @@ from Arrays import Array
 from plasTeX import Command, Environment, sourceChildren
 from plasTeX import DimenCommand, GlueCommand
 from plasTeX.Logging import getLogger
+from plasTeX.DOM import Text
 
 #
 # C.7.1
@@ -47,22 +48,6 @@ class math(MathEnvironment):
         if self.hasChildNodes():
             return '$%s$' % sourceChildren(self)
         return '$'
-
-    def digest(self, tokens):
-        res = MathEnvironment.digest(self, tokens)
-        print 'math.digest'
-        print self, self.nodeName, type(self)
-
-        children = self.childNodes
-
-        if len(children) == 1:
-            child = children[0]
-            if child.nodeName == '#text':
-                self.nodeName = 'mathphrase'
-                print 'replaced'
-            else:
-                print 'unchanged'
-                print child.nodeName, child
 
 class displaymath(MathEnvironment):
     blockType = True
@@ -230,7 +215,26 @@ class ddots(Command):
 #
 
 class MathSymbol(Command):
-    pass
+    unicode = None
+
+    def not_invoke(self, tex):
+        a = Command.invoke(self, tex)
+        print 'MathSymbol.invoke'
+        print self, self.tagName, type(self)
+
+        if self.unicode is None:
+            return a
+        if self.unicode == -1:
+            code = self.tagName
+        else:
+            code = self.unicode
+
+        o = self.ownerDocument.createElement('mathsymbol')
+        child = self.ownerDocument.createTextNode(code)
+        o.append(child)
+        self.ownerDocument.context.push(o)
+        return [o]
+        
 
 # Lowercase
 class alpha(MathSymbol): unicode = unichr(945)
@@ -494,7 +498,7 @@ class lim(MathSymbol): pass
 class liminf(MathSymbol): pass
 class limsup(MathSymbol): pass
 class ln(MathSymbol): pass
-class log(MathSymbol): pass
+class log(MathSymbol): unicode = -1
 class max(MathSymbol): pass
 class min(MathSymbol): pass
 class Pr(MathSymbol): pass

@@ -24,10 +24,13 @@ name: it
 <emphasis tal:content="self"></emphasis>
 
 name: mathit
-<emphasis tal:content="self"></emphasis>
+<emphasis role="math" tal:content="self"></emphasis>
 
 name: mathphrase
 <inlineequation><mathphrase tal:content="self"></mathphrase></inlineequation>
+
+name: displaymathphrase
+<equation><mathphrase tal:content="self"></mathphrase></equation>
 
 name: bf
 <emphasis role="bold" tal:content="self"></emphasis>

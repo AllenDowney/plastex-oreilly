@@ -144,7 +144,7 @@ class TreeCleaner(object):
 
         node: Node
         """
-        if node.nodeName != 'math':
+        if node.nodeName not in ['math', 'displaymath']:
             return
 
         print 'before'
@@ -152,16 +152,16 @@ class TreeCleaner(object):
 
         children = node.childNodes
 
-        if len(children) == 1:
-            child = children[0]
-            if child.nodeName == '#text':
-                phrase = self.document.createElement('mathphrase')
-                phrase.append(child)
-                self.replace(node, [phrase])
+        # math becomes mathphrase, which is rendered as inlinequation
+        # displaymath becomes displaymathphrase, rendered as equation
+        #phrase = self.document.createElement(node.nodeName + 'phrase')
+        phrase = self.document.createElement('mathphrase')
+        phrase.extend(children)
+        self.replace(node, [phrase])
 
-                print 'after'
-                self.print_tree(phrase, '')
-
+        print 'after'
+        self.print_tree(phrase, '')
+                
     def test_figure(self, node):
         """Checks for bad paragraphs inside figures.
 

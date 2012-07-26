@@ -80,7 +80,3 @@ type: xml
 </tbody>
 </tgroup>
 </informaltable>
-
-
-name:mathphrase
-<mathphrase tal:content="self"></mathphrase>
