@@ -511,7 +511,7 @@ class lim(MathSymbol): pass
 class liminf(MathSymbol): pass
 class limsup(MathSymbol): pass
 class ln(MathSymbol): pass
-class log(MathSymbol): pass
+class log(MathSymbol): unicode = 'log'
 class max(MathSymbol): pass
 class min(MathSymbol): pass
 class Pr(MathSymbol): pass
@@ -656,9 +656,6 @@ class mathrm(Command):
 class mathit(Command):
     args = 'self'
 
-class mathphrase(Command):
-    args = 'self'
-
 class mathbf(Command):
     args = 'self'
 
@@ -690,3 +687,29 @@ class scriptstyle(Command):
 
 class scriptscriptstyle(Command):
     pass
+
+
+# ABD: the following are "commands" created in TreeCleaner to generate
+# mathphrases and mathML 
+
+class mathphrase(Command):
+    args = 'self'
+
+class displaymathphrase(Command):
+    args = 'self'
+
+class mmlmath(Command):
+    args = 'self'
+
+class mmlmrow(Command):
+    args = 'self'
+
+class mmlmn(Command):
+    args = 'self'
+
+class mmlmo(Command):
+    args = 'self'
+
+class mmlmi(Command):
+    args = 'self'
+

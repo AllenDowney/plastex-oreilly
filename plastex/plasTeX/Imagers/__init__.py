@@ -723,6 +723,7 @@ class Imager(object):
             
         # Move images to their final location
         for src, dest in zip(images, self.images.values()):
+            print src, dest
             # Move the image
             directory = os.path.dirname(dest.path)
             if directory and not os.path.isdir(directory):

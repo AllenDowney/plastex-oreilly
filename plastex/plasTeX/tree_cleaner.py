@@ -9,6 +9,9 @@ Same license as the rest of plasTeX.
 
 import codecs
 
+from plasTeX.Base.LaTeX.Math import MathSymbol
+
+
 class TreeCleaner(object):
     def __init__(self, tex, document):
         self.tex = tex
@@ -63,6 +66,9 @@ class TreeCleaner(object):
         if node.nodeName not in ['math', 'displaymath']:
             return
 
+        if not self.is_simple_math(node):
+            return
+
         print 'before'
         self.print_tree(node, '')
 
@@ -70,13 +76,34 @@ class TreeCleaner(object):
 
         # math becomes mathphrase, which is rendered as inlinequation
         # displaymath becomes displaymathphrase, rendered as equation
-        #phrase = self.document.createElement(node.nodeName + 'phrase')
-        phrase = self.document.createElement('mathphrase')
+        phrase = self.document.createElement(node.nodeName + 'phrase')
         phrase.extend(children)
         self.replace(node, [phrase])
 
         print 'after'
         self.print_tree(phrase, '')
+
+    def is_simple_math(self, node, prefix=''):
+        if node.nodeName in ['sum', 'int']:
+            print node.nodeName
+            return False
+
+        if node.nodeName == '#text':
+            print '#text', node
+            return True
+
+        if isinstance(node, MathSymbol):
+            print 'MathSymbol', node.unicode
+            if node.unicode is not None:
+                return True
+            else:
+                return False
+
+        for child in node.childNodes:
+            if not self.is_simple_math(child):
+                return False
+
+        return True
                 
     def test_figure(self, node):
         """Checks for bad paragraphs inside figures.
@@ -148,7 +175,7 @@ class TreeCleaner(object):
                          'verbatim', 'par', 'figure', 'centerline', 'label'])
 
         if first.nodeName not in bad_names:
-            print 'Allowing embedded', first.nodeName
+            # print 'Allowing embedded', first.nodeName
             return
 
         self.replace(node, children)

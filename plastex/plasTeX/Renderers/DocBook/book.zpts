@@ -54,3 +54,19 @@ name: includegraphics
     <imagedata tal:attributes="fileref self/image/url;width self/image/width/in" />
   </imageobject>
 </mediaobject>
+
+name: mmlmath
+<mml:math overflow="scroll" xmlns:mml="http://www.w3.org/1998/Math/MathML" tal:content="self">
+</mml:math>
+
+name: mmlmrow
+<mml:mrow tal:content="self"></mml:mrow>
+
+name: mmlmn
+<mml:mn tal:content="self"></mml:mn>
+
+name: mmlmo
+<mml:mo tal:content="self"></mml:mo>
+
+name: mmlmi
+<mml:mi tal:content="self"></mml:mi>
