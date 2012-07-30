@@ -282,6 +282,19 @@ class Phi(MathSymbol): unicode = unichr(934)
 class Psi(MathSymbol): unicode = unichr(936)
 class Omega(MathSymbol): unicode = unichr(8486)
 
+# adding these to make mathpazo happy
+class upGamma(MathSymbol): unicode = unichr(915)
+class upDelta(MathSymbol): unicode = unichr(916)
+class upTheta(MathSymbol): unicode = unichr(920)
+class upLambda(MathSymbol): unicode = unichr(923)
+class upXi(MathSymbol): unicode = unichr(926)
+class upPi(MathSymbol): unicode = unichr(928)
+class upSigma(MathSymbol): unicode = unichr(931)
+class upUpsilon(MathSymbol): unicode = unichr(978)
+class upPhi(MathSymbol): unicode = unichr(934)
+class upPsi(MathSymbol): unicode = unichr(936)
+class upOmega(MathSymbol): unicode = unichr(8486)
+
 
 #
 # Table 3.4: Binary Operation Symbols
@@ -498,7 +511,7 @@ class lim(MathSymbol): pass
 class liminf(MathSymbol): pass
 class limsup(MathSymbol): pass
 class ln(MathSymbol): pass
-class log(MathSymbol): unicode = -1
+class log(MathSymbol): pass
 class max(MathSymbol): pass
 class min(MathSymbol): pass
 class Pr(MathSymbol): pass
