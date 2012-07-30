@@ -1,0 +1,87 @@
+% LaTeX source for ``Think Stats:
+% Probability and Statistics for Programmers''
+% Copyright 2011  Allen B. Downey.
+
+% License: Creative Commons Attribution-NonCommercial 3.0 Unported License.
+% http://creativecommons.org/licenses/by-nc/3.0/
+%
+
+%\documentclass[10pt,b5paper]{book}
+\documentclass[12pt]{book}
+\usepackage[width=5.5in,height=8.5in,
+  hmarginratio=3:2,vmarginratio=1:1]{geometry}
+
+% for some of these packages, you might have to install
+% texlive-latex-extra (in Ubuntu)
+
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{mathpazo}
+
+%\usepackage{pslatex}
+
+\usepackage{url}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{amsmath}
+\usepackage{amsthm}
+%\usepackage{amssymb}
+\usepackage{makeidx}
+\usepackage{setspace}
+\usepackage{hevea}                           
+\usepackage{upquote}
+
+
+\title{Think Stats}
+\author{Allen B. Downey}
+
+\newcommand{\thetitle}{Example file for testing MathML}
+
+% these styles get translated in CSS for the HTML version
+\newstyle{a:link}{color:black;}
+\newstyle{p+p}{margin-top:1em;margin-bottom:1em}
+\newstyle{img}{border:0px}
+
+% change the arrows in the HTML version
+\setlinkstext
+  {\imgsrc[ALT="Previous"]{back.png}}
+  {\imgsrc[ALT="Up"]{up.png}}
+  {\imgsrc[ALT="Next"]{next.png}} 
+
+\makeindex
+
+\newif\ifplastex
+\plastexfalse
+
+\begin{document}
+
+\frontmatter
+
+\ifplastex
+    \usepackage{localdef}
+    \maketitle
+
+\else
+
+
+\fi
+
+\chapter{Math examples}
+
+\[ \mu = \frac{1}{n} \sum_i x_i \]
+
+\[ \sigma^2 = \frac{1}{n} \sum_i (x_i - \mu)^2 \]
+
+\[ \sigma^2 = \frac{1}{n} \sum_i (x_i - \mu)^2 \]
+
+The term $x_i - \mu$ is called the ``deviation from the mean,'' so
+variance is the mean squared deviation, which is why it is denoted
+$\sigma^2$.  The square root of variance, $\sigma$, is called the {\bf
+  standard deviation}.
+
+Here's a math symbol with no unicode in Math.py, so it should get
+imaged: $a \leadsto b$
+
+\end{document}
+
