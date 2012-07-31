@@ -692,6 +692,12 @@ class scriptscriptstyle(Command):
 # ABD: the following are "commands" created in TreeCleaner to generate
 # mathphrases and mathML 
 
+class inlineequation(Command):
+    args = 'self'
+
+class informalequation(Command):
+    args = 'self'
+
 class mathphrase(Command):
     args = 'self'
 
@@ -704,6 +710,18 @@ class mmlmath(Command):
 class mmlmrow(Command):
     args = 'self'
 
+class mmlmfrac(Command):
+    args = 'self'
+
+class mmlmsup(Command):
+    args = 'self'
+
+class mmlmsub(Command):
+    args = 'self'
+
+class mmlmunder(Command):
+    args = 'self'
+
 class mmlmn(Command):
     args = 'self'
 
@@ -712,4 +730,3 @@ class mmlmo(Command):
 
 class mmlmi(Command):
     args = 'self'
-

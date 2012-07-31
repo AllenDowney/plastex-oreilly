@@ -81,3 +81,30 @@ type: xml
 </tgroup>
 </informaltable>
 
+
+name: mmlmath
+<mml:math overflow="scroll" xmlns:mml="http://www.w3.org/1998/Math/MathML" tal:content="self"></mml:math>
+
+name: mmlmrow
+<mml:mrow tal:content="self"></mml:mrow>
+
+name: mmlmsup
+<mml:msup tal:content="self"></mml:msup>
+
+name: mmlmsub
+<mml:msub tal:content="self"></mml:msub>
+
+name: mmlmfrac
+<mml:mfrac tal:content="self"></mml:mfrac>
+
+name: mmlmunder
+<mml:munder tal:content="self"></mml:munder>
+
+name: mmlmn
+<mml:mn tal:content="self"></mml:mn>
+
+name: mmlmo
+<mml:mo tal:content="self"></mml:mo>
+
+name: mmlmi
+<mml:mi tal:content="self"></mml:mi>

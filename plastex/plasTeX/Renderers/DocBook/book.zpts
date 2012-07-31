@@ -26,11 +26,19 @@ name: it
 name: mathit
 <emphasis role="math" tal:content="self"></emphasis>
 
+name: inlineequation
+<inlineequation tal:content="self"></inlineequation>
+
+name: informalequation
+<informalequation tal:content="self"></informalequation>
+
 name: mathphrase
-<inlineequation><mathphrase tal:content="self"></mathphrase></inlineequation>
+<inlineequation><mathphrase tal:content="self"></mathphrase>
+</inlineequation>
 
 name: displaymathphrase
-<equation><mathphrase tal:content="self"></mathphrase></equation>
+<informalequation><mathphrase tal:content="self"></mathphrase>
+</informalequation>
 
 name: bf
 <emphasis role="bold" tal:content="self"></emphasis>
@@ -55,18 +63,3 @@ name: includegraphics
   </imageobject>
 </mediaobject>
 
-name: mmlmath
-<mml:math overflow="scroll" xmlns:mml="http://www.w3.org/1998/Math/MathML" tal:content="self">
-</mml:math>
-
-name: mmlmrow
-<mml:mrow tal:content="self"></mml:mrow>
-
-name: mmlmn
-<mml:mn tal:content="self"></mml:mn>
-
-name: mmlmo
-<mml:mo tal:content="self"></mml:mo>
-
-name: mmlmi
-<mml:mi tal:content="self"></mml:mi>
