@@ -3,7 +3,7 @@
 
 plastex:
 	rm -rf book/.svn
-	plastex --renderer=DocBook --theme=book --imager=tralics --filename=book.xml book.tex
+	plastex --renderer=DocBook --theme=book --filename=book.xml book.tex
 	rm -rf book/.svn
 
 xxe:
@@ -18,5 +18,4 @@ TEST_REPO = ../../test_repo
 
 test_repo:
 	rsync -a book/ $(TEST_REPO)
-	rsync -a figs/* $(TEST_REPO)/figs
 	cd $(TEST_REPO); svn ci -m "Testing; orm:commitpdf"

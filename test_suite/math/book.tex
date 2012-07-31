@@ -69,9 +69,11 @@
 
 \chapter{Math examples}
 
+Display math:
+
 \[ \mu = \frac{1}{n} \sum_i x_i \]
 
-\[ \sigma^2 = \frac{1}{n} \sum_i (x_i - \mu)^2 \]
+Another display equation:
 
 \[ \sigma^2 = \frac{1}{n} \sum_i (x_i - \mu)^2 \]
 
@@ -80,8 +82,14 @@ variance is the mean squared deviation, which is why it is denoted
 $\sigma^2$.  The square root of variance, $\sigma$, is called the {\bf
   standard deviation}.
 
-Here's a math symbol with no unicode in Math.py, so it should get
-imaged: $a \leadsto b$
+Here's a math expression that should get translated to a mathphrase: 
+$a^2 + b^2 = c^2$.
+
+Here's a math expression that has super and subscripts on the same
+character, so it should be MathML: $a_i^2$.
+
+Here's a math expression that contains a symbol with no unicode in Math.py,
+so it should get translated to MathML: $a \leadsto b$.
 
 \end{document}
 
