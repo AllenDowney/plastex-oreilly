@@ -85,20 +85,8 @@ type: xml
 name: mmlmath
 <mml:math overflow="scroll" xmlns:mml="http://www.w3.org/1998/Math/MathML" tal:content="self"></mml:math>
 
-name: mmlmrow
-<mml:mrow tal:content="self"></mml:mrow>
-
-name: mmlmsup
-<mml:msup tal:content="self"></mml:msup>
-
-name: mmlmsub
-<mml:msub tal:content="self"></mml:msub>
-
-name: mmlmfrac
-<mml:mfrac tal:content="self"></mml:mfrac>
-
-name: mmlmunder
-<mml:munder tal:content="self"></mml:munder>
+name: mmlmi
+<mml:mi tal:content="self"></mml:mi>
 
 name: mmlmn
 <mml:mn tal:content="self"></mml:mn>
@@ -106,5 +94,80 @@ name: mmlmn
 name: mmlmo
 <mml:mo tal:content="self"></mml:mo>
 
-name: mmlmi
-<mml:mi tal:content="self"></mml:mi>
+name: mmlmtext
+<mml:mtext tal:content="self"></mml:mtext>
+
+name: mmlmspace
+<mml:mspace tal:content="self"></mml:mspace>
+
+name: mmlms
+<mml:ms tal:content="self"></mml:ms>
+
+name: mmlmglyph
+<mml:mglyph tal:content="self"></mml:mglyph>
+
+name: mmlmrow
+<mml:mrow tal:content="self"></mml:mrow>
+
+name: mmlmfrac
+<mml:mfrac tal:content="self"></mml:mfrac>
+
+name: mmlmsqrt
+<mml:msqrt tal:content="self"></mml:msqrt>
+
+name: mmlmroot
+<mml:mroot tal:content="self"></mml:mroot>
+
+name: mmlmstyle
+<mml:mstyle tal:content="self"></mml:mstyle>
+
+name: mmlmerror
+<mml:merror tal:content="self"></mml:merror>
+
+name: mmlmpadded
+<mml:mpadded tal:content="self"></mml:mpadded>
+
+name: mmlmphantom
+<mml:mphantom tal:content="self"></mml:mphantom>
+
+name: mmlmfenced
+<mml:mfenced tal:content="self"></mml:mfenced>
+
+name: mmlmenclose
+<mml:menclose tal:content="self"></mml:menclose>
+
+name: mmlmsub
+<mml:msub tal:content="self"></mml:msub>
+
+name: mmlmsup
+<mml:msup tal:content="self"></mml:msup>
+
+name: mmlmsubsup
+<mml:msubsup tal:content="self"></mml:msubsup>
+
+name: mmlmunder
+<mml:munder tal:content="self"></mml:munder>
+
+name: mmlmover
+<mml:mover tal:content="self"></mml:mover>
+
+name: mmlmunderover
+<mml:munderover tal:content="self"></mml:munderover>
+
+name: mmlmmultiscripts
+<mml:mmultiscripts tal:content="self"></mml:mmultiscripts>
+
+name: mmlmtable
+<mml:mtable tal:content="self"></mml:mtable>
+
+name: mmlmlabeledtr
+<mml:mlabeledtr tal:content="self"></mml:mlabeledtr>
+
+name: mmlmtr
+<mml:mtr tal:content="self"></mml:mtr>
+
+name: mmlmtd
+<mml:mtd tal:content="self"></mml:mtd>
+
+name: mmlmaction
+<mml:maction tal:content="self"></mml:maction>

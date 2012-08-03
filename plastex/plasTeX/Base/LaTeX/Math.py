@@ -707,26 +707,89 @@ class displaymathphrase(Command):
 class mmlmath(Command):
     args = 'self'
 
-class mmlmrow(Command):
-    args = 'self'
-
-class mmlmfrac(Command):
-    args = 'self'
-
-class mmlmsup(Command):
-    args = 'self'
-
-class mmlmsub(Command):
-    args = 'self'
-
-class mmlmunder(Command):
-    args = 'self'
+class mmlmi(Command):
+    args = "self"
 
 class mmlmn(Command):
-    args = 'self'
+    args = "self"
 
 class mmlmo(Command):
-    args = 'self'
+    args = "self"
 
-class mmlmi(Command):
-    args = 'self'
+class mmlmtext(Command):
+    args = "self"
+
+class mmlmspace(Command):
+    args = "self"
+
+class mmlms(Command):
+    args = "self"
+
+class mmlmglyph(Command):
+    args = "self"
+
+class mmlmrow(Command):
+    args = "self"
+
+class mmlmfrac(Command):
+    args = "self"
+
+class mmlmsqrt(Command):
+    args = "self"
+
+class mmlmroot(Command):
+    args = "self"
+
+class mmlmstyle(Command):
+    args = "self"
+
+class mmlmerror(Command):
+    args = "self"
+
+class mmlmpadded(Command):
+    args = "self"
+
+class mmlmphantom(Command):
+    args = "self"
+
+class mmlmfenced(Command):
+    args = "self"
+
+class mmlmenclose(Command):
+    args = "self"
+
+class mmlmsub(Command):
+    args = "self"
+
+class mmlmsup(Command):
+    args = "self"
+
+class mmlmsubsup(Command):
+    args = "self"
+
+class mmlmunder(Command):
+    args = "self"
+
+class mmlmover(Command):
+    args = "self"
+
+class mmlmunderover(Command):
+    args = "self"
+
+class mmlmmultiscripts(Command):
+    args = "self"
+
+class mmlmtable(Command):
+    args = "self"
+
+class mmlmlabeledtr(Command):
+    args = "self"
+
+class mmlmtr(Command):
+    args = "self"
+
+class mmlmtd(Command):
+    args = "self"
+
+class mmlmaction(Command):
+    args = "self"

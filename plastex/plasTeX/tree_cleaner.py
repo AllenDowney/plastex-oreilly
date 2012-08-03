@@ -158,7 +158,7 @@ class TreeCleaner(object):
         for child in root:
             node.append(self.convert_elements(child))
 
-        print node, node[0]
+        print node
         return node
 
     def is_simple_math(self, node):
