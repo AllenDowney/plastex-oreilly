@@ -1,0 +1,29 @@
+mi,identifier
+mn,number
+mo,"operator, fence, or separator"
+mtext,text
+mspace,space
+ms,string literal
+mglyph,accessing glyphs for characters from MathML
+mrow,group any number of sub-expressions horizontally
+mfrac,form a fraction from two sub-expressions
+msqrt,form a square root (radical without an index)
+mroot,form a radical with specified index
+mstyle,style change
+merror,enclose a syntax error message from a preprocessor
+mpadded,adjust space around content
+mphantom,make content invisible but preserve its size
+mfenced,surround content with a pair of fences
+menclose,enclose content with a stretching symbol such as a long division sign.
+msub,attach a subscript to a base
+msup,attach a superscript to a base
+msubsup,attach a subscript-superscript pair to a base
+munder,attach an underscript to a base
+mover,attach an overscript to a base
+munderover,attach an underscript-overscript pair to a base
+mmultiscripts,attach prescripts and tensor indices to a base
+mtable,table or matrix
+mlabeledtr,row in a table or matrix with a label or equation number
+mtr,row in a table or matrix
+mtd,one entry in a table or matrix
+maction,bind actions to a sub-expression
