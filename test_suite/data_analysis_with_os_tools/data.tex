@@ -1,4 +1,442 @@
-% ============================================================\chapter{Working with Data}{}{}\label{app:data}\makeatletter\renewcommand\thefigure{C-\@arabic\c@figure}%\thechapter.%\renewcommand\thetable{C-\@arabic\c@table}%\thechapter.\makeatother\index{data analysis!data|(} \index{data|(} \Fint{One of the uncomfortable (and easily overlooked) truths of workingwith data is that usually} only a small fraction of the time is spenton the actual ``analysis.'' Often a far greater amount of time andeffort is expended on a variety of tasks that may appear ``menial'' bycomparison but that are absolutely critical nevertheless: obtainingthe data; verifying, cleaning and possibly reformatting it; anddealing with updates, storage, and archiving.  For someone new toworking with data (and even, periodically, for someone not so new), ittypically comes as a surprise that these preparatory tasks are notonly necessary but also take up as much time as they do.By their nature, these housekeeping and auxiliary tasks tend to bevery specific: specific to the data, specific to the environment, andspecific to the particular question being investigated.  This impliesthat there is little that can be said about them in generality---itpretty much all comes down to ad hoc hackery. Of course, this absenceof recognizable nontrivial techniques is one of the main reasons theseactivities receive as little attention as they do.That being said, we can try to increase our awareness of such issuestypically arising in practical situations.\vspace*{-12pt}% ============================================================\section{Sources for Data}\index{data!sources and availability} The two most common sources for data in an enterprise environment are\emph{databases} \index{databases!about} and \emph{logfiles}. \index{logfiles} As data sources, the twosources tend to address different needs. Databases will contain data relatedto the ``business,'' whereas logfiles are a source for ``operational''data: databases answer the question ``what did we sell to whom?''whereas logfiles answer the question ``what did we do, and when?''Databases can be either ``online transaction processing'' (OLTP) or``production'' databases, or ``data warehouses'' for long-termstorage.  Production databases tend to be normalized, fast, and busy.You may or may not be able to get read access to them for ad hocqueries, depending on company policy.  Data warehouses tend to bedenormalized, slow, and often accessed through a batch processingfacility (submit your query tonight and find out tomorrow that youomitted a field you needed). Production databases tend to be owned (atleast in spirit) by the application development teams. Data warehousesare invariably owned by the IT department, which implies a differentculture (see also the discussion in Chapter \ref{ch:business}).  Ineither form, databases tend to provide a stable foundation for dataneeds---provided you are interested in something the company alreadyconsiders part of its ``business.''In contrast, logfiles are often an important source of data for newinitiatives. If you want to evaluate a new business idea, chances arethat the data required for your analysis will not be available in thedatabase---not \emph{yet}, since there has never been a reason tostore it before. In such situations you may still be able to find theinformation you need in logfiles that are regularly produced.One \emph{very} important distinction is that databases and logfileshave different life cycles: making changes to the design of a databaseis always a slow (often, excruciatingly slow) process, but the dataitself lives in the database forever (if the database is properlydesigned). In contrast, logfiles often contain much more informationthan the database, but they are usually deleted very quickly. If yourorganization keeps logfiles for two weeks, consider yourself lucky!Therefore, if you want to begin a project using data contained inlogfiles then you need to move \emph{fast}: start saving all files toyour desktop or another safe location immediately, \emph{then} figureout what you want to do with them! Frequently, you will need severalweeks' (or months') worth of data for a conclusive analysis, and everyday that you wait can never be made up. Also keep in mind thatlogfiles are usually generated on production servers to which accessmay be heavily restricted. It is not uncommon to spend \emph{weeks} innegotiations with network administrators if you need to movesignificant amounts of data off of production systems.The same consideration applies if information is not available in thelogfiles, so that existing code needs to be instrumented to supportcollection of the required data. In this situation, you will likelyfind yourself captive to preexisting release schedules and otherconstraints. Again: start to think about \emph{collecting} data early.Because databases and logfiles are so common and so directly usefulsources of data in an enterprise environment, it's easy to forget thatthey're not the only available sources.A separate data source that sometimes can be extremely useful is thecompany's finance department. Companies are required to report onvarious financial metrics, which means that such information\emph{must} be available, although possibly only in a highlyaggregated form (\eg, quarterly) and possibly quite late.  On otherhand, this\vadjust{\pagebreak} information is normative and therefore reliable: after all,it's what the company is paying taxes on! (I am ignoring thepossibility that the data provided by the finance department might be\emph{wrong}, but don't get me wrong: forensic data analysis is alsoan interesting field of study.)What works internally may also work with competitors. The quarterlyfilings that publicly listed companies are required to make can makeinteresting reading!So far we have assumed that you had to find and extract the data youneed from whatever sources are available; in my experience, this is byfar the most common scenario. However, your data may also be handed toyou---for example, if it is experimental data or if it comes from anexternal source. In this case, it may come in a domain-specific fileformat (we'll return to data formats shortly).  The problem with thissituation is, of course, that now you have no control over what is inthe data!\vspace*{-9pt}% ============================================================\section{Cleaning and Conditioning}\index{data!cleaning and conditioning} \index{cleaning and conditioning data} Raw data, whether it was obtained from a database query or by parsinga logfile, typically needs to be cleaned or conditioned. Here are some areas that often need attention.\begin{unnumlist}\subparagraph{Missing values}\item If individual attributes or entire data points \index{missing values}   are missing, we need to decide how to handle them. Should we discard  the whole record, mark the information in question as missing, or  backfill it in some way?  Your choice will depend strongly on your  specific situation and goals.\subparagraph{Outliers}\item In general, you should be extremely careful when \index{outliers}   removing outliers---you may be removing the effect that you are  looking for. \emph{Never} should data points be removed silently.  (There is a (partly apocryphal)   story\footnote{\url{http://www.nas.nasa.gov/About/Education/Ozone/history.html.}}  that the discovery of the hole in the ozone layer over Antarctica  was delayed by several years because the automated data gathering  system discarded readings that it considered to be ``impossibly  low.'')\subparagraph{Junk}\item Data that comes over a network may contain nonprintable  characters or similar junk. Such data is not only useless but can  also seriously confuse downstream applications that are attempting  to process the data (\eg, when nonprintable characters are  interpreted as control characters---many programming environments  will not issue helpful diagnostics if this happens).  This kind of  problem frequently goes unnoticed, because such junk is typically  rare and not easily noticed simply by scanning the beginning of a  data set.  \subparagraph{Formatting and normalizing} \index{format!data} \index{normalization!about}\item Individual values may not be  formatted in the most useful way for subsequent analysis. Examples  of frequently used transformations\vadjust{\pagebreak} for this purpose include: forcing  upper- or\break lowercase; removing blanks within  strings, or replacing  them with dashes; replacing timestamps with Unix Epoch seconds, the  Julian day number, or a similar numerical value; replacing numeric  codes with string labels, or vice versa; and so on.\subparagraph{Duplicate records}\item Data sets often contain duplicate records \index{duplicate records}   that need to be recognized and removed (``de-duped'').  Depending on  what you consider ``duplicate,'' this may require a nontrivial  effort.  (I once worked on a project that tried to recognize  misspelled postal addresses and assign them to the correctly spelled  one.  This also is a form of\break de-duping.)\subparagraph{Merging data sets} \item The need to merge data sets from different \index{merging data sets}   sources is arises pretty often---for instance, when the data comes  from different database instances. Make sure the data is truly  compatible, especially if the database instances are geographically  dispersed.  Differing time zones are a common trouble spot, but don't  overlook things like monetary units.  In addition, you may need to  be aware of localization issues, such as font encodings and date  formatting.\footnote{Regarding time zones, I used to be a strong    proponent of keeping all date/time information in Coordinated Universal Time     (UTC, ``Greenwich Time''), always. However, I have    since learned that this is not always appropriate: for some    information, such as customer behavior, it is the \emph{local}    time that matters, not the absolute time. Nevertheless, I would    prefer to store such information in two parts: timestamp in UTC    \emph{and} in addition, the local time zone of the user.  (Whether    we can actually determine the user's time zone accurately is a    different matter.)}\end{unnumlist}Reading this list, you should realize that the process of\emph{cleaning} data cannot be separated from \emph{analyzing} it.For instance: outlier detection and evaluation require some prettydeep analysis to be reliable. On the other hand, you may need toremove outliers before you can calculate meaningful values for certainsummary statistics. This is an important insight, which we will maketime and again: data analysis is an \emph{iterative} process, in whicheach operation is at the same time the result of a previous step andthe preparation for a subsequent step.Data files may also be defective in ways that only become apparentwhen subsequent analysis fails or produces nonsensical results. Somecommon problems are:\begin{unnumlist}\subparagraph{Clerical errors}\item These are basically data entry errors: 0.01 \index{!clerical errors}   instead of 0.001, values entered in the wrong column, all that.  Because most data these days is computer generated, the classic  occasional typo seems to be mostly a thing of the past. But watch  out for its industrial counterpart: entire data sets that are  systematically corrupted. (Once, we didn't realize that a certain  string field in the database was of fixed width.  As we went from  entries of the form \texttt{ID1}, \texttt{ID2}, and so on to entries  like \texttt{ID10}, the last character was silently truncated by the  database. It took a long time before we noticed---after all, the  results we got back \emph{looked} all right.)\pagebreak\subparagraph{Numerical ``special'' values}\item Missing values \index{missing values} in a data set may  be encoded using special numerical values (such as $-1$ or 9999).  Unless these values are filtered out, they will obviously corrupt  any statistical analysis. There is less of a need for special values  like this when data is kept in text files (because you can indicate  missing values with a marker such as \texttt{???}), but be aware  that it's still an issue when you are dealing with binary files.\subparagraph{Crazy business rules and overloaded database fields}\item Bad schema  design can thoroughly wreck your analysis. A pernicious problem is  overloaded database fields: fields that change their meaning  depending on the values of \emph{other} fields in the database. I  remember a case where the \texttt{Quantity} field in a table  contained the number of items shipped---unless it was zero---in  which case it signaled a discount, a promotion, or an out-of-stock  situation depending on whether an entry with the same order ID  existed in the \texttt{Discounts}, \texttt{Promotions}, or  \texttt{BackOrders} tables---or it contained not the number of items  shipped but rather the number of multi-item packages that had been  shipped (if the \texttt{IsMulti} flag was set), or it contained the  ID (!)  of the return order associated with this line item (if some  other flag was set).  What made the situation so treacherous was  that running a query such as \texttt{select avg(Quantity) from    \dots} would produce a number that \emph{seemed} sensible even  though it was, of course, complete nonsense. What's worse, most  people were unaware of this situation because the data was usually  accessed only through (massive) stored procedures that took all  these crazy business rules into account.% \item[Blanks masking for columns] This is a tiny problem by%   comparison, but it can be annoying and hard to detect. If you are%   using whitespace-separated text files, then missing values or blank%   strings cannot be recognized and so the values from the following%   columns will be substituted instead. (This is an argument for using%   comma-separated rather than whitespace-separated, files.)\end{unnumlist}% ============================================================\section{Sampling}\index{data!sampling}\index{sampling, data}  When dealing with very large data sets, we can often simplify ourlives significantly by working with a \emph{sample} instead of thefull data set---provided the sample is \emph{representative} of thewhole.  And therein lies the problem.In practice, sampling often means partitioning the data on someproperty of the data: picking all customers whose names begin with theletter ``t,'' for instance, or whose customer ID ends with ``0''; orusing the logfile from one server only (out of 10); or alltransactions that occurred today. The problem is that it can be verydifficult to establish a priori whether these subpopulations are atall representative of the entire population. Determining this wouldrequire an in-depth study on the \emph{whole} population---preciselywhat we wanted to avoid!Statistical lore is full of (often quite amusing) stories about thesubtle biases introduced through improper sampling. Choosing allcustomers whose first names end in ``a'' will probably introduce abias toward female customers. Surveying children for the number ofsiblings will overestimate the number of children per householdbecause it excludes households without children. A long-term study ofmutual funds may report overly optimistic average returns oninvestment\vadjust{\pagebreak} because it ignores funds that have been shut down because ofpoor performance (``survivorship bias'').  A trailing zero mayindicate a customer record that was created long ago by the previousversion of the software. The server you selected for your logfile maybe the ``overflow'' server that comes online during peak hours only.And we haven't even mentioned the problems involved with collectingdata in the first place! (A phone survey is inherently biased againstthose who don't have a phone or don't answer it.)  Furthermore,strange biases may exist that nobody is aware of.  (It is notguaranteed that the network administrators will know or understand thealgorithm that the load balancer uses to assign transactions toservers,  particularly if the load balancer itself is ``smart'' andchanges its logic based on traffic patterns.)A relatively safe way to create a sample is to take the whole data set(or as large a chunk of it as possible) and randomly pick some of therecords. The keyword is \emph{randomly}: don't take every tenthrecord; instead, evaluate each record and retain it with a probability of $1/10$. Also make sure that the data set does not contain duplicates.(For instance, to sample customers given their purchases, you mustfirst extract the customer IDs and de-dupe them, then sample from thede-duped IDs. Sampling from the transactions alone will introduce abias toward repeat customers.)\spreadlong{-13pt}Sampling in this way pretty much requires that the data be availableas a file. In contrast, sampling from a database is more difficultbecause, in general, we don't have control (or even full understanding)over how records are sorted internally. We can dump all records tofile and then sample from there, but this is rather awkward and maynot even be feasible for very large tables.A good trick to enable random sampling from databases is to include anadditional column, which \emph{at the time the record is created} isfilled with a random integer between (say) 0 and 99. By selecting onthis column, we can extract a sample consisting of 1~percent of allrecords. This column can even be indexed (although the database enginemay ignore the index if the result set is too large). Even when it isnot possible to add such a column to the actual table, the sametechnique can still be used by adding a cross-reference table thatcontains only the primary key of the table we want to sample from andthe random integer. It is critical that the the random number isassigned at the time the record is created and is never changed orupdated thereafter.Whichever approach you take, you should verify that your samplingprocess does lead to representative samples. (Take two independentsamples and compare their properties.)Sampling can be truly useful---even necessary. Just be very careful.% ============================================================\section{Data File Formats}\index{data!file formats} \index{files!formats} \index{format!file formats} When it comes to file formats for data, my recommendation is to keepit simple, even dead-simple. The simpler the file format, the greaterflexibility you have in terms of the tools you can use on the data.Avoid formats that require a nontrivial parser!My personal favorite is that old standby, the delimiter-separated textfile,\index{text files}\index{delimiter-separated text files} with one record per line and a single data set per file.(Despite the infamous difficulties with the Unix \texttt{make}utility, I nevertheless like tab-delimited files: since numbers don'tcontain tabs, I never need to quote or escape anything; and the tabsmake it easy to visually inspect a file---easier than do commas.)In fairness, delimiter-separated text files do not work well forone-to-many relationships or other situations where each record canhave a varying number of attributes. On the other hand, suchsituations are rare and tend to require special treatment, anyway.One disadvantage of this format is that it does not allow you to keepinformation about the data (``metadata'') within the file itself,except possibly the column names as first row. One solution is to usetwo files---one for the data and one for the metadata---and to adopt aconvenient naming convention (\eg, using the same basename for bothfiles while distinguishing them by the extensions \texttt{.data} and\texttt{.names}).\footnote{This convention is used by many data sets  available from the UCI Machine Learning Repository.}In general, I strongly recommend that you stay with text files andavoid binary files. Text files are portable (despite the annoyingnewline issue), robust, and self-explanatory. They also compressnicely. If you nevertheless decide to use binary files, I suggest thatyou use an established format (for which mature libraries exist!)instead of devising an ad hoc format of your own.I also don't find XML very suitable as a file format for data: \index{XML data file format} theratio of markup to payload is poor which leads to unnecessarilybloated files. XML is also notoriously expensive to parse, inparticular for large files. Finally, the flexibility provided by XMLis rarely necessary for data sets, which typically have a very regularstructure. (It may seem as if XML might be useful for metadata, buteven here I disagree: the value of XML is to make datamachine-readable, whereas the primary consumers of metadata arehumans!)Everything I have said so far assumes that the data files areprimarily for yourself (you don't want to distribute them) and thatyou are willing to read in the entire file sequentially (so that youdon't need to perform seeks within the file). There are file formatsthat allow you to bundle multiple data sets into a single file andefficiently extract parts of them (for example, check out theHierarchical Data Format (HDF) and its variants, such as netCDF), butI have never encountered them in real life. It should not be lost onyou that the statistics and machine-learning communities usedelimiter-separated text almost exclusively as format for data sets ontheir public data repositories. (And if you need indexed lookup, youmay be better off setting up a minimal standalone database foryourself: see the Workshop in Chapter \ref{ch:buzzwords}.)Finally, I should point out that some (scientific) disciplines havetheir own specialized file formats as well as the tools designed tohandle them. Use them when appropriate.% ============================================================\section{The Care and Feeding of Your Data Zoo}\index{data!maintenance} \index{files!maintenance} If you work in the same environment for a while, you are likely todevelop a veritable collection of different data sets.  Notinfrequently, it is this ready access to relevant data sets that makesyou valuable to the organization (quite aside from your morecelebrated skills). On the downside, \emph{maintaining} thatcollection in good order requires a certain amount of effort.My primary advice is make sure that all data sets are\emph{self-explanatory} and \emph{reproducible}. To ensure that a data set is self-explanatory, you should not onlyinclude the minimal metadata with or in the file itself, but include\emph{all} the information necessary to make sense of it. Forinstance, to represent a time series (\ie, a data set of measurementstaken over time at regular intervals), it is strictly necessary tostore only the values, the starting time, and the length of theinterval between data points.  However, it is safer to store the
+
+
+% ============================================================
+\chapter{Working with Data}{}{}
+\label{app:data}
+
+\makeatletter
+\renewcommand\thefigure{C-\@arabic\c@figure}%\thechapter.
+%
+\renewcommand\thetable{C-\@arabic\c@table}%\thechapter.
+\makeatother
+
+
+\index{data analysis!data|(} 
+\index{data|(} 
+
+\Fint{One of the uncomfortable (and easily overlooked) truths of working
+with data is that usually} only a small fraction of the time is spent
+on the actual ``analysis.'' Often a far greater amount of time and
+effort is expended on a variety of tasks that may appear ``menial'' by
+comparison but that are absolutely critical nevertheless: obtaining
+the data; verifying, cleaning and possibly reformatting it; and
+dealing with updates, storage, and archiving.  For someone new to
+working with data (and even, periodically, for someone not so new), it
+typically comes as a surprise that these preparatory tasks are not
+only necessary but also take up as much time as they do.
+
+By their nature, these housekeeping and auxiliary tasks tend to be
+very specific: specific to the data, specific to the environment, and
+specific to the particular question being investigated.  This implies
+that there is little that can be said about them in generality---it
+pretty much all comes down to ad hoc hackery. Of course, this absence
+of recognizable nontrivial techniques is one of the main reasons these
+activities receive as little attention as they do.
+
+That being said, we can try to increase our awareness of such issues
+typically arising in practical situations.\vspace*{-12pt}
+
+% ============================================================
+\section{Sources for Data}
+
+\index{data!sources and availability} 
+
+The two most common sources for data in an enterprise environment are
+\emph{databases} \index{databases!about} and \emph{logfiles}. \index{logfiles} As data sources, the two
+sources tend to address different needs. Databases will contain data related
+to the ``business,'' whereas logfiles are a source for ``operational''
+data: databases answer the question ``what did we sell to whom?''
+whereas logfiles answer the question ``what did we do, and when?''
+
+Databases can be either ``online transaction processing'' (OLTP) or
+``production'' databases, or ``data warehouses'' for long-term
+storage.  Production databases tend to be normalized, fast, and busy.
+You may or may not be able to get read access to them for ad hoc
+queries, depending on company policy.  Data warehouses tend to be
+denormalized, slow, and often accessed through a batch processing
+facility (submit your query tonight and find out tomorrow that you
+omitted a field you needed). Production databases tend to be owned (at
+least in spirit) by the application development teams. Data warehouses
+are invariably owned by the IT department, which implies a different
+culture (see also the discussion in Chapter \ref{ch:business}).  In
+either form, databases tend to provide a stable foundation for data
+needs---provided you are interested in something the company already
+considers part of its ``business.''
+
+In contrast, logfiles are often an important source of data for new
+initiatives. If you want to evaluate a new business idea, chances are
+that the data required for your analysis will not be available in the
+database---not \emph{yet}, since there has never been a reason to
+store it before. In such situations you may still be able to find the
+information you need in logfiles that are regularly produced.
+
+One \emph{very} important distinction is that databases and logfiles
+have different life cycles: making changes to the design of a database
+is always a slow (often, excruciatingly slow) process, but the data
+itself lives in the database forever (if the database is properly
+designed). In contrast, logfiles often contain much more information
+than the database, but they are usually deleted very quickly. If your
+organization keeps logfiles for two weeks, consider yourself lucky!
+
+Therefore, if you want to begin a project using data contained in
+logfiles then you need to move \emph{fast}: start saving all files to
+your desktop or another safe location immediately, \emph{then} figure
+out what you want to do with them! Frequently, you will need several
+weeks' (or months') worth of data for a conclusive analysis, and every
+day that you wait can never be made up. Also keep in mind that
+logfiles are usually generated on production servers to which access
+may be heavily restricted. It is not uncommon to spend \emph{weeks} in
+negotiations with network administrators if you need to move
+significant amounts of data off of production systems.
+
+The same consideration applies if information is not available in the
+logfiles, so that existing code needs to be instrumented to support
+collection of the required data. In this situation, you will likely
+find yourself captive to preexisting release schedules and other
+constraints. Again: start to think about \emph{collecting} data early.
+
+Because databases and logfiles are so common and so directly useful
+sources of data in an enterprise environment, it's easy to forget that
+they're not the only available sources.
+
+A separate data source that sometimes can be extremely useful is the
+company's finance department. Companies are required to report on
+various financial metrics, which means that such information
+\emph{must} be available, although possibly only in a highly
+aggregated form (\eg, quarterly) and possibly quite late.  On other
+hand, this\vadjust{\pagebreak} information is normative and therefore reliable: after all,
+it's what the company is paying taxes on! (I am ignoring the
+possibility that the data provided by the finance department might be
+\emph{wrong}, but don't get me wrong: forensic data analysis is also
+an interesting field of study.)
+
+What works internally may also work with competitors. The quarterly
+filings that publicly listed companies are required to make can make
+interesting reading!
+
+So far we have assumed that you had to find and extract the data you
+need from whatever sources are available; in my experience, this is by
+far the most common scenario. However, your data may also be handed to
+you---for example, if it is experimental data or if it comes from an
+external source. In this case, it may come in a domain-specific file
+format (we'll return to data formats shortly).  The problem with this
+situation is, of course, that now you have no control over what is in
+the data!\vspace*{-9pt}
+
+% ============================================================
+\section{Cleaning and Conditioning}
+
+\index{data!cleaning and conditioning} 
+\index{cleaning and conditioning data} 
+
+Raw data, whether it was obtained from a database query or by parsing
+a logfile, typically needs to be cleaned or conditioned. Here are some 
+areas that often need attention.
+
+\begin{unnumlist}
+\subparagraph{Missing values}
+\item If individual attributes or entire data points \index{missing values} 
+  are missing, we need to decide how to handle them. Should we discard
+  the whole record, mark the information in question as missing, or
+  backfill it in some way?  Your choice will depend strongly on your
+  specific situation and goals.
+
+\subparagraph{Outliers}
+\item In general, you should be extremely careful when \index{outliers} 
+  removing outliers---you may be removing the effect that you are
+  looking for. \emph{Never} should data points be removed silently.
+  (There is a (partly apocryphal) 
+  story\footnote{\url{http://www.nas.nasa.gov/About/Education/Ozone/history.html.}}
+  that the discovery of the hole in the ozone layer over Antarctica
+  was delayed by several years because the automated data gathering
+  system discarded readings that it considered to be ``impossibly
+  low.'')
+
+\subparagraph{Junk}
+\item Data that comes over a network may contain nonprintable
+  characters or similar junk. Such data is not only useless but can
+  also seriously confuse downstream applications that are attempting
+  to process the data (\eg, when nonprintable characters are
+  interpreted as control characters---many programming environments
+  will not issue helpful diagnostics if this happens).  This kind of
+  problem frequently goes unnoticed, because such junk is typically
+  rare and not easily noticed simply by scanning the beginning of a
+  data set.
+  
+\subparagraph{Formatting and normalizing} \index{format!data} \index{normalization!about}
+\item Individual values may not be
+  formatted in the most useful way for subsequent analysis. Examples
+  of frequently used transformations\vadjust{\pagebreak} for this purpose include: forcing
+  upper- or\break lowercase; removing blanks within  strings, or replacing
+  them with dashes; replacing timestamps with Unix Epoch seconds, the
+  Julian day number, or a similar numerical value; replacing numeric
+  codes with string labels, or vice versa; and so on.
+
+\subparagraph{Duplicate records}
+\item Data sets often contain duplicate records \index{duplicate records} 
+  that need to be recognized and removed (``de-duped'').  Depending on
+  what you consider ``duplicate,'' this may require a nontrivial
+  effort.  (I once worked on a project that tried to recognize
+  misspelled postal addresses and assign them to the correctly spelled
+  one.  This also is a form of\break de-duping.)
+
+\subparagraph{Merging data sets} 
+\item The need to merge data sets from different \index{merging data sets} 
+  sources is arises pretty often---for instance, when the data comes
+  from different database instances. Make sure the data is truly
+  compatible, especially if the database instances are geographically
+  dispersed.  Differing time zones are a common trouble spot, but don't
+  overlook things like monetary units.  In addition, you may need to
+  be aware of localization issues, such as font encodings and date
+  formatting.\footnote{Regarding time zones, I used to be a strong
+    proponent of keeping all date/time information in Coordinated Universal Time
+     (UTC, ``Greenwich Time''), always. However, I have
+    since learned that this is not always appropriate: for some
+    information, such as customer behavior, it is the \emph{local}
+    time that matters, not the absolute time. Nevertheless, I would
+    prefer to store such information in two parts: timestamp in UTC
+    \emph{and} in addition, the local time zone of the user.  (Whether
+    we can actually determine the user's time zone accurately is a
+    different matter.)}
+\end{unnumlist}
+
+Reading this list, you should realize that the process of
+\emph{cleaning} data cannot be separated from \emph{analyzing} it.
+For instance: outlier detection and evaluation require some pretty
+deep analysis to be reliable. On the other hand, you may need to
+remove outliers before you can calculate meaningful values for certain
+summary statistics. This is an important insight, which we will make
+time and again: data analysis is an \emph{iterative} process, in which
+each operation is at the same time the result of a previous step and
+the preparation for a subsequent step.
+
+Data files may also be defective in ways that only become apparent
+when subsequent analysis fails or produces nonsensical results. Some
+common problems are:
+
+\begin{unnumlist}
+\subparagraph{Clerical errors}
+\item These are basically data entry errors: 0.01 \index{!clerical errors} 
+  instead of 0.001, values entered in the wrong column, all that.
+  Because most data these days is computer generated, the classic
+  occasional typo seems to be mostly a thing of the past. But watch
+  out for its industrial counterpart: entire data sets that are
+  systematically corrupted. (Once, we didn't realize that a certain
+  string field in the database was of fixed width.  As we went from
+  entries of the form \texttt{ID1}, \texttt{ID2}, and so on to entries
+  like \texttt{ID10}, the last character was silently truncated by the
+  database. It took a long time before we noticed---after all, the
+  results we got back \emph{looked} all right.)\pagebreak
+
+\subparagraph{Numerical ``special'' values}
+\item Missing values \index{missing values} in a data set may
+  be encoded using special numerical values (such as $-1$ or 9999).
+  Unless these values are filtered out, they will obviously corrupt
+  any statistical analysis. There is less of a need for special values
+  like this when data is kept in text files (because you can indicate
+  missing values with a marker such as \texttt{???}), but be aware
+  that it's still an issue when you are dealing with binary files.
+
+\subparagraph{Crazy business rules and overloaded database fields}
+\item Bad schema
+  design can thoroughly wreck your analysis. A pernicious problem is
+  overloaded database fields: fields that change their meaning
+  depending on the values of \emph{other} fields in the database. I
+  remember a case where the \texttt{Quantity} field in a table
+  contained the number of items shipped---unless it was zero---in
+  which case it signaled a discount, a promotion, or an out-of-stock
+  situation depending on whether an entry with the same order ID
+  existed in the \texttt{Discounts}, \texttt{Promotions}, or
+  \texttt{BackOrders} tables---or it contained not the number of items
+  shipped but rather the number of multi-item packages that had been
+  shipped (if the \texttt{IsMulti} flag was set), or it contained the
+  ID (!)  of the return order associated with this line item (if some
+  other flag was set).  What made the situation so treacherous was
+  that running a query such as \texttt{select avg(Quantity) from
+    \dots} would produce a number that \emph{seemed} sensible even
+  though it was, of course, complete nonsense. What's worse, most
+  people were unaware of this situation because the data was usually
+  accessed only through (massive) stored procedures that took all
+  these crazy business rules into account.
+
+% \item[Blanks masking for columns] This is a tiny problem by
+%   comparison, but it can be annoying and hard to detect. If you are
+%   using whitespace-separated text files, then missing values or blank
+%   strings cannot be recognized and so the values from the following
+%   columns will be substituted instead. (This is an argument for using
+%   comma-separated rather than whitespace-separated, files.)
+\end{unnumlist}
+
+% ============================================================
+\section{Sampling}
+
+\index{data!sampling}
+\index{sampling, data} 
+ 
+When dealing with very large data sets, we can often simplify our
+lives significantly by working with a \emph{sample} instead of the
+full data set---provided the sample is \emph{representative} of the
+whole.  And therein lies the problem.
+
+In practice, sampling often means partitioning the data on some
+property of the data: picking all customers whose names begin with the
+letter ``t,'' for instance, or whose customer ID ends with ``0''; or
+using the logfile from one server only (out of 10); or all
+transactions that occurred today. The problem is that it can be very
+difficult to establish a priori whether these subpopulations are at
+all representative of the entire population. Determining this would
+require an in-depth study on the \emph{whole} population---precisely
+what we wanted to avoid!
+
+Statistical lore is full of (often quite amusing) stories about the
+subtle biases introduced through improper sampling. Choosing all
+customers whose first names end in ``a'' will probably introduce a
+bias toward female customers. Surveying children for the number of
+siblings will overestimate the number of children per household
+because it excludes households without children. A long-term study of
+mutual funds may report overly optimistic average returns on
+investment\vadjust{\pagebreak} because it ignores funds that have been shut down because of
+poor performance (``survivorship bias'').  A trailing zero may
+indicate a customer record that was created long ago by the previous
+version of the software. The server you selected for your logfile may
+be the ``overflow'' server that comes online during peak hours only.
+And we haven't even mentioned the problems involved with collecting
+data in the first place! (A phone survey is inherently biased against
+those who don't have a phone or don't answer it.)  Furthermore,
+strange biases may exist that nobody is aware of.  (It is not
+guaranteed that the network administrators will know or understand the
+algorithm that the load balancer uses to assign transactions to
+servers,  particularly if the load balancer itself is ``smart'' and
+changes its logic based on traffic patterns.)
+
+A relatively safe way to create a sample is to take the whole data set
+(or as large a chunk of it as possible) and randomly pick some of the
+records. The keyword is \emph{randomly}: don't take every tenth
+record; instead, evaluate each record and retain it with a probability of 
+$1/10$. Also make sure that the data set does not contain duplicates.
+(For instance, to sample customers given their purchases, you must
+first extract the customer IDs and de-dupe them, then sample from the
+de-duped IDs. Sampling from the transactions alone will introduce a
+bias toward repeat customers.)
+
+\spreadlong{-13pt}
+
+Sampling in this way pretty much requires that the data be available
+as a file. In contrast, sampling from a database is more difficult
+because, in general, we don't have control (or even full understanding)
+over how records are sorted internally. We can dump all records to
+file and then sample from there, but this is rather awkward and may
+not even be feasible for very large tables.
+
+A good trick to enable random sampling from databases is to include an
+additional column, which \emph{at the time the record is created} is
+filled with a random integer between (say) 0 and 99. By selecting on
+this column, we can extract a sample consisting of 1~percent of all
+records. This column can even be indexed (although the database engine
+may ignore the index if the result set is too large). Even when it is
+not possible to add such a column to the actual table, the same
+technique can still be used by adding a cross-reference table that
+contains only the primary key of the table we want to sample from and
+the random integer. It is critical that the the random number is
+assigned at the time the record is created and is never changed or
+updated thereafter.
+
+Whichever approach you take, you should verify that your sampling
+process does lead to representative samples. (Take two independent
+samples and compare their properties.)
+
+Sampling can be truly useful---even necessary. Just be very careful.
+
+% ============================================================
+\section{Data File Formats}
+
+\index{data!file formats} 
+\index{files!formats} 
+\index{format!file formats} 
+
+When it comes to file formats for data, my recommendation is to keep
+it simple, even dead-simple. The simpler the file format, the greater
+flexibility you have in terms of the tools you can use on the data.
+Avoid formats that require a nontrivial parser!
+
+My personal favorite is that old standby, the delimiter-separated text
+file,\index{text files}\index{delimiter-separated text files} with one record per line and a single data set per file.
+(Despite the infamous difficulties with the Unix \texttt{make}
+utility, I nevertheless like tab-delimited files: since numbers don't
+contain tabs, I never need to quote or escape anything; and the tabs
+make it easy to visually inspect a file---easier than do commas.)
+In fairness, delimiter-separated text files do not work well for
+one-to-many relationships or other situations where each record can
+have a varying number of attributes. On the other hand, such
+situations are rare and tend to require special treatment, anyway.
+
+One disadvantage of this format is that it does not allow you to keep
+information about the data (``metadata'') within the file itself,
+except possibly the column names as first row. One solution is to use
+two files---one for the data and one for the metadata---and to adopt a
+convenient naming convention (\eg, using the same basename for both
+files while distinguishing them by the extensions \texttt{.data} and
+\texttt{.names}).\footnote{This convention is used by many data sets
+  available from the UCI Machine Learning Repository.}
+
+In general, I strongly recommend that you stay with text files and
+avoid binary files. Text files are portable (despite the annoying
+newline issue), robust, and self-explanatory. They also compress
+nicely. If you nevertheless decide to use binary files, I suggest that
+you use an established format (for which mature libraries exist!)
+instead of devising an ad hoc format of your own.
+
+I also don't find XML very suitable as a file format for data: \index{XML data file format} the
+ratio of markup to payload is poor which leads to unnecessarily
+bloated files. XML is also notoriously expensive to parse, in
+particular for large files. Finally, the flexibility provided by XML
+is rarely necessary for data sets, which typically have a very regular
+structure. (It may seem as if XML might be useful for metadata, but
+even here I disagree: the value of XML is to make data
+machine-readable, whereas the primary consumers of metadata are
+humans!)
+
+Everything I have said so far assumes that the data files are
+primarily for yourself (you don't want to distribute them) and that
+you are willing to read in the entire file sequentially (so that you
+don't need to perform seeks within the file). There are file formats
+that allow you to bundle multiple data sets into a single file and
+efficiently extract parts of them (for example, check out the
+Hierarchical Data Format (HDF) and its variants, such as netCDF), but
+I have never encountered them in real life. It should not be lost on
+you that the statistics and machine-learning communities use
+delimiter-separated text almost exclusively as format for data sets on
+their public data repositories. (And if you need indexed lookup, you
+may be better off setting up a minimal standalone database for
+yourself: see the Workshop in Chapter \ref{ch:buzzwords}.)
+
+Finally, I should point out that some (scientific) disciplines have
+their own specialized file formats as well as the tools designed to
+handle them. Use them when appropriate.
+
+% ============================================================
+\section{The Care and Feeding of Your Data Zoo}
+
+\index{data!maintenance} 
+\index{files!maintenance} 
+
+If you work in the same environment for a while, you are likely to
+develop a veritable collection of different data sets.  Not
+infrequently, it is this ready access to relevant data sets that makes
+you valuable to the organization (quite aside from your more
+celebrated skills). On the downside, \emph{maintaining} that
+collection in good order requires a certain amount of effort.
+
+My primary advice is make sure that all data sets are
+\emph{self-explanatory} and \emph{reproducible}. 
+
+To ensure that a data set is self-explanatory, you should not only
+include the minimal metadata with or in the file itself, but include
+\emph{all} the information necessary to make sense of it. For
+instance, to represent a time series (\ie, a data set of measurements
+taken over time at regular intervals), it is strictly necessary to
+store only the values, the starting time, and the length of the
+interval between data points.  However, it is safer to store the
 corresponding timestamp with each measured value---this way, the data
 set still makes sense even if the metadata has been lost or garbled.
 Similar considerations apply more generally: I tend to be fairly
@@ -7,4 +445,388 @@ generous when it comes to including information that might seem
 
 To keep data reproducible, you should keep track of its source
 \emph{and} the cleaning and conditioning transformations.  This can be
-tedious because so much of the latter consists of ad hoc, manualoperations. I usually keep logs with my data sets to record the URLs(if the data came from the Web) or the database queries. I alsocapture the commands and pipelines issued at the shell prompt and keepcopies of all transformation scripts.  Finally, if I combine data frommultiple sources into a single data set, I always retain the originaldata sets.This kind of housekeeping is very important: not only to produce anaudit trail (should it ever be needed) but also because data setstend to be reused again and again and for different purposes.  Beingable to determine \emph{exactly} what is in the data is crucial.I have not found many opportunities to automate these processes; thetasks just vary too much. The one exception is the automated scheduledcollection and archiving of volatile data (\eg, copying logfiles to asafe location). Your needs may be different.Finally, here are three pieces of advice on the physical handling ofdata files. They should be obvious but aren't necessarily.\begin{unnumlist}\subparagraph{Keep data files readily available} \item Being able to run a minimal  script on a file residing on a local drive to come up with an answer  in seconds (compared to the 12--24 hour turnaround typical of may  data warehouse installations) is a huge enabler.\subparagraph{Compress your data files} \item I remember a group of statisticians \index{compression, data files}   who constantly complained about the lack of disk space and kept  requesting more\vadjust{\pagebreak} storage. None of them used compression or had even  heard of it. And all their data sets were kept in a textlike format  that could be compressed by 90 percent! (Also keep in mind that  \texttt{gzip} can read from and write to a pipe, so that the  uncompressed file never needs to exist on disk.)\subparagraph{Have a backup strategy}\item  This is important especially if all of \index{backups, data files}   your data resides only on your local workstation. At the very least,  get a second drive and mirror files to it. Of course, a remote (and,  ideally, managed) storage location is much better. Keep in mind that  data sets can easily become large, so you might want to sit down  with your network administrators early in the process so that your  storage needs can be budgeted appropriately.\end{unnumlist}% ============================================================\section{Skills}\index{data!skills} I hope that I've convinced you that obtaining, preparing, andtransforming data makes up~a large part of day-to-day activities whenworking with data. To be effective in this role, I recommend youacquire and develop some skills that facilitate these aspects of\break yourrole.For the most part, these skills come down to easy, ad hoc programming.If you come from  software development, you will hardly find anythingnew here. But if you come from a scientific (or academic) background,you might want to broaden your expertise a little.A special consideration is due to those who come to ``data analysis''from a database-centric, SQL programming point of view. If thisdescribes your situation, I \emph{strongly} encourage you to pick up alanguage besides SQL. SQL is simply too restricted in what it can doand therefore limits the kinds of problems you will choose totackle---whether you realize it or not!  It's also a good idea to dothe majority of your work ``offline'' so that there is less of a tollon the database (which is, after all, usually a shared resource).\begin{unnumlist}\subparagraph{Learn a scripting language}\item A scripting language such as\index{software!skills}\index{scripting languages} Perl, Python, or Ruby is required for easy manipulation of data files.Knowledge of a ``large-scale'' programming language likeC/C++/Java/C\# is \emph{not} sufficient.  Scripting languageseliminate the overhead (``boilerplate code'') typically associatedwith common tasks such as input/output and file or string handling.This is important because most data transformation tasks are tiny andtherefore the typical cost of overhead, relative to the overallprogramming task, is simply not acceptable.\vspace*{6pt}Note that R (the statistics package) can do double duty as a scriptinglanguage for these purposes.\subparagraph{Master regular expressions}\item If you are dealing with \index{regular expressions} strings (or stringlike objects, such as timestamps), then regularexpressions are the solution (and an amazingly powerful solution) toproblems you didn't even realize you had! You don't need to developintimate familiarity with the whole regular expression bestiary, butworking knowledge of the basics is required.\pagebreak\subparagraph{Be comfortable browsing a database} \item Pick a graphical \index{databases!browsing} database frontend\footnote{The SQuirreL project  (\url{http://squirrel-sql.sourceforge.net}) is a good choice. Free,  open source, and mature, it is also written in Java---which means  that it can run anywhere and connect to any database for which JDBC  drivers exist.} and become proficient with it. You should be able tofigure out the schema of a database and the semantics of the datasimply by browsing the tables and their values, requiring only minimalhelp.\subparagraph{Develop a good relationship with your system administrator  and DBA}\item System administrators and DBAs are in the position to makeyour life significantly easier (by granting you access, creatingaccounts, saving files, providing storage, running jobs for you,\dots). However, they were not hired to do that---to the contrary,they are paid to ``keep the trains on time.'' A rogue (and possiblyclueless or oblivious) data analyst, running huge batch jobs duringthe busiest time of the day, does \emph{not} help with that task!\vspace*{6pt}I would like to encourage you to take an interest in the situation ofyour system administrators: try to understand their position and theconstraints they have to work under. System administrators tend to beparanoid---that's what they're paid for! Their biggest fear is that\emph{something} will upset the system. If you can convince them thatyou do not pose a great risk, you will probably find them to beincredibly helpful.\vspace*{6pt}(Finally, I tend to adopt the attitude that any production job bydefault has higher priority than the research and analysis I amworking on, and therefore I better be patient.)\subparagraph{Work on Unix}\item I mean it. Unix was developed for\index{Unix}\index{Linux}\index{Mac OS X}  \emph{precisely} this kind of ad hoc programming with files and data,and it continues to provide the most liberating environment for suchwork.\vspace*{6pt}Unix (and its variants, including Linux and Mac OS X) has some obvioustechnical advantages, but its most important property in the presentcontext is that it \emph{encourages you to devise solutions}. It doesnot try (or pretend) to do the job for you, but it goes out of its wayto give you tools that you might find handy---without prescribing howor for what you use them. In contrast, other operating systems tend toencourage you to stay within the boundaries of certain familiaractivity patterns---which does \emph{not} encourage the development ofyour problem-solving abilities (or, more importantly, yourproblem-solving \emph{attitudes}).\vspace*{6pt}True story: I needed to send a file containing several millions ofkeys to a coworker. (The company did not work on Unix.) Since the filewas too large to fit safely into an email message, I posted it to aweb server on my desktop and sent my coworker the link. (I dutifullyhad provided the file with the extension \texttt{.txt}, so that hewould be able to open it.) Five minutes later, he calls me back: ``Ican't open that''---``What do you mean?''---``Well, I click the link,but ScrapPaper\vadjust{\pagebreak} [the default text editor for small text files on thisparticular system] dies because the file is too big.''  This  coworkerwas not inept (in fact, he was quite good at his primary job), but hedisplayed the particular non-problem-solving attitude that develops inpredefined work environments: ``link, click.'' It did not even occurto him to think of something else to try. That's a problem!\vspace*{6pt}If you want to be successful working with data, you want to work in anenvironment that encourages you to devise your own solutions.\vspace*{6pt}You want to work on Unix.\end{unnumlist}  \vspace*{-6pt}% ============================================================\section{Terminology}\index{data!terminology and data types} When working with data, there is some terminology that is frequentlyused.\vspace*{-6pt}\subsection{Types of Data}We can distinguish different types of data. The most importantdistinction is the one between \emph{numerical} and nonnumerical or\emph{categorical} data. Numerical data \index{numerical data!about} is the most convenient to handle because it allows usto perform arbitrary calculations. (In other words, we can calculatequantities like the mean.) Numerical data can be \emph{continuous}(taking on all values) or \emph{discrete} (taking on only a discreteset of values). It is often necessary to discretize or \emph{bin}continuous data.You will sometimes find numerical data subdivided further into\emph{interval} and \emph{ratio} data. Interval data is data that doesnot have a proper origin, whereas ratio data does. Examples ofinterval data (without proper origin) are calendar dates andtemperatures in units of Fahrenheit or Celsius. You can subtract suchdata to form \emph{intervals} (there are 7 days between 01 April 09 and07 April 09) but you cannot form ratios: it does not make sense to saythat 60 Celsius is ``twice as hot'' as 30 Celsius.  In contrast,quantities like length or weight measurements are ratio data: 0kilograms truly means ``no mass,'' and 0 centimeters truly means ``nolength.''  For ratio data, it makes sense to say that a mass of 2kilograms is ``twice as heavy'' as a mass of 1 kilogram.% For such an argument to be valid, 0 Celsius would have to% correspond to ``no temperature'', which is not the case. The distinction between ratio and interval data is not very importantin practice, because interval data occurs rarely (I can think of noexamples other than the two just  mentioned) and can always beavoided through better encoding. The data is numeric by construction,so a zero must exist; hence an encoding can be found that measuresmagnitudes from this origin (the Kelvin scale for temperatures doesexactly that).All nonnumerical data is categorical---in practice, you will usually\index{nonnumerical data}\index{categorical data!about} find categorical data encoded as strings.  Categorical data is lesspowerful than numerical data because there are fewer things we can dowith it. Pretty much the only available operation is counting howoften each value occurs.Categorical data can be subdivided into \emph{nominal} \index{nominal data} and\emph{ordinal} data. \index{ordinal data} The difference is that for ordinal data, anatural sort order\vadjust{\pagebreak} between values exists, whereas for nominal data nosuch sort order exists. An example for ordinal (sortable) data is adata set consisting of values like \texttt{Like}, \texttt{Dislike},\texttt{Don't Care}, which have a clear sort order (namely,\texttt{Like} $>$ \texttt{Don't Care} $>$ \texttt{Dislike}). Incontrast, the colors \texttt{Red}, \texttt{Blue}, \texttt{Green} whenused to describe (say) a sweater are nominal, because there is nonatural order in which to arrange these values.Sortability is an important property because it implies that the datais ``almost'' numerical.  If categorical data is sortable then it canbe mapped to a set of numbers, which are more convenient to handle.For example, we can map \texttt{Like}, \texttt{Dislike}, \texttt{Don't  Care} to the numbers $1$, $-1$, and $0$, which allows us tocalculate an average value after all! However, there is no such thingas the ``average color'' of all sweaters that were sold.Another property I look for determines whether data is ``mixable.''Can I combine arbitrary multiples of data points to construct a newdata point?  For data to be mixable in this way, it is not enough tobe able to \emph{combine} data points (\eg, concatenating two strings)I must also be able to combine \emph{arbitrary} multiples of all datapoints.  If I can do this, then I can construct a \emph{new} data pointthat lies, for example, ``halfway'' between the original ones, likeso: $x/2 + y/2$. Being able to construct new data points in this waycan speed up certain algorithms (see Chapter \ref{ch:clustering} forsome applications).When data is mixable it is similar to points in space, and a lot ofgeometric intuition can be brought to bear.  (Technically, the dataforms a vector space over the real numbers.)\subsection{The Data Type Depends on the Semantics}It is extremely important to realize that \emph{the type of the data  is determined by the semantics of the data}. The data type is\emph{not} inherent in the data---it only arises from its\emph{context}.Postal codes are a good example: although a postal code like\texttt{98101} may \emph{look} like a number, it does not\emph{behave} like a number. It just does not make sense to add twopostal codes together or to form the average of a bunch of postalcodes! Similarly, the colors \texttt{Red}, \texttt{Yellow},\texttt{Green} may be either nominal (if they refer to the colors of asweater) or ordinal (if they are status indicators, in which case theyobey a sort order akin to that of a traffic light).Whether data is numerical or categorical, sortable or not, depends onits meaning. You can't just look at a data set in isolation todetermine its type. You need to know what the data \emph{means}.Data by itself does not provide information. It is only when we takethe data \emph{together} with its context that defines its semanticsthat data becomes meaningful. (This point is occasionally overlookedby people with an overly formalistic disposition.)\subsection{Types of Data Sets}Data sets can be classified by the number of variables or columns they contain.  Depending on the type of data set, we tend to beinterested in different questions.\begin{unnumlist}\subparagraph{Univariate} \item A data set containing values only for a single \index{univariate data sets}   variable. The weights of all students in a class, for example, form  a univariate data set. For univariate data sets, we usually want to  know how the individual points are distributed: the shape of the  distribution, whether it is symmetric, does it have outliers, and so  on.\subparagraph{Bivariate}\item A data set containing two variables. For such data \index{bivariate data sets}   sets, we are mostly interested in determining whether there is a  relationship between the two quantities. If we had the heights in  addition to the weights, for instance, we would ask whether there is  any discernible relationship between heights and weights (\eg, are  taller students heavier?).\subparagraph{Multivariate}\item If a data set contains more than two variables, \index{multivariate data sets}   then it is considered multivariate. When dealing with multivariate  problems, we typically want to find a smaller group of variables  that still contains most of the information about the data set.\end{unnumlist}Of course, any bivariate or multivariate data set can be\emph{treated} as a univariate one if we consider a single variable ata time. Again, the nature of the data set is not inherent in the databut depends on how we look at it.% ============================================================\section{Further Reading}\begin{itemize}\item \cit{Problem Solving: A Statistician's Guide}{Chris    Chatfield}{2nd ed., Chapman \& Hall/CRC}{1995}  This is a highly informative book about all the messy realities that  are usually \emph{not} mentioned in class: from botched experimental  setups to effective communication with the public. The book is  geared toward professional statisticians, and some of the technical  discussion may be too advanced, but it is worthwhile for the  practicality of its general advice nonetheless.\item \cit{Unix Power Tools}{Shelley Powers, Jerry Peek, Tim O'Reilly,    and Mike Loukides}{3rd ed., O'Reilly}{2002}  The classic book on getting stuff done with Unix.\item \cit{The Art of UNIX Programming}{Eric S.\    Raymond}{Addison-Wesley}{2003}  The Unix philosophy has been expounded many times before but rarely  more eloquently. This is a partisan book, and one need not agree  with every argument the author makes, but some of his observations  on good design and desirable features in a programming environment  are well worth contemplating.\end{itemize}\subsection{Data Set Repositories}Although I assume that you have your own data sets that you would liketo analyze, it's nice to have access to a wider selection of datasets---for instance, when you want to try out and learn a new method.Several data set repositories exist on the Web. These are the onesthat I have found particularly helpful.\begin{itemize}\item {\it The Data and Story Library at statlib.} A smaller collection of  data sets, together with their motivating ``stories,'' intended for  courses in introductory statistics.  (\url{http://lib.stat.cmu.edu/DASL})\item {\it Data Archive at the Journal of Statistics Education.} A large  collection of often uncommonly interesting data sets. In addition to  the data sets, the site provides links to the full text of the  articles in which these data sets were analyzed and discussed.  (\url{http://www.amstat.org/publications/jse}---then select ``Data  Archive'' in the navigation bar)\item {\it UCI Machine Learning Repository.} A large collection of data  sets, mostly suitable for classification tasks.  (\url{http://archive.ics.uci.edu/ml/})\item {\it Time Series Data Library.} An extensive collection of times  series data. Unfortunately, many of the data sets are   poorly documented. (\url{http://robjhyndman.com/TSDL/})\item {\it Frequent Itemset Mining Dataset Repository.} A specialized   repository with data sets for methods to find frequent item sets.  (\url{http://fimi.cs.helsinki.fi/data/})\item {\it UCINET IV Datasets.} Another specialized collection: this one  includes data sets with information about social networks.  (\url{http://vlado.fmf.uni-lj.si/pub/networks/data/Ucinet/UciData.htm})\item \cit{A Handbook of Small Data Sets}{David J.\ Hand, Fergus Daly,    K.\ McConway, D.\ Lunn, and E. Ostrowski}{Chapman \& Hall/CRC}{1993}  This is a rather curious resource: a book containing over 500  individual data sets (with descriptions) from all walks of life.  Most of the data sets are ``small,'' containing from a handful to a  few hundred points. The data sets themselves can be found all over  the Web, but only the book gives you the descriptions as well.\end{itemize}\index{data analysis!data|)} \index{data|)} 
+tedious because so much of the latter consists of ad hoc, manual
+operations. I usually keep logs with my data sets to record the URLs
+(if the data came from the Web) or the database queries. I also
+capture the commands and pipelines issued at the shell prompt and keep
+copies of all transformation scripts.  Finally, if I combine data from
+multiple sources into a single data set, I always retain the original
+data sets.
+
+This kind of housekeeping is very important: not only to produce an
+audit trail (should it ever be needed) but also because data sets
+tend to be reused again and again and for different purposes.  Being
+able to determine \emph{exactly} what is in the data is crucial.
+
+I have not found many opportunities to automate these processes; the
+tasks just vary too much. The one exception is the automated scheduled
+collection and archiving of volatile data (\eg, copying logfiles to a
+safe location). Your needs may be different.
+
+Finally, here are three pieces of advice on the physical handling of
+data files. They should be obvious but aren't necessarily.
+\begin{unnumlist}
+\subparagraph{Keep data files readily available} 
+\item Being able to run a minimal
+  script on a file residing on a local drive to come up with an answer
+  in seconds (compared to the 12--24 hour turnaround typical of may
+  data warehouse installations) is a huge enabler.
+
+\subparagraph{Compress your data files} 
+\item I remember a group of statisticians \index{compression, data files} 
+  who constantly complained about the lack of disk space and kept
+  requesting more\vadjust{\pagebreak} storage. None of them used compression or had even
+  heard of it. And all their data sets were kept in a textlike format
+  that could be compressed by 90 percent! (Also keep in mind that
+  \texttt{gzip} can read from and write to a pipe, so that the
+  uncompressed file never needs to exist on disk.)
+
+\subparagraph{Have a backup strategy}
+\item  This is important especially if all of \index{backups, data files} 
+  your data resides only on your local workstation. At the very least,
+  get a second drive and mirror files to it. Of course, a remote (and,
+  ideally, managed) storage location is much better. Keep in mind that
+  data sets can easily become large, so you might want to sit down
+  with your network administrators early in the process so that your
+  storage needs can be budgeted appropriately.
+\end{unnumlist}
+
+% ============================================================
+\section{Skills}
+
+\index{data!skills} 
+
+I hope that I've convinced you that obtaining, preparing, and
+transforming data makes up~a large part of day-to-day activities when
+working with data. To be effective in this role, I recommend you
+acquire and develop some skills that facilitate these aspects of\break your
+role.
+
+For the most part, these skills come down to easy, ad hoc programming.
+If you come from  software development, you will hardly find anything
+new here. But if you come from a scientific (or academic) background,
+you might want to broaden your expertise a little.
+
+A special consideration is due to those who come to ``data analysis''
+from a database-centric, SQL programming point of view. If this
+describes your situation, I \emph{strongly} encourage you to pick up a
+language besides SQL. SQL is simply too restricted in what it can do
+and therefore limits the kinds of problems you will choose to
+tackle---whether you realize it or not!  It's also a good idea to do
+the majority of your work ``offline'' so that there is less of a toll
+on the database (which is, after all, usually a shared resource).
+\begin{unnumlist}
+\subparagraph{Learn a scripting language}
+\item A scripting language such as\index{software!skills}\index{scripting languages} 
+Perl, Python, or Ruby is required for easy manipulation of data files.
+Knowledge of a ``large-scale'' programming language like
+C/C++/Java/C\# is \emph{not} sufficient.  Scripting languages
+eliminate the overhead (``boilerplate code'') typically associated
+with common tasks such as input/output and file or string handling.
+This is important because most data transformation tasks are tiny and
+therefore the typical cost of overhead, relative to the overall
+programming task, is simply not acceptable.\vspace*{6pt}
+
+Note that R (the statistics package) can do double duty as a scripting
+language for these purposes.
+
+\subparagraph{Master regular expressions}
+\item If you are dealing with \index{regular expressions} 
+strings (or stringlike objects, such as timestamps), then regular
+expressions are the solution (and an amazingly powerful solution) to
+problems you didn't even realize you had! You don't need to develop
+intimate familiarity with the whole regular expression bestiary, but
+working knowledge of the basics is required.\pagebreak
+
+\subparagraph{Be comfortable browsing a database} \item Pick a graphical \index{databases!browsing} 
+database frontend\footnote{The SQuirreL project
+  (\url{http://squirrel-sql.sourceforge.net}) is a good choice. Free,
+  open source, and mature, it is also written in Java---which means
+  that it can run anywhere and connect to any database for which JDBC
+  drivers exist.} and become proficient with it. You should be able to
+figure out the schema of a database and the semantics of the data
+simply by browsing the tables and their values, requiring only minimal
+help.
+
+\subparagraph{Develop a good relationship with your system administrator
+  and DBA}
+\item System administrators and DBAs are in the position to make
+your life significantly easier (by granting you access, creating
+accounts, saving files, providing storage, running jobs for you,
+\dots). However, they were not hired to do that---to the contrary,
+they are paid to ``keep the trains on time.'' A rogue (and possibly
+clueless or oblivious) data analyst, running huge batch jobs during
+the busiest time of the day, does \emph{not} help with that task!\vspace*{6pt}
+
+I would like to encourage you to take an interest in the situation of
+your system administrators: try to understand their position and the
+constraints they have to work under. System administrators tend to be
+paranoid---that's what they're paid for! Their biggest fear is that
+\emph{something} will upset the system. If you can convince them that
+you do not pose a great risk, you will probably find them to be
+incredibly helpful.\vspace*{6pt}
+
+(Finally, I tend to adopt the attitude that any production job by
+default has higher priority than the research and analysis I am
+working on, and therefore I better be patient.)
+
+\subparagraph{Work on Unix}
+\item I mean it. Unix was developed for\index{Unix}\index{Linux}\index{Mac OS X}  
+\emph{precisely} this kind of ad hoc programming with files and data,
+and it continues to provide the most liberating environment for such
+work.\vspace*{6pt}
+
+
+Unix (and its variants, including Linux and Mac OS X) has some obvious
+technical advantages, but its most important property in the present
+context is that it \emph{encourages you to devise solutions}. It does
+not try (or pretend) to do the job for you, but it goes out of its way
+to give you tools that you might find handy---without prescribing how
+or for what you use them. In contrast, other operating systems tend to
+encourage you to stay within the boundaries of certain familiar
+activity patterns---which does \emph{not} encourage the development of
+your problem-solving abilities (or, more importantly, your
+problem-solving \emph{attitudes}).\vspace*{6pt}
+
+True story: I needed to send a file containing several millions of
+keys to a coworker. (The company did not work on Unix.) Since the file
+was too large to fit safely into an email message, I posted it to a
+web server on my desktop and sent my coworker the link. (I dutifully
+had provided the file with the extension \texttt{.txt}, so that he
+would be able to open it.) Five minutes later, he calls me back: ``I
+can't open that''---``What do you mean?''---``Well, I click the link,
+but ScrapPaper\vadjust{\pagebreak} [the default text editor for small text files on this
+particular system] dies because the file is too big.''  This  coworker
+was not inept (in fact, he was quite good at his primary job), but he
+displayed the particular non-problem-solving attitude that develops in
+predefined work environments: ``link, click.'' It did not even occur
+to him to think of something else to try. That's a problem!\vspace*{6pt}
+
+If you want to be successful working with data, you want to work in an
+environment that encourages you to devise your own solutions.\vspace*{6pt}
+
+You want to work on Unix.
+\end{unnumlist}  
+
+\vspace*{-6pt}
+% ============================================================
+\section{Terminology}
+
+\index{data!terminology and data types} 
+
+When working with data, there is some terminology that is frequently
+used.
+
+\vspace*{-6pt}
+\subsection{Types of Data}
+
+We can distinguish different types of data. The most important
+distinction is the one between \emph{numerical} and nonnumerical or
+\emph{categorical} data. 
+
+Numerical data \index{numerical data!about} is the most convenient to handle because it allows us
+to perform arbitrary calculations. (In other words, we can calculate
+quantities like the mean.) Numerical data can be \emph{continuous}
+(taking on all values) or \emph{discrete} (taking on only a discrete
+set of values). It is often necessary to discretize or \emph{bin}
+continuous data.
+
+You will sometimes find numerical data subdivided further into
+\emph{interval} and \emph{ratio} data. Interval data is data that does
+not have a proper origin, whereas ratio data does. Examples of
+interval data (without proper origin) are calendar dates and
+temperatures in units of Fahrenheit or Celsius. You can subtract such
+data to form \emph{intervals} (there are 7 days between 01 April 09 and
+07 April 09) but you cannot form ratios: it does not make sense to say
+that 60 Celsius is ``twice as hot'' as 30 Celsius.  In contrast,
+quantities like length or weight measurements are ratio data: 0
+kilograms truly means ``no mass,'' and 0 centimeters truly means ``no
+length.''  For ratio data, it makes sense to say that a mass of 2
+kilograms is ``twice as heavy'' as a mass of 1 kilogram.
+
+% For such an argument to be valid, 0 Celsius would have to
+% correspond to ``no temperature'', which is not the case. 
+
+The distinction between ratio and interval data is not very important
+in practice, because interval data occurs rarely (I can think of no
+examples other than the two just  mentioned) and can always be
+avoided through better encoding. The data is numeric by construction,
+so a zero must exist; hence an encoding can be found that measures
+magnitudes from this origin (the Kelvin scale for temperatures does
+exactly that).
+
+All nonnumerical data is categorical---in practice, you will usually\index{nonnumerical data}\index{categorical data!about} 
+find categorical data encoded as strings.  Categorical data is less
+powerful than numerical data because there are fewer things we can do
+with it. Pretty much the only available operation is counting how
+often each value occurs.
+
+Categorical data can be subdivided into \emph{nominal} \index{nominal data} and
+\emph{ordinal} data. \index{ordinal data} The difference is that for ordinal data, a
+natural sort order\vadjust{\pagebreak} between values exists, whereas for nominal data no
+such sort order exists. An example for ordinal (sortable) data is a
+data set consisting of values like \texttt{Like}, \texttt{Dislike},
+\texttt{Don't Care}, which have a clear sort order (namely,
+\texttt{Like} $>$ \texttt{Don't Care} $>$ \texttt{Dislike}). In
+contrast, the colors \texttt{Red}, \texttt{Blue}, \texttt{Green} when
+used to describe (say) a sweater are nominal, because there is no
+natural order in which to arrange these values.
+
+Sortability is an important property because it implies that the data
+is ``almost'' numerical.  If categorical data is sortable then it can
+be mapped to a set of numbers, which are more convenient to handle.
+For example, we can map \texttt{Like}, \texttt{Dislike}, \texttt{Don't
+  Care} to the numbers $1$, $-1$, and $0$, which allows us to
+calculate an average value after all! However, there is no such thing
+as the ``average color'' of all sweaters that were sold.
+
+Another property I look for determines whether data is ``mixable.''
+Can I combine arbitrary multiples of data points to construct a new
+data point?  For data to be mixable in this way, it is not enough to
+be able to \emph{combine} data points (\eg, concatenating two strings)
+I must also be able to combine \emph{arbitrary} multiples of all data
+points.  If I can do this, then I can construct a \emph{new} data point
+that lies, for example, ``halfway'' between the original ones, like
+so: $x/2 + y/2$. Being able to construct new data points in this way
+can speed up certain algorithms (see Chapter \ref{ch:clustering} for
+some applications).
+
+When data is mixable it is similar to points in space, and a lot of
+geometric intuition can be brought to bear.  (Technically, the data
+forms a vector space over the real numbers.)
+
+
+\subsection{The Data Type Depends on the Semantics}
+
+It is extremely important to realize that \emph{the type of the data
+  is determined by the semantics of the data}. The data type is
+\emph{not} inherent in the data---it only arises from its
+\emph{context}.
+
+Postal codes are a good example: although a postal code like
+\texttt{98101} may \emph{look} like a number, it does not
+\emph{behave} like a number. It just does not make sense to add two
+postal codes together or to form the average of a bunch of postal
+codes! Similarly, the colors \texttt{Red}, \texttt{Yellow},
+\texttt{Green} may be either nominal (if they refer to the colors of a
+sweater) or ordinal (if they are status indicators, in which case they
+obey a sort order akin to that of a traffic light).
+
+Whether data is numerical or categorical, sortable or not, depends on
+its meaning. You can't just look at a data set in isolation to
+determine its type. You need to know what the data \emph{means}.
+
+Data by itself does not provide information. It is only when we take
+the data \emph{together} with its context that defines its semantics
+that data becomes meaningful. (This point is occasionally overlooked
+by people with an overly formalistic disposition.)
+
+\subsection{Types of Data Sets}
+
+Data sets can be classified by the number of variables or columns 
+they contain.  Depending on the type of data set, we tend to be
+interested in different questions.
+
+\begin{unnumlist}
+\subparagraph{Univariate} 
+\item A data set containing values only for a single \index{univariate data sets} 
+  variable. The weights of all students in a class, for example, form
+  a univariate data set. For univariate data sets, we usually want to
+  know how the individual points are distributed: the shape of the
+  distribution, whether it is symmetric, does it have outliers, and so
+  on.
+\subparagraph{Bivariate}
+\item A data set containing two variables. For such data \index{bivariate data sets} 
+  sets, we are mostly interested in determining whether there is a
+  relationship between the two quantities. If we had the heights in
+  addition to the weights, for instance, we would ask whether there is
+  any discernible relationship between heights and weights (\eg, are
+  taller students heavier?).
+\subparagraph{Multivariate}
+\item If a data set contains more than two variables, \index{multivariate data sets} 
+  then it is considered multivariate. When dealing with multivariate
+  problems, we typically want to find a smaller group of variables
+  that still contains most of the information about the data set.
+\end{unnumlist}
+
+Of course, any bivariate or multivariate data set can be
+\emph{treated} as a univariate one if we consider a single variable at
+a time. Again, the nature of the data set is not inherent in the data
+but depends on how we look at it.
+
+
+% ============================================================
+\section{Further Reading}
+
+\begin{itemize}
+\item \cit{Problem Solving: A Statistician's Guide}{Chris
+    Chatfield}{2nd ed., Chapman \& Hall/CRC}{1995}
+  This is a highly informative book about all the messy realities that
+  are usually \emph{not} mentioned in class: from botched experimental
+  setups to effective communication with the public. The book is
+  geared toward professional statisticians, and some of the technical
+  discussion may be too advanced, but it is worthwhile for the
+  practicality of its general advice nonetheless.
+
+\item \cit{Unix Power Tools}{Shelley Powers, Jerry Peek, Tim O'Reilly,
+    and Mike Loukides}{3rd ed., O'Reilly}{2002}
+  The classic book on getting stuff done with Unix.
+
+\item \cit{The Art of UNIX Programming}{Eric S.\
+    Raymond}{Addison-Wesley}{2003}
+  The Unix philosophy has been expounded many times before but rarely
+  more eloquently. This is a partisan book, and one need not agree
+  with every argument the author makes, but some of his observations
+  on good design and desirable features in a programming environment
+  are well worth contemplating.
+\end{itemize}
+
+\subsection{Data Set Repositories}
+
+Although I assume that you have your own data sets that you would like
+to analyze, it's nice to have access to a wider selection of data
+sets---for instance, when you want to try out and learn a new method.
+
+Several data set repositories exist on the Web. These are the ones
+that I have found particularly helpful.
+
+\begin{itemize}
+\item {\it The Data and Story Library at statlib.} A smaller collection of
+  data sets, together with their motivating ``stories,'' intended for
+  courses in introductory statistics.
+  (\url{http://lib.stat.cmu.edu/DASL})
+
+\item {\it Data Archive at the Journal of Statistics Education.} A large
+  collection of often uncommonly interesting data sets. In addition to
+  the data sets, the site provides links to the full text of the
+  articles in which these data sets were analyzed and discussed.
+  (\url{http://www.amstat.org/publications/jse}---then select ``Data
+  Archive'' in the navigation bar)
+
+\item {\it UCI Machine Learning Repository.} A large collection of data
+  sets, mostly suitable for classification tasks.
+  (\url{http://archive.ics.uci.edu/ml/})
+
+\item {\it Time Series Data Library.} An extensive collection of times
+  series data. Unfortunately, many of the data sets are 
+  poorly documented. (\url{http://robjhyndman.com/TSDL/})
+
+\item {\it Frequent Itemset Mining Dataset Repository.} A specialized 
+  repository with data sets for methods to find frequent item sets.
+  (\url{http://fimi.cs.helsinki.fi/data/})
+
+\item {\it UCINET IV Datasets.} Another specialized collection: this one
+  includes data sets with information about social networks.
+  (\url{http://vlado.fmf.uni-lj.si/pub/networks/data/Ucinet/UciData.htm})
+
+\item \cit{A Handbook of Small Data Sets}{David J.\ Hand, Fergus Daly,
+    K.\ McConway, D.\ Lunn, and E. Ostrowski}{Chapman \& Hall/CRC}{1993}
+  This is a rather curious resource: a book containing over 500
+  individual data sets (with descriptions) from all walks of life.
+  Most of the data sets are ``small,'' containing from a handful to a
+  few hundred points. The data sets themselves can be found all over
+  the Web, but only the book gives you the descriptions as well.
+\end{itemize}
+
+\index{data analysis!data|)} 
+\index{data|)} 

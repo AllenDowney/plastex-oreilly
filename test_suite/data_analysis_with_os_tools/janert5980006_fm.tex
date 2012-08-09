@@ -1,1 +1,577 @@
-%\documentclass[draft]{Oreilly5980006}\documentclass{Oreilly5980006}\hoffset-.5in\voffset-.5in\begin{document}\pagenumbering{roman}\pagestyle{blind}%%%%%%%%%%%%%%%%%%%%% Half Title %%%%%%%%%%%%%%%%%%%%%%\def\title#1{\par\vspace*{50pt}{\fontfamily{Akzidenz}\fontsize{22}{26}\selectfont\leftskip0pt plus1fill\noindent#1\par}}%%\title{Data Analysis with Open Source~Tools} \clearpage\\thispagestyle{empty}\\clearpage %%%%%%%%%%%%%%%%%%%%%% Series Page %%%%%%%%%%%%%%%%%%%%%%%%\makeatletter%\def\seheadfont{\fontfamily{Bailey}\fontsize{10}{12}\bfseries\selectfont}%\def\sehead#1{\par\hbox to 8pc{\hfill\seheadfont #1}\par\addvspace{-27pt}}%\def\subhead#1{\par\llap{\seheadfont #1\hskip1pc}\par\addvspace{-18pt}}%\makeatother%%%\vbox to \textheight{\parindent0pt%\linewidth\typewidth\rightskip0pc plus1fill%%\vskip-\headheight\vskip-\headsep\vspace*{59pt}%\noindent{\fontfamily{Bailey}\fontsize{14}{12}\bfseries\selectfont\hspace*{96pt}Other resources from O{'}Reilly}\par\vspace*{-13pt}%\vrule height0.5pt width\typewidth depth0pt\par\vspace*{15pt}%\vbox{\fontfamily{Meridien}\fontsize{9.5}{12}\Medseries\selectfont %\sehead{Related titles}%\hspace*{108pt}\vbox{\hsize21pc\linewidth21pc\rightskip-0pc\columnsep1.5pc%\begin{multicols}{2}%Apache Cookbook${}^{\hbox{\rm\scriptsize TM}}$\\%Apache 2 Pocket Reference\\%Building\,Scalable\,Web\,Sites\\%High Performance MySQL\\[10pt]%High Performance Web\\%\quad Sites\\%Optimizing Oracle\\%\quad Performance\\%Website Optimization %\end{multicols}\vspace*{-18pt}%%\noindent \vrule height0.5pt width21pc depth0pt\par\vspace*{-1pt}%\subhead{oreilly.com}%\noindent {\it oreilly.com} is more than a complete catalog of O'Reilly\break%books. YouÕll also find links to news, events, articles,\break%weblogs, sample chapters, and code examples.\par\vspace*{-5pt}%\noindent \vrule height0.5pt width21pc depth0pt\par\vspace*{3pt}%\llap{\smash{\lower19pt\hbox{\epsfbox{\MasterDir  icon01.eps}\hskip1pc}}}\par\vspace*{-21pt}%\noindent {\it oreillynet.com} is the essential portal for developers interested%in open and emerging technologies, including new platforms,%programming languages, and operating systems.\par\vspace*{-5pt}%\noindent \vrule height0.5pt width21pc depth0pt\par\vspace*{-1pt}%\subhead{Conferences} O'Reilly brings diverse innovators together to nurture the%ideas that spark revolutionary industries. We specialize in%documenting the latest tools and systems, translating the%innovatorÕs knowledge into useful skills for those in the%trenches. Visit {\it conferences.oreilly.com} for our upcoming%events.\par\vspace*{-5pt}%\noindent \vrule height0.5pt width21pc depth0pt\par\vspace*{-1pt}%\llap{\smash{\lower28pt\hbox{\epsfbox{\MasterDir  icon02.eps}\hskip1pc}}}\par\vspace*{-18pt}%Safari Bookshelf (safari.oreilly.com) is the premier online%reference library for programmers and IT professionals.%Conduct searches across more than 1,000 books. Sub-\break scribers%can zero in on answers to time-critical questions%in a matter of seconds. Read the books on your Bookshelf%from cover to cover or simply flip to the page you need.%Try it today for free.}%}}%\clearpage%\end{document} %%%%%%%%%%%%%%%%%%%%% Title Page %%%%%%%%%%%%%%%%%%%%%% \vbox to \vsize{\vskip95pt%\noindent{\fontfamily{Akzidenz}\fontsize{30}{32}\selectfont\leftskip0pt plus1fill Data Analysis with Open~Source Tools\par} \vspace*{125pt}%\hbox to \textwidth{\hss\hbox to \typewidth{\hfill\epsfbox{\MasterDir chair.eps}}}%\vspace*{95pt}\noindent {\fontfamily{Akzidenz}\fontsize{13}{13}\selectfont\raggedleft Philipp K. Janert\par}  \vfill\hbox to \textwidth{\hss\hbox to \typewidth{\hfill\epsfbox{\MasterDir orelly_logo.eps}}}%%\vspace*{-10pt}\par}%\end{document}\clearpage%%%%%%%%%%%%%%%%%%%%% copyright Page %%%%%%%%%%%%%%%%%%%%%% \def\seitem#1#2{\par{\fontfamily{Bailey}\fontsize{8}{14}\bfseries\selectfont#1}\enspace{\fontfamily{Bailey}\fontsize{7.5}{14}\selectfont#2}\par}%\vbox to \vsize{\par\parindent0pt\parsep0pt\makeatletter\setlength\parskip{0\p@}\makeatother\vskip-\headsep\vskip-\headheight\fontsize{7.5}{14}\selectfont\raggedright \noindent {\fontfamily{Bailey}\fontsize{9}{12}\bfseries\selectfont Data Analysis with Open Source Tools}\par\noindent {\fontfamily{Bailey}\fontsize{9}{12}\bookseries\selectfont by Philipp K. Janert}\vspace*{18pt}Copyright \hbox{$\copyright$} 2011 Philipp K. Janert. All rights reserved. Printed in the United States of America.\par\vspace*{6pt}Published by O{'}Reilly Media, Inc. 1005 Gravenstein Highway North, Sebastopol, CA 95472.\par\vspace*{6pt}O{'}Reilly books may be purchased for educational, business, or sales promotional use. Online\pareditions are also available for most titles ({\it http://my.safaribooksonline.com}). For more information,\parcontact our corporate/institutional sales department: (800) 998-9938 or {\it corporate@oreilly.com}.\par\vspace*{6pt}\columnsep1.5pc\begin{multicols}{2}\seitem{Editor:}{Mike Loukides}\seitem{Production Editor:}{Sumita Mukherji}\seitem{Copyeditor:}{Matt Darnell}\seitem{Production Services:}{MPS Limited, a\vspace*{-4pt} Macmillan Company, and Newgen North America, Inc.}\seitem{Indexer:}{Fred Brown}\seitem{Cover Designer:}{Karen Montgomery}\seitem{Interior Designer:}{Edie Freedman\vspace*{-4pt}\break and Ron Bilodeau}\seitem{Illustrator:}{Philipp K. Janert}\end{multicols}\par\noindent{\fontfamily{Bailey}\fontsize{8}{10}\bfseries\selectfont Printing History:}\noindent\hspace*{24pt}{\fontfamily{Bailey}\fontsize{8}{10}\selectfont November 2010: First Edition.}\vspace*{72pt}The O{'}Reilly logo is a registered trademark of O{'}Reilly Media, Inc. {\it Data Analysis with Open Source\par Tools},  the image of a common kite, andrelated trade dress are trademarks of O{'}Reilly Media, Inc.\par\vspace*{6pt} Many of the designations used by manufacturers and sellers to distinguish their products are\par  claimed as trademarks. Where those designations appear in this book, and  O{'}Reilly Media, Inc.\par  was aware of a trademark claim, the designations have been printed in  caps or initial caps.\par\vspace*{6pt}While every precaution has been taken in the preparation of this book, the publisher and author\parassume no responsibility for errors or omissions, or for damages resulting from the use of the\parinformation contained herein.\par\vfill%\noindent {\fontsize{7}{12}\selectfont This book uses RepKover${}^{\hbox{\rm\tiny TM}}$, a durable and flexible lay-flat binding.}\vspace*{-6pt}%\llap{\epsfbox{\MasterDir RepKover.eps}}\vspace*{-5.5pt}\noindent {\fontsize{7}{12}\selectfont ISBN: 978-0-596-80235-6}\vspace*{-2pt}\noindent {\fontsize{7}{12}\selectfont [M]}}\clearpage%\end{document}%%%%%%%%%%%%%%%%%%%%% Dedication Page %%%%%%%%%%%%%%%%%%%%%%\vbox to \textheight{\vskip95pt%\par\parindent0pt \fontsize{10}{12}\selectfont\leftskip0pt plus1fill \rightskip0pt plus1fill{\itshape Furious activity is no substitute for understanding.}\par\hspace*{125pt}---H. H. Williams}\clearpage\\thispagestyle{blind}\\clearpage%\end{document}\pagestyle{headings}%%%%%%%%%%%%%%%%%%%%% Table of Contents %%%%%%%%%%%%%%%%%%%%%%\makeatletter\def\COAfont{\fontfamily{Bailey}\fontsize{15}{17}\bookseries\selectfont\raggedleft}%\def\@makeschapterhead#1{\def\spreadoutfactor{3}%  \vbox to 90pt{\vskip28pt\vskip-\headheight\vskip\headsep\vskip-\topskip\vskip-26pt\parindent\z@ {\uppercase{\COAfont \spreadout{ #1}\hspace*{-3pt}}\par}%    \vfill   }}\makeatother\makeatletter\setcounter{tocdepth}{2}%\newdimen\secdim\newdimen\subsecdim\def\secmax#1{\setbox\tempbox\hbox{\fontfamily{Bailey}\fontsize{9}{11}\bfseries\selectfont#1\hskip1em}%\secdim\wd\tempbox\subsecdim\wd\tempbox%\advance\subsecdim1pc}\secmax{11}%%\def\numberline#1{\hb@xt@\@tempdima{#1\hfil}}\def\@@@@numberline#1{\llap{\hbox to \secdim{\fontfamily{Bailey}\fontsize{9}{11}\bfseries\selectfont #1\hskip1em\hfill}}}%\def\@numberline#1{\hbox to 1.5pc{\hbox to 1pc{\fontfamily{Bailey}\fontsize{9}{9}\selectfont\hfill#1}\hfill}}%\def\@@numberline#1{\@hangfrom{\fontfamily{Bailey}\fontsize{9}{11}\bfseries\selectfont\advance\leftskip9pc\llap{\hbox to 12pt{\hfill#1}}\hskip1em}}%\def\@@@numberline#1{\def\arg{#1}{\fontsize{13}{15}PART\ \ifcase\arg\or I\or II\or III \or IV\fi\enspace}}%%\newcommand*\l@part[2]{\let\numberline\@@@numberline%  \ifnum \c@tocdepth >\m@ne    \addpenalty{-\@highpenalty}%    \vskip10pt%\@plus\p@    \setlength\@tempdima{16pt}%    \begingroup      \parindent \z@       \leavevmode\fontfamily{Bailey}\fontsize{11.5}{13}\bfseries\selectfont\advance\leftskip8.5pc      {#1}{\hskip1em#2}\par%      \penalty\@highpenalty    \endgroup  \fi}%%\newcommand*\l@schapter[2]{%\let\numberline\@numberline%  \ifnum \c@tocdepth >\m@ne    \addpenalty{-\@highpenalty}%    \vskip 0pt %\@plus\p@    \setlength\@tempdima{16pt}%    \begingroup      \parindent \z@       \leavevmode       \fontfamily{Bailey}\fontsize{9}{11}\bookseries\selectfont\advance\leftskip9.8pc%\hangindent1.5pc      \uppercase{#1}\hfill{#2}\par\addvspace{3pt}%      \penalty\@highpenalty    \endgroup  \fi}%%%\newcommand*\l@chapter[2]{\let\numberline\@@numberline%  \ifnum \c@tocdepth >\m@ne    \addpenalty{-\@highpenalty}%    \vskip 10pt %\@plus\p@    \setlength\@tempdima{0pt}%    \begingroup      \parindent \z@       \leavevmode       \fontfamily{Bailey}\fontsize{9}{11}\bookseries\selectfont\advance\leftskip9pc      \uppercase{#1}\hfill{#2}\par\addvspace{3pt}%      \penalty\@highpenalty    \endgroup  \fi}%%\def\@dottedtocline#1#2#3#4#5{%  \ifnum #1>\c@tocdepth \else    \vskip \z@ %\@plus.2\p@    {\let\numberline\@@@@numberline%\leftskip #2\relax %\rightskip \@tocrmarg \parfillskip -\rightskip     \parindent\z@ %#2\relax\@afterindenttrue     \interlinepenalty\@M     \leavevmode     \@tempdima #3\relax     \advance\leftskip \@tempdima \null\nobreak      \fontfamily{Bailey}\fontsize{9}{12}\itshape\bookseries\selectfont\advance\leftskip9pc     {#4}\nobreak     \hfill\nobreak     {#5}%\vskip4pt%     \par}%  \fi}%\def\@@dottedtocline#1#2#3#4#5{%  \ifnum #1>\c@tocdepth \else    \vskip \z@ %\@plus.2\p@    {\let\numberline\@@@@numberline%\leftskip #2\relax %\rightskip \@tocrmarg \parfillskip -\rightskip     \parindent\z@ %#2\relax\@afterindenttrue     \interlinepenalty\@M     \leavevmode     \@tempdima #3\relax     \advance\leftskip \@tempdima \null\nobreak     \fontsize{9}{12}\itshape\selectfont\rightskip6pc plus1fill     {#4}\nobreak     \hskip1em\nobreak     {#5}%\vskip4pt%     \par}%  \fi}%\newcommand*\l@section{\@dottedtocline{1}{0pc}{9pt}}%\newcommand*\l@subsection{\@@dottedtocline{1}{}{\subsecdim}}%\newcommand*\l@subsubsection{\@dottedtocline{1}{0pc}{5.5pc}}%%%\setlength\parskip{0\p@}%%\def\Booktitle#1{\gdef\@@Book{#1}}%\Booktitle{C O N T E N T S \ \ \ifcase \thechapter\or {O N E} \or  {T W O} \or  {T H R E E} \or{F O U R} \or  {F I V E} \or  {S I X} \or   {S E V E N} \or   {E I G H T} \or   {N I N E} \or {T E N} \or   {E L E V E N} \or   {T W E L V E}  \or {T H I R T E E N} \or {F O U R T E E N} \or {F I F T E E N} \or   {S I X T E E N} \or   {S E V E N T E E N} \or {E I G H T E E N} \or   {N I N T E E N} \or {A} \or   {B} \or   {C} \fi}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  End Footnote %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Page styles %%\def\ps@headings{%       \let\@oddfoot\@empty\let\@evenfoot\@empty      \def\@evenfoot{\hspace*{-36pt}{\foliofont\thepage}\rhfont\hskip10pt \@@Book\hfill}%      \def\@oddfoot{\hfill\rhfont\rightmark\hskip10pt\foliofont\thepage\hspace*{-36pt}}%      \let\@mkboth\markboth% \def\chaptermark##1{\markright{\ifnum \c@secnumdepth >\m@ne       \reset@font\rhfont ##1}}%      \def\chaptermark##1{\markboth{\rhfont \@@Book}{\ifnum \c@secnumdepth >\m@ne       \rhrfont  \uppercase{##1}}}%      \def\chaptermark##1{\markboth{\uppercase{\booktitle}}{##1}}%%      \def\chaptermark##1{\markboth{\rhfont \uppercase{##1}}{\rhfont\@@Book}%%      \def\sectionmark##1{\markright{\ifnum\c@secnumdepth>0 {\rhfont \thesection}\else\fi\quad{##1}}}%}\makeatother\chapter*{Contents}%\markboth{Contents}{Contents}\contentsline {schapter}{Preface}{xiii}\vspace*{-4pt}%\secmax{9}%  \contentsline {chapter}{\numberline {1}Introduction}{1}\contentsline {section}{Data Analysis}{1}\contentsline {section}{What's in This Book}{2}\contentsline {section}{What's with the Workshops?}{3}\contentsline {section}{What's with the Math?}{4}\contentsline {section}{What You'll Need}{5}\contentsline {section}{What's Missing}{6}\contentsline {part}{\numberline {1}Graphics: Looking at Data}{} \contentsline {chapter}{\numberline {2}A Single Variable: Shape and Distribution}{11}\contentsline {section}{Dot and Jitter Plots}{12}\contentsline {section}{Histograms and Kernel Density Estimates}{14}\contentsline {section}{The Cumulative Distribution Function}{23}\contentsline {section}{Rank-Order Plots and Lift Charts}{30}\contentsline {section}{Only When Appropriate: Summary Statistics and Box Plots}{33}\contentsline {section}{Workshop: NumPy}{38}\contentsline {section}{Further Reading}{45}\contentsline {chapter}{\numberline {3}Two Variables: Establishing Relationships}{47}\contentsline {section}{Scatter Plots}{47}\contentsline {section}{Conquering Noise: Smoothing}{48}\contentsline {section}{Logarithmic Plots}{57}\contentsline {section}{Banking}{61}\contentsline {section}{Linear Regression and All That}{62}\contentsline {section}{Showing What's Important}{66}\contentsline {section}{Graphical Analysis and Presentation Graphics}{68}\contentsline {section}{Workshop: matplotlib}{69}\contentsline {section}{Further Reading}{78} \contentsline {chapter}{\numberline {4}Time As a Variable: Time-Series Analysis}{79}\contentsline {section}{Examples}{79}\contentsline {section}{The Task}{83}\contentsline {section}{Smoothing}{84}\contentsline {section}{Don't Overlook the Obvious!}{90}\contentsline {section}{The Correlation Function}{91}\contentsline {section}{Optional: Filters and Convolutions}{95}\contentsline {section}{Workshop: scipy.signal}{96}\contentsline {section}{Further Reading}{98}\contentsline {chapter}{\numberline {5}More Than Two Variables: Graphical Multivariate Analysis}{99}\contentsline {section}{False-Color Plots}{100}\contentsline {section}{A Lot at a Glance: Multiplots}{105}\contentsline {section}{Composition Problems}{110}\contentsline {section}{Novel Plot Types}{116}\contentsline {section}{Interactive Explorations}{120}\contentsline {section}{Workshop: Tools for Multivariate Graphics}{123}\contentsline {section}{Further Reading}{125}\contentsline {chapter}{\numberline {6}Intermezzo: A Data Analysis Session}{127}\contentsline {section}{A Data Analysis Session}{127}\contentsline {section}{Workshop: gnuplot}{136}\contentsline {section}{Further Reading}{138} %\spreadlong{12pt}\contentsline {part}{\numberline {2}Analytics: Modeling Data}{} \contentsline {chapter}{\numberline {7}Guesstimation and the Back of the Envelope}{141}\contentsline {section}{Principles of Guesstimation}{142}\contentsline {section}{How Good Are Those Numbers?}{151}\contentsline {section}{Optional: A Closer Look at Perturbation Theory and\break\hspace*{12pt} Error Propagation}{155}\contentsline {section}{Workshop: The Gnu Scientific Library (GSL)}{158}\contentsline {section}{Further Reading}{161}\contentsline {chapter}{\numberline {8}Models from Scaling Arguments}{163}\contentsline {section}{Models}{163}\contentsline {section}{Arguments from Scale}{165}\contentsline {section}{Mean-Field Approximations}{175}\contentsline {section}{Common Time-Evolution Scenarios}{178}\contentsline {section}{Case Study: How Many Servers Are Best?}{182}\contentsline {section}{Why Modeling?}{184}\contentsline {section}{Workshop: Sage}{184}\contentsline {section}{Further Reading}{188} \contentsline {chapter}{\numberline {9}Arguments from Probability Models}{191}\contentsline {section}{The Binomial Distribution and Bernoulli Trials}{191}\contentsline {section}{The Gaussian Distribution and the Central Limit Theorem}{195}\contentsline {section}{Power-Law Distributions and Non-Normal Statistics}{201}\contentsline {section}{Other Distributions}{206}\contentsline {section}{Optional: Case StudyÑUnique Visitors over Time}{211}\contentsline {section}{Workshop: Power-Law Distributions}{215}\contentsline {section}{Further Reading}{218}\contentsline {chapter}{\numberline {10}What You Really Need to Know About Classical Statistics}{221}\contentsline {section}{Genesis}{221}\contentsline {section}{Statistics Defined}{223}\contentsline {section}{Statistics Explained}{226}\contentsline {section}{Controlled Experiments Versus Observational Studies}{230}\contentsline {section}{Optional: Bayesian StatisticsÑThe Other Point of View}{235}\contentsline {section}{Workshop: R}{243}\contentsline {section}{Further Reading}{249} \contentsline {chapter}{\numberline {11}Intermezzo: MythbustingÑBigfoot, Least Squares,\break and All That}{253}\contentsline {section}{How to Average Averages}{253}\contentsline {section}{The Standard Deviation}{256}\contentsline {section}{Least Squares}{260}\contentsline {section}{Further Reading}{264} \contentsline {part}{\numberline {3}Computation: Mining Data}{}  \contentsline {chapter}{\numberline {12}Simulations}{267}\contentsline {section}{A Warm-Up Question}{267}\contentsline {section}{Monte Carlo Simulations}{270}\contentsline {section}{Resampling Methods}{276}\contentsline {section}{Workshop: Discrete Event Simulations with SimPy}{280}\contentsline {section}{Further Reading}{291} \contentsline {chapter}{\numberline {13}Finding Clusters}{293}\contentsline {section}{What Constitutes a Cluster?}{293}\contentsline {section}{Distance and Similarity Measures}{298}\contentsline {section}{Clustering Methods}{304}\contentsline {section}{Pre- and Postprocessing}{311}\contentsline {section}{Other Thoughts}{314}\contentsline {section}{A Special Case: Market Basket Analysis}{316}\contentsline {section}{A Word of Warning}{319}\contentsline {section}{Workshop: Pycluster and the C Clustering Library}{320}\contentsline {section}{Further Reading}{324} \contentsline {chapter}{\numberline {14}Seeing the Forest for the Trees: Finding\break Important Attributes}{327}\contentsline {section}{Principal Component Analysis}{328}\contentsline {section}{Visual Techniques}{337}\contentsline {section}{Kohonen Maps}{339}\contentsline {section}{Workshop: PCA with R}{342}\contentsline {section}{Further Reading}{348} \contentsline {chapter}{\numberline {15}Intermezzo: When More Is Different}{351}\contentsline {section}{A Horror Story}{353}\contentsline {section}{Some Suggestions}{354}\contentsline {section}{What About Map/Reduce?}{356}\contentsline {section}{Workshop: Generating Permutations}{357}\contentsline {section}{Further Reading}{358} \contentsline {part}{\numberline {4}Applications: Using Data}{} \contentsline {chapter}{\numberline {16}Reporting, Business Intelligence, and Dashboards}{361}\contentsline {section}{Business Intelligence}{362}\contentsline {section}{Corporate Metrics and Dashboards}{369}\contentsline {section}{Data Quality Issues}{373}\contentsline {section}{Workshop: Berkeley DB and SQLite}{376}\contentsline {section}{Further Reading}{381}\contentsline {chapter}{\numberline {17}Financial Calculations and Modeling}{383}\contentsline {section}{The Time Value of Money}{384}\contentsline {section}{Uncertainty in Planning and Opportunity Costs}{391}\contentsline {section}{Cost Concepts and Depreciation}{394}\contentsline {section}{Should You Care?}{398}\contentsline {section}{Is This All That Matters?}{399}\contentsline {section}{Workshop: The Newsvendor Problem}{400}\contentsline {section}{Further Reading}{403} \contentsline {chapter}{\numberline {18}Predictive Analytics}{405}\contentsline {section}{Introduction}{405}\contentsline {section}{Some Classification Terminology}{407}\contentsline {section}{Algorithms for Classification}{408}\contentsline {section}{The Process}{419}\contentsline {section}{The Secret Sauce}{423}\contentsline {section}{The Nature of Statistical Learning}{424}\contentsline {section}{Workshop: Two Do-It-Yourself Classifiers}{426}\contentsline {section}{Further Reading}{431}  \contentsline {chapter}{\numberline {19}Epilogue: Facts Are Not Reality}{433}\contentsline {chapter}{\numberline {A}Programming Environments for Scientific Computation\break and Data Analysis}{435}\contentsline {section}{Software Tools}{435}\contentsline {section}{A Catalog of Scientific Software}{437}\contentsline {section}{Writing Your Own}{443}\contentsline {section}{Further Reading}{444}\contentsline {chapter}{\numberline {B}Results from Calculus}{447}\contentsline {section}{Common Functions}{448}\contentsline {section}{Calculus}{460}\contentsline {section}{Useful Tricks}{468}\contentsline {section}{Notation and Basic Math}{472}\contentsline {section}{Where to Go from Here}{479}\contentsline {section}{Further Reading}{481} \contentsline {chapter}{\numberline {C}Working with Data}{485}\contentsline {section}{Sources for Data}{485}\contentsline {section}{Cleaning and Conditioning}{487}\contentsline {section}{Sampling}{489}\contentsline {section}{Data File Formats}{490}\contentsline {section}{The Care and Feeding of Your Data Zoo}{492}\contentsline {section}{Skills}{493}\contentsline {section}{Terminology}{495}\contentsline {section}{Further Reading}{497}% \vskip10pt\contentsline {schapter}{Index}{499}\clearpage\\thispagestyle{empty}\\clearpage%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Preface %%%%%%%%%%%%%%%\makeatletter%\setlength\parskip{7\p@}%\makeatother\def\ps@myheadings{%       \let\@oddfoot\@empty\let\@evenfoot\@empty      \def\@evenfoot{\hspace*{-36pt}{\foliofont\thepage}\rhfont\hskip10pt \@@Book\hfill}%      \def\@oddfoot{\hfill\rhfont\rightmark\hskip10pt\foliofont\thepage\hspace*{-36pt}}%      \let\@mkboth\markboth% \def\chaptermark##1{\markright{\ifnum \c@secnumdepth >\m@ne       \reset@font\rhfont ##1}}%      \def\chaptermark##1{\markboth{\rhfont \@@Book}{\ifnum \c@secnumdepth >\m@ne       \rhrfont  \uppercase{P R E F A C E##1}}}%      \def\chaptermark##1{\markboth{\uppercase{\booktitle}}{##1}}%%      \def\chaptermark##1{\markboth{\rhfont \uppercase{##1}}{\rhfont\@@Book}%%      \def\sectionmark##1{\markright{\ifnum\c@secnumdepth>0 {\rhfont \thesection}\else\fi\quad{##1}}}%}%\def\Booktitle#1{\gdef\@@Book{#1}}%\Booktitle{P R E F A C E \ \ \ifcase \thechapter\or {O N E} \or  {T W O} \or  {T H R E E} \or{F O U R} \or  {F I V E} \or  {S I X} \or   {S E V E N} \or   {E I G H T} \or   {N I N E} \or {T E N} \or   {E L E V E N} \or   {T W E L V E}  \or {T H I R T E E N} \or {F O U R T E E N} \or {F I F T E E N} \or   {S I X T E E N} \or   {S E V E N T E E N} \or {E I G H T E E N} \or   {N I N T E E N} \or {A} \or   {B} \or   {C} \fi}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  End Footnote %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Page styles %%\makeatother\end{document}
+%\documentclass[draft]{Oreilly5980006}
+\documentclass{Oreilly5980006}
+
+\hoffset-.5in
+\voffset-.5in
+
+\begin{document}
+
+
+\pagenumbering{roman}
+\pagestyle{blind}
+%%%%%%%%%%%%%%%%%%%%% Half Title %%%%%%%%%%%%%%%%%%%%%%
+\def\title#1{\par\vspace*{50pt}{\fontfamily{Akzidenz}\fontsize{22}{26}\selectfont\leftskip0pt plus1fill\noindent#1\par}}%
+%
+\title{Data Analysis with Open Source~Tools}
+
+ 
+\clearpage
+\
+\thispagestyle{empty}
+\
+\clearpage 
+
+%%%%%%%%%%%%%%%%%%%%%% Series Page %%%%%%%%%%%%%%%%%%%%%%
+%
+%\makeatletter
+%\def\seheadfont{\fontfamily{Bailey}\fontsize{10}{12}\bfseries\selectfont}
+%\def\sehead#1{\par\hbox to 8pc{\hfill\seheadfont #1}\par\addvspace{-27pt}}
+%\def\subhead#1{\par\llap{\seheadfont #1\hskip1pc}\par\addvspace{-18pt}}
+%\makeatother
+%
+%
+%\vbox to \textheight{\parindent0pt%\linewidth\typewidth\rightskip0pc plus1fill%
+%\vskip-\headheight\vskip-\headsep\vspace*{59pt}
+%\noindent{\fontfamily{Bailey}\fontsize{14}{12}\bfseries\selectfont\hspace*{96pt}Other resources from O{'}Reilly}\par\vspace*{-13pt}
+%\vrule height0.5pt width\typewidth depth0pt\par\vspace*{15pt}
+%\vbox{\fontfamily{Meridien}\fontsize{9.5}{12}\Medseries\selectfont 
+%\sehead{Related titles}
+%\hspace*{108pt}\vbox{\hsize21pc\linewidth21pc\rightskip-0pc\columnsep1.5pc
+%\begin{multicols}{2}
+%Apache Cookbook${}^{\hbox{\rm\scriptsize TM}}$\\
+%Apache 2 Pocket Reference\\
+%Building\,Scalable\,Web\,Sites\\
+%High Performance MySQL\\[10pt]
+%High Performance Web\\
+%\quad Sites\\
+%Optimizing Oracle\\
+%\quad Performance\\
+%Website Optimization 
+%\end{multicols}\vspace*{-18pt}
+%
+%\noindent \vrule height0.5pt width21pc depth0pt\par\vspace*{-1pt}
+%\subhead{oreilly.com}
+%\noindent {\it oreilly.com} is more than a complete catalog of O'Reilly\break
+%books. YouÕll also find links to news, events, articles,\break
+%weblogs, sample chapters, and code examples.\par\vspace*{-5pt}
+%\noindent \vrule height0.5pt width21pc depth0pt\par\vspace*{3pt}
+%\llap{\smash{\lower19pt\hbox{\epsfbox{\MasterDir  icon01.eps}\hskip1pc}}}\par\vspace*{-21pt}
+%\noindent {\it oreillynet.com} is the essential portal for developers interested
+%in open and emerging technologies, including new platforms,
+%programming languages, and operating systems.\par\vspace*{-5pt}
+%\noindent \vrule height0.5pt width21pc depth0pt\par\vspace*{-1pt}
+%\subhead{Conferences} O'Reilly brings diverse innovators together to nurture the
+%ideas that spark revolutionary industries. We specialize in
+%documenting the latest tools and systems, translating the
+%innovatorÕs knowledge into useful skills for those in the
+%trenches. Visit {\it conferences.oreilly.com} for our upcoming
+%events.\par\vspace*{-5pt}
+%\noindent \vrule height0.5pt width21pc depth0pt\par\vspace*{-1pt}
+%\llap{\smash{\lower28pt\hbox{\epsfbox{\MasterDir  icon02.eps}\hskip1pc}}}\par\vspace*{-18pt}
+%Safari Bookshelf (safari.oreilly.com) is the premier online
+%reference library for programmers and IT professionals.
+%Conduct searches across more than 1,000 books. Sub-\break scribers
+%can zero in on answers to time-critical questions
+%in a matter of seconds. Read the books on your Bookshelf
+%from cover to cover or simply flip to the page you need.
+%Try it today for free.}
+%}}
+%\clearpage
+%\end{document}
+
+ 
+
+%%%%%%%%%%%%%%%%%%%%% Title Page %%%%%%%%%%%%%%%%%%%%%%
+
+ 
+
+\vbox to \vsize{\vskip95pt%
+\noindent{\fontfamily{Akzidenz}\fontsize{30}{32}\selectfont\leftskip0pt plus1fill Data Analysis with Open~Source Tools\par}
+ \vspace*{125pt}
+
+%\hbox to \textwidth{\hss\hbox to \typewidth{\hfill\epsfbox{\MasterDir chair.eps}}}%
+\vspace*{95pt}
+
+\noindent {\fontfamily{Akzidenz}\fontsize{13}{13}\selectfont\raggedleft Philipp K. Janert\par}
+
+  
+
+
+\vfill
+\hbox to \textwidth{\hss\hbox to \typewidth{\hfill\epsfbox{\MasterDir orelly_logo.eps}}}%
+%\vspace*{-10pt}
+\par}
+
+%\end{document}
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%% copyright Page %%%%%%%%%%%%%%%%%%%%%%
+ 
+\def\seitem#1#2{\par{\fontfamily{Bailey}\fontsize{8}{14}\bfseries\selectfont#1}\enspace{\fontfamily{Bailey}\fontsize{7.5}{14}\selectfont#2}\par}%
+
+\vbox to \vsize{\par\parindent0pt\parsep0pt\makeatletter\setlength\parskip{0\p@}\makeatother
+\vskip-\headsep\vskip-\headheight
+\fontsize{7.5}{14}\selectfont\raggedright
+ 
+\noindent {\fontfamily{Bailey}\fontsize{9}{12}\bfseries\selectfont Data Analysis with Open Source Tools}\par
+\noindent {\fontfamily{Bailey}\fontsize{9}{12}\bookseries\selectfont by Philipp K. Janert}
+\vspace*{18pt}
+
+Copyright \hbox{$\copyright$} 2011 Philipp K. Janert. All rights reserved. Printed in the United States of America.\par\vspace*{6pt}
+Published by O{'}Reilly Media, Inc. 1005 Gravenstein Highway North, Sebastopol, CA 95472.\par\vspace*{6pt}
+O{'}Reilly books may be purchased for educational, business, or sales promotional use. Online\par
+editions are also available for most titles ({\it http://my.safaribooksonline.com}). For more information,\par
+contact our corporate/institutional sales department: (800) 998-9938 or {\it corporate@oreilly.com}.\par\vspace*{6pt}
+
+\columnsep1.5pc\begin{multicols}{2}
+\seitem{Editor:}{Mike Loukides}
+\seitem{Production Editor:}{Sumita Mukherji}
+\seitem{Copyeditor:}{Matt Darnell}
+\seitem{Production Services:}{MPS Limited, a\vspace*{-4pt} Macmillan Company, and Newgen North America, Inc.}
+\seitem{Indexer:}{Fred Brown}
+\seitem{Cover Designer:}{Karen Montgomery}
+\seitem{Interior Designer:}{Edie Freedman\vspace*{-4pt}\break and Ron Bilodeau}
+\seitem{Illustrator:}{Philipp K. Janert}
+\end{multicols}
+\par
+\noindent{\fontfamily{Bailey}\fontsize{8}{10}\bfseries\selectfont Printing History:}
+
+\noindent\hspace*{24pt}{\fontfamily{Bailey}\fontsize{8}{10}\selectfont November 2010: First Edition.}
+\vspace*{72pt}
+
+
+
+The O{'}Reilly logo is a registered trademark of O{'}Reilly Media, Inc. {\it Data Analysis with Open Source\par Tools},  the image of a common kite, and
+related trade dress are trademarks of O{'}Reilly Media, Inc.\par\vspace*{6pt} Many of the designations used by 
+manufacturers and sellers to distinguish their products are\par  claimed as trademarks. Where those 
+designations appear in this book, and  O{'}Reilly Media, Inc.\par  was aware of a trademark claim, the 
+designations have been printed in  caps or initial caps.\par\vspace*{6pt}
+While every precaution has been taken in the preparation of this book, the publisher and author\par
+assume no responsibility for errors or omissions, or for damages resulting from the use of the\par
+information contained herein.\par
+\vfill
+
+%\noindent {\fontsize{7}{12}\selectfont This book uses RepKover${}^{\hbox{\rm\tiny TM}}$, a durable and flexible lay-flat binding.}\vspace*{-6pt}
+
+%\llap{\epsfbox{\MasterDir RepKover.eps}}\vspace*{-5.5pt}
+
+\noindent {\fontsize{7}{12}\selectfont ISBN: 978-0-596-80235-6}\vspace*{-2pt}
+
+\noindent {\fontsize{7}{12}\selectfont [M]}
+}
+\clearpage
+%\end{document}
+
+
+%%%%%%%%%%%%%%%%%%%%% Dedication Page %%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\vbox to \textheight{\vskip95pt%
+\par\parindent0pt
+ \fontsize{10}{12}\selectfont\leftskip0pt plus1fill \rightskip0pt plus1fill
+{\itshape Furious activity is no substitute for understanding.}\par
+\hspace*{125pt}---H. H. Williams
+}
+
+\clearpage
+\
+\thispagestyle{blind}
+\
+\clearpage
+%\end{document}
+
+\pagestyle{headings}
+
+%%%%%%%%%%%%%%%%%%%%% Table of Contents %%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\def\COAfont{\fontfamily{Bailey}\fontsize{15}{17}\bookseries\selectfont\raggedleft}%
+
+\def\@makeschapterhead#1{\def\spreadoutfactor{3}%
+  \vbox to 90pt{\vskip28pt\vskip-\headheight\vskip\headsep\vskip-\topskip\vskip-26pt\parindent\z@ 
+{\uppercase{\COAfont \spreadout{ #1}\hspace*{-3pt}}\par}%
+    \vfill
+   }}
+\makeatother
+
+\makeatletter
+\setcounter{tocdepth}{2}%
+\newdimen\secdim
+\newdimen\subsecdim
+\def\secmax#1{\setbox\tempbox\hbox{\fontfamily{Bailey}\fontsize{9}{11}\bfseries\selectfont#1\hskip1em}%
+\secdim\wd\tempbox
+\subsecdim\wd\tempbox
+%\advance\subsecdim1pc
+}
+\secmax{11}%
+%
+\def\numberline#1{\hb@xt@\@tempdima{#1\hfil}}
+\def\@@@@numberline#1{\llap{\hbox to \secdim{\fontfamily{Bailey}\fontsize{9}{11}\bfseries\selectfont #1\hskip1em\hfill}}}%
+\def\@numberline#1{\hbox to 1.5pc{\hbox to 1pc{\fontfamily{Bailey}\fontsize{9}{9}\selectfont\hfill#1}\hfill}}%
+\def\@@numberline#1{\@hangfrom{\fontfamily{Bailey}\fontsize{9}{11}\bfseries\selectfont\advance\leftskip9pc\llap{\hbox to 12pt{\hfill#1}}\hskip1em}}%
+\def\@@@numberline#1{\def\arg{#1}{\fontsize{13}{15}PART\ \ifcase\arg\or I\or II\or III \or IV\fi\enspace}}%
+%
+\newcommand*\l@part[2]{\let\numberline\@@@numberline%
+  \ifnum \c@tocdepth >\m@ne
+    \addpenalty{-\@highpenalty}%
+    \vskip10pt%\@plus\p@
+    \setlength\@tempdima{16pt}%
+    \begingroup
+      \parindent \z@ 
+      \leavevmode\fontfamily{Bailey}\fontsize{11.5}{13}\bfseries\selectfont\advance\leftskip8.5pc
+      {#1}{\hskip1em#2}\par%
+      \penalty\@highpenalty
+    \endgroup
+  \fi}%
+%
+\newcommand*\l@schapter[2]{%\let\numberline\@numberline%
+  \ifnum \c@tocdepth >\m@ne
+    \addpenalty{-\@highpenalty}%
+    \vskip 0pt %\@plus\p@
+    \setlength\@tempdima{16pt}%
+    \begingroup
+      \parindent \z@ 
+      \leavevmode 
+      \fontfamily{Bailey}\fontsize{9}{11}\bookseries\selectfont\advance\leftskip9.8pc%\hangindent1.5pc
+      \uppercase{#1}\hfill{#2}\par\addvspace{3pt}%
+      \penalty\@highpenalty
+    \endgroup
+  \fi}%
+%
+%
+\newcommand*\l@chapter[2]{\let\numberline\@@numberline%
+  \ifnum \c@tocdepth >\m@ne
+    \addpenalty{-\@highpenalty}%
+    \vskip 10pt %\@plus\p@
+    \setlength\@tempdima{0pt}%
+    \begingroup
+      \parindent \z@ 
+      \leavevmode 
+      \fontfamily{Bailey}\fontsize{9}{11}\bookseries\selectfont\advance\leftskip9pc
+      \uppercase{#1}\hfill{#2}\par\addvspace{3pt}%
+      \penalty\@highpenalty
+    \endgroup
+  \fi}%
+%
+\def\@dottedtocline#1#2#3#4#5{%
+  \ifnum #1>\c@tocdepth \else
+    \vskip \z@ %\@plus.2\p@
+    {\let\numberline\@@@@numberline%\leftskip #2\relax %\rightskip \@tocrmarg \parfillskip -\rightskip
+     \parindent\z@ %#2\relax\@afterindenttrue
+     \interlinepenalty\@M
+     \leavevmode
+     \@tempdima #3\relax
+     \advance\leftskip \@tempdima \null\nobreak
+      \fontfamily{Bailey}\fontsize{9}{12}\itshape\bookseries\selectfont\advance\leftskip9pc
+     {#4}\nobreak
+     \hfill\nobreak
+     {#5}%\vskip4pt%
+     \par}%
+  \fi}
+%
+\def\@@dottedtocline#1#2#3#4#5{%
+  \ifnum #1>\c@tocdepth \else
+    \vskip \z@ %\@plus.2\p@
+    {\let\numberline\@@@@numberline%\leftskip #2\relax %\rightskip \@tocrmarg \parfillskip -\rightskip
+     \parindent\z@ %#2\relax\@afterindenttrue
+     \interlinepenalty\@M
+     \leavevmode
+     \@tempdima #3\relax
+     \advance\leftskip \@tempdima \null\nobreak
+     \fontsize{9}{12}\itshape\selectfont\rightskip6pc plus1fill
+     {#4}\nobreak
+     \hskip1em\nobreak
+     {#5}%\vskip4pt%
+     \par}%
+  \fi}
+%
+\newcommand*\l@section{\@dottedtocline{1}{0pc}{9pt}}%
+\newcommand*\l@subsection{\@@dottedtocline{1}{}{\subsecdim}}%
+\newcommand*\l@subsubsection{\@dottedtocline{1}{0pc}{5.5pc}}%
+%
+%
+\setlength\parskip{0\p@}
+%
+
+%
+\def\Booktitle#1{\gdef\@@Book{#1}}%
+\Booktitle{C O N T E N T S \ \ \ifcase \thechapter\or {O N E} \or  {T W O} \or  {T H R E E} \or
+{F O U R} \or  {F I V E} \or  {S I X} \or   {S E V E N} \or   {E I G H T} \or   {N I N E} \or 
+{T E N} \or   {E L E V E N} \or   {T W E L V E}  \or {T H I R T E E N} \or {F O U R T E E N} \or 
+{F I F T E E N} \or   {S I X T E E N} \or   {S E V E N T E E N} \or {E I G H T E E N} \or   {N I N T E E N} \or 
+{A} \or   {B} \or   {C} \fi}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  End Footnote %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Page styles 
+%%
+\def\ps@headings{% 
+      \let\@oddfoot\@empty\let\@evenfoot\@empty
+      \def\@evenfoot{\hspace*{-36pt}{\foliofont\thepage}\rhfont\hskip10pt \@@Book\hfill}%
+      \def\@oddfoot{\hfill\rhfont\rightmark\hskip10pt\foliofont\thepage\hspace*{-36pt}}%
+      \let\@mkboth\markboth%
+ \def\chaptermark##1{\markright{\ifnum \c@secnumdepth >\m@ne
+       \reset@font\rhfont ##1}}%
+      \def\chaptermark##1{\markboth{\rhfont \@@Book}{\ifnum \c@secnumdepth >\m@ne
+       \rhrfont  \uppercase{##1}}}
+%      \def\chaptermark##1{\markboth{\uppercase{\booktitle}}{##1}}%
+%      \def\chaptermark##1{\markboth{\rhfont \uppercase{##1}}{\rhfont\@@Book}%
+%      \def\sectionmark##1{\markright{\ifnum\c@secnumdepth>0 {\rhfont \thesection}\else\fi\quad{##1}}}%
+}
+\makeatother
+
+\chapter*{Contents}
+%\markboth{Contents}{Contents}
+
+
+\contentsline {schapter}{Preface}{xiii}
+
+\vspace*{-4pt}
+%
+\secmax{9}%
+  
+\contentsline {chapter}{\numberline {1}Introduction}{1}
+\contentsline {section}{Data Analysis}{1}
+\contentsline {section}{What's in This Book}{2}
+\contentsline {section}{What's with the Workshops?}{3}
+\contentsline {section}{What's with the Math?}{4}
+\contentsline {section}{What You'll Need}{5}
+\contentsline {section}{What's Missing}{6}
+
+
+\contentsline {part}{\numberline {1}Graphics: Looking at Data}{}
+ 
+\contentsline {chapter}{\numberline {2}A Single Variable: Shape and Distribution}{11}
+\contentsline {section}{Dot and Jitter Plots}{12}
+\contentsline {section}{Histograms and Kernel Density Estimates}{14}
+\contentsline {section}{The Cumulative Distribution Function}{23}
+\contentsline {section}{Rank-Order Plots and Lift Charts}{30}
+\contentsline {section}{Only When Appropriate: Summary Statistics and Box Plots}{33}
+\contentsline {section}{Workshop: NumPy}{38}
+\contentsline {section}{Further Reading}{45}
+
+\contentsline {chapter}{\numberline {3}Two Variables: Establishing Relationships}{47}
+\contentsline {section}{Scatter Plots}{47}
+\contentsline {section}{Conquering Noise: Smoothing}{48}
+\contentsline {section}{Logarithmic Plots}{57}
+\contentsline {section}{Banking}{61}
+\contentsline {section}{Linear Regression and All That}{62}
+\contentsline {section}{Showing What's Important}{66}
+\contentsline {section}{Graphical Analysis and Presentation Graphics}{68}
+\contentsline {section}{Workshop: matplotlib}{69}
+\contentsline {section}{Further Reading}{78}
+ 
+\contentsline {chapter}{\numberline {4}Time As a Variable: Time-Series Analysis}{79}
+\contentsline {section}{Examples}{79}
+\contentsline {section}{The Task}{83}
+\contentsline {section}{Smoothing}{84}
+\contentsline {section}{Don't Overlook the Obvious!}{90}
+\contentsline {section}{The Correlation Function}{91}
+\contentsline {section}{Optional: Filters and Convolutions}{95}
+\contentsline {section}{Workshop: scipy.signal}{96}
+\contentsline {section}{Further Reading}{98}
+
+\contentsline {chapter}{\numberline {5}More Than Two Variables: Graphical Multivariate Analysis}{99}
+\contentsline {section}{False-Color Plots}{100}
+\contentsline {section}{A Lot at a Glance: Multiplots}{105}
+\contentsline {section}{Composition Problems}{110}
+\contentsline {section}{Novel Plot Types}{116}
+\contentsline {section}{Interactive Explorations}{120}
+\contentsline {section}{Workshop: Tools for Multivariate Graphics}{123}
+\contentsline {section}{Further Reading}{125}
+
+\contentsline {chapter}{\numberline {6}Intermezzo: A Data Analysis Session}{127}
+\contentsline {section}{A Data Analysis Session}{127}
+\contentsline {section}{Workshop: gnuplot}{136}
+\contentsline {section}{Further Reading}{138}
+ 
+%\spreadlong{12pt}
+
+\contentsline {part}{\numberline {2}Analytics: Modeling Data}{} 
+
+\contentsline {chapter}{\numberline {7}Guesstimation and the Back of the Envelope}{141}
+\contentsline {section}{Principles of Guesstimation}{142}
+\contentsline {section}{How Good Are Those Numbers?}{151}
+\contentsline {section}{Optional: A Closer Look at Perturbation Theory and\break\hspace*{12pt} Error Propagation}{155}
+\contentsline {section}{Workshop: The Gnu Scientific Library (GSL)}{158}
+\contentsline {section}{Further Reading}{161}
+
+
+\contentsline {chapter}{\numberline {8}Models from Scaling Arguments}{163}
+\contentsline {section}{Models}{163}
+\contentsline {section}{Arguments from Scale}{165}
+\contentsline {section}{Mean-Field Approximations}{175}
+\contentsline {section}{Common Time-Evolution Scenarios}{178}
+\contentsline {section}{Case Study: How Many Servers Are Best?}{182}
+\contentsline {section}{Why Modeling?}{184}
+\contentsline {section}{Workshop: Sage}{184}
+\contentsline {section}{Further Reading}{188}
+ 
+
+\contentsline {chapter}{\numberline {9}Arguments from Probability Models}{191}
+\contentsline {section}{The Binomial Distribution and Bernoulli Trials}{191}
+\contentsline {section}{The Gaussian Distribution and the Central Limit Theorem}{195}
+\contentsline {section}{Power-Law Distributions and Non-Normal Statistics}{201}
+\contentsline {section}{Other Distributions}{206}
+\contentsline {section}{Optional: Case StudyÑUnique Visitors over Time}{211}
+\contentsline {section}{Workshop: Power-Law Distributions}{215}
+\contentsline {section}{Further Reading}{218}
+
+\contentsline {chapter}{\numberline {10}What You Really Need to Know About Classical Statistics}{221}
+\contentsline {section}{Genesis}{221}
+\contentsline {section}{Statistics Defined}{223}
+\contentsline {section}{Statistics Explained}{226}
+\contentsline {section}{Controlled Experiments Versus Observational Studies}{230}
+\contentsline {section}{Optional: Bayesian StatisticsÑThe Other Point of View}{235}
+\contentsline {section}{Workshop: R}{243}
+\contentsline {section}{Further Reading}{249}
+ 
+\contentsline {chapter}{\numberline {11}Intermezzo: MythbustingÑBigfoot, Least Squares,\break and All That}{253}
+\contentsline {section}{How to Average Averages}{253}
+\contentsline {section}{The Standard Deviation}{256}
+\contentsline {section}{Least Squares}{260}
+\contentsline {section}{Further Reading}{264}
+ 
+
+\contentsline {part}{\numberline {3}Computation: Mining Data}{} 
+ 
+\contentsline {chapter}{\numberline {12}Simulations}{267}
+\contentsline {section}{A Warm-Up Question}{267}
+\contentsline {section}{Monte Carlo Simulations}{270}
+\contentsline {section}{Resampling Methods}{276}
+\contentsline {section}{Workshop: Discrete Event Simulations with SimPy}{280}
+\contentsline {section}{Further Reading}{291}
+ 
+\contentsline {chapter}{\numberline {13}Finding Clusters}{293}
+\contentsline {section}{What Constitutes a Cluster?}{293}
+\contentsline {section}{Distance and Similarity Measures}{298}
+\contentsline {section}{Clustering Methods}{304}
+\contentsline {section}{Pre- and Postprocessing}{311}
+\contentsline {section}{Other Thoughts}{314}
+\contentsline {section}{A Special Case: Market Basket Analysis}{316}
+\contentsline {section}{A Word of Warning}{319}
+\contentsline {section}{Workshop: Pycluster and the C Clustering Library}{320}
+\contentsline {section}{Further Reading}{324}
+ 
+\contentsline {chapter}{\numberline {14}Seeing the Forest for the Trees: Finding\break Important Attributes}{327}
+\contentsline {section}{Principal Component Analysis}{328}
+\contentsline {section}{Visual Techniques}{337}
+\contentsline {section}{Kohonen Maps}{339}
+\contentsline {section}{Workshop: PCA with R}{342}
+\contentsline {section}{Further Reading}{348}
+ 
+\contentsline {chapter}{\numberline {15}Intermezzo: When More Is Different}{351}
+\contentsline {section}{A Horror Story}{353}
+\contentsline {section}{Some Suggestions}{354}
+\contentsline {section}{What About Map/Reduce?}{356}
+\contentsline {section}{Workshop: Generating Permutations}{357}
+\contentsline {section}{Further Reading}{358}
+ 
+\contentsline {part}{\numberline {4}Applications: Using Data}{} 
+
+\contentsline {chapter}{\numberline {16}Reporting, Business Intelligence, and Dashboards}{361}
+\contentsline {section}{Business Intelligence}{362}
+\contentsline {section}{Corporate Metrics and Dashboards}{369}
+\contentsline {section}{Data Quality Issues}{373}
+\contentsline {section}{Workshop: Berkeley DB and SQLite}{376}
+\contentsline {section}{Further Reading}{381}
+
+\contentsline {chapter}{\numberline {17}Financial Calculations and Modeling}{383}
+\contentsline {section}{The Time Value of Money}{384}
+\contentsline {section}{Uncertainty in Planning and Opportunity Costs}{391}
+\contentsline {section}{Cost Concepts and Depreciation}{394}
+\contentsline {section}{Should You Care?}{398}
+\contentsline {section}{Is This All That Matters?}{399}
+\contentsline {section}{Workshop: The Newsvendor Problem}{400}
+\contentsline {section}{Further Reading}{403}
+ 
+\contentsline {chapter}{\numberline {18}Predictive Analytics}{405}
+\contentsline {section}{Introduction}{405}
+\contentsline {section}{Some Classification Terminology}{407}
+\contentsline {section}{Algorithms for Classification}{408}
+\contentsline {section}{The Process}{419}
+\contentsline {section}{The Secret Sauce}{423}
+\contentsline {section}{The Nature of Statistical Learning}{424}
+\contentsline {section}{Workshop: Two Do-It-Yourself Classifiers}{426}
+\contentsline {section}{Further Reading}{431}
+ 
+ \contentsline {chapter}{\numberline {19}Epilogue: Facts Are Not Reality}{433}
+
+\contentsline {chapter}{\numberline {A}Programming Environments for Scientific Computation\break and Data Analysis}{435}
+\contentsline {section}{Software Tools}{435}
+\contentsline {section}{A Catalog of Scientific Software}{437}
+\contentsline {section}{Writing Your Own}{443}
+\contentsline {section}{Further Reading}{444}
+
+\contentsline {chapter}{\numberline {B}Results from Calculus}{447}
+\contentsline {section}{Common Functions}{448}
+\contentsline {section}{Calculus}{460}
+\contentsline {section}{Useful Tricks}{468}
+\contentsline {section}{Notation and Basic Math}{472}
+\contentsline {section}{Where to Go from Here}{479}
+\contentsline {section}{Further Reading}{481}
+ 
+\contentsline {chapter}{\numberline {C}Working with Data}{485}
+\contentsline {section}{Sources for Data}{485}
+\contentsline {section}{Cleaning and Conditioning}{487}
+\contentsline {section}{Sampling}{489}
+\contentsline {section}{Data File Formats}{490}
+\contentsline {section}{The Care and Feeding of Your Data Zoo}{492}
+\contentsline {section}{Skills}{493}
+\contentsline {section}{Terminology}{495}
+\contentsline {section}{Further Reading}{497}
+
+%
+
+
+
+ 
+\vskip10pt
+
+\contentsline {schapter}{Index}{499}
+\clearpage
+\
+\thispagestyle{empty}
+\
+\clearpage
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Preface %%%%%%%%%%%%%%%
+
+
+\makeatletter
+%
+\setlength\parskip{7\p@}
+%
+\makeatother
+\def\ps@myheadings{% 
+      \let\@oddfoot\@empty\let\@evenfoot\@empty
+      \def\@evenfoot{\hspace*{-36pt}{\foliofont\thepage}\rhfont\hskip10pt \@@Book\hfill}%
+      \def\@oddfoot{\hfill\rhfont\rightmark\hskip10pt\foliofont\thepage\hspace*{-36pt}}%
+      \let\@mkboth\markboth%
+ \def\chaptermark##1{\markright{\ifnum \c@secnumdepth >\m@ne
+       \reset@font\rhfont ##1}}%
+      \def\chaptermark##1{\markboth{\rhfont \@@Book}{\ifnum \c@secnumdepth >\m@ne
+       \rhrfont  \uppercase{P R E F A C E##1}}}
+%      \def\chaptermark##1{\markboth{\uppercase{\booktitle}}{##1}}%
+%      \def\chaptermark##1{\markboth{\rhfont \uppercase{##1}}{\rhfont\@@Book}%
+%      \def\sectionmark##1{\markright{\ifnum\c@secnumdepth>0 {\rhfont \thesection}\else\fi\quad{##1}}}%
+}
+%
+\def\Booktitle#1{\gdef\@@Book{#1}}%
+\Booktitle{P R E F A C E \ \ \ifcase \thechapter\or {O N E} \or  {T W O} \or  {T H R E E} \or
+{F O U R} \or  {F I V E} \or  {S I X} \or   {S E V E N} \or   {E I G H T} \or   {N I N E} \or 
+{T E N} \or   {E L E V E N} \or   {T W E L V E}  \or {T H I R T E E N} \or {F O U R T E E N} \or 
+{F I F T E E N} \or   {S I X T E E N} \or   {S E V E N T E E N} \or {E I G H T E E N} \or   {N I N T E E N} \or 
+{A} \or   {B} \or   {C} \fi}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  End Footnote %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Page styles 
+%%
+\makeatother
+
+
+
+\end{document}

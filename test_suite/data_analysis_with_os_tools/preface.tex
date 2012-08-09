@@ -1,4 +1,99 @@
-\makeatletter\def\@makeschapterhead#1{%  \vbox to 68pt{\vskip30pt\vskip-\headheight\vskip\headsep\vskip-\topskip\vskip-28pt\parindent\z@ \leftskip0pt plus1fill{{\CTfont  #1\par}}%    \vfill   }}\makeatother\setcounter{page}{13}\chapter*{Preface}{}{}\Fint{This book grew out of my experience of working with data for variouscompanies in the tech} industry. It is a collection of those conceptsand techniques that I have found to be the most useful, including manytopics that I wish I had known earlier---but didn't.My degree is in physics, but I also worked as a software engineer forseveral years. The book reflects this dual heritage. On the one hand,it is written for programmers and others in the software field: Iassume that you, like me, have the ability to write your own programsto manipulate data in any way you want.On the other hand, the way I think about data has been shaped bymy background and education.  As a physicist, I am not content merelyto describe data or to make black-box predictions: the purpose of ananalysis is always to develop an understanding for the processes ormechanisms that give rise to the data that we observe.The instrument to express such understanding is the \emph{model}: \index{modeling!about} adescription of the system under study (in other words, not just adescription of the data!), simplified as necessary but neverthelesscapturing the relevant information. A model may be crude (``Assume aspherical cow$\,\ldots$''), but if it helps us develop better insight onhow the system works, it is a successful model nevertheless.(Additional precision can often be obtained at a later time, if it isreally necessary.)This emphasis on models and simplified descriptions is not universal:other authors and practitioners will make different choices. But it isessential to my approach and point of view.This is a rather personal book. Although I have tried to be reasonablycomprehensive, I have selected the topics that I consider relevant anduseful in practice---whether they are part of the ``canon'' or not.Also included are several topics that you won't find in any other bookon data analysis. Although neither new nor original, they are usuallynot used or discussed in this particular context---but I find themindispensable.Throughout the book, I freely offer specific, explicit advice,opinions, and assessments. These remarks are reflections of mypersonal interest, experience, and understanding. I do not claim thatmy point of view is necessarily correct: evaluate what I say foryourself and feel free to adapt it to your needs.  In my view, aspecific, well-argued position is of greater use than a sterilelaundry list of possible algorithms---even if you later decide todisagree with me.  The value is not in the opinion but rather in thearguments leading up to it. If your arguments are better than mine, oreven just more agreeable to you, then I will have achieved my purpose!Data analysis, as I understand it, is not a fixed set of techniques.It is a way of life, and it has a name: curiosity. There is alwayssomething else to find out and something more to learn.  This book isnot the last word on the matter; it is merely a snapshot in time:things I knew about and found useful today.``Works are of value only if they give rise to better ones.''(Alexander von Humboldt, writing to Charles Darwin, 18 September 1839)% ============================================================\section*{Before We Begin}\index{data analysis!about} More data analysis efforts seem to go bad because of an excess ofsophistication rather than a lack of it.This may come as a surprise, but it has been my experience again andagain. As a consultant, I am often called in when the initial projectteam has already gotten stuck. Rarely (if ever) does the problemturn out to be that the team did not have the required skills.  On thecontrary, I usually find that they tried to do something unnecessarilycomplicated and are now struggling with the consequences of their owninvention! Based on what I have seen, two particular risk areas stand out:\begin{itemize}\item The use of ``statistical'' concepts that are only partially  understood (and given the relative obscurity of most of statistics,  this includes virtually \emph{all} statistical concepts)\item Complicated (and expensive) black-box solutions when a simple
+
+
+\makeatletter
+\def\@makeschapterhead#1{%
+  \vbox to 68pt{\vskip30pt\vskip-\headheight\vskip\headsep\vskip-\topskip\vskip-28pt\parindent\z@ \leftskip0pt plus1fill
+{{\CTfont  #1\par}}%
+    \vfill
+   }}
+\makeatother
+
+\setcounter{page}{13}
+\chapter*{Preface}{}{}
+
+\Fint{This book grew out of my experience of working with data for various
+companies in the tech} industry. It is a collection of those concepts
+and techniques that I have found to be the most useful, including many
+topics that I wish I had known earlier---but didn't.
+
+My degree is in physics, but I also worked as a software engineer for
+several years. The book reflects this dual heritage. On the one hand,
+it is written for programmers and others in the software field: I
+assume that you, like me, have the ability to write your own programs
+to manipulate data in any way you want.
+
+On the other hand, the way I think about data has been shaped by
+my background and education.  As a physicist, I am not content merely
+to describe data or to make black-box predictions: the purpose of an
+analysis is always to develop an understanding for the processes or
+mechanisms that give rise to the data that we observe.
+
+The instrument to express such understanding is the \emph{model}: \index{modeling!about} a
+description of the system under study (in other words, not just a
+description of the data!), simplified as necessary but nevertheless
+capturing the relevant information. A model may be crude (``Assume a
+spherical cow$\,\ldots$''), but if it helps us develop better insight on
+how the system works, it is a successful model nevertheless.
+(Additional precision can often be obtained at a later time, if it is
+really necessary.)
+
+This emphasis on models and simplified descriptions is not universal:
+other authors and practitioners will make different choices. But it is
+essential to my approach and point of view.
+
+This is a rather personal book. Although I have tried to be reasonably
+comprehensive, I have selected the topics that I consider relevant and
+useful in practice---whether they are part of the ``canon'' or not.
+Also included are several topics that you won't find in any other book
+on data analysis. Although neither new nor original, they are usually
+not used or discussed in this particular context---but I find them
+indispensable.
+
+Throughout the book, I freely offer specific, explicit advice,
+opinions, and assessments. These remarks are reflections of my
+personal interest, experience, and understanding. I do not claim that
+my point of view is necessarily correct: evaluate what I say for
+yourself and feel free to adapt it to your needs.  In my view, a
+specific, well-argued position is of greater use than a sterile
+laundry list of possible algorithms---even if you later decide to
+disagree with me.  The value is not in the opinion but rather in the
+arguments leading up to it. If your arguments are better than mine, or
+even just more agreeable to you, then I will have achieved my purpose!
+
+Data analysis, as I understand it, is not a fixed set of techniques.
+It is a way of life, and it has a name: curiosity. There is always
+something else to find out and something more to learn.  This book is
+not the last word on the matter; it is merely a snapshot in time:
+things I knew about and found useful today.
+
+``Works are of value only if they give rise to better ones.''
+
+(Alexander von Humboldt, writing to Charles Darwin, 18 September 1839)
+
+
+% ============================================================
+\section*{Before We Begin}
+
+\index{data analysis!about} 
+
+More data analysis efforts seem to go bad because of an excess of
+sophistication rather than a lack of it.
+
+This may come as a surprise, but it has been my experience again and
+again. As a consultant, I am often called in when the initial project
+team has already gotten stuck. Rarely (if ever) does the problem
+turn out to be that the team did not have the required skills.  On the
+contrary, I usually find that they tried to do something unnecessarily
+complicated and are now struggling with the consequences of their own
+invention! 
+
+Based on what I have seen, two particular risk areas stand out:
+
+\begin{itemize}
+\item The use of ``statistical'' concepts that are only partially
+  understood (and given the relative obscurity of most of statistics,
+  this includes virtually \emph{all} statistical concepts)
+\item Complicated (and expensive) black-box solutions when a simple
   and transparent approach would have worked at least as well or
   better
 \end{itemize}
@@ -9,4 +104,272 @@ is absolutely nothing wrong with speaking of the ``range over which
 points spread,'' because this phrase means exactly what it says: the
 range over which points spread, and only that! Once we start talking
 about ``standard deviations,'' this clarity is gone.  Are we still
-talking about the \emph{observed} width of the distribution?  Or arewe talking about one specific \emph{measure} for this width?  (Thestandard deviation is only one of several that are available.)  Are wealready making an implicit \emph{assumption} about the nature of thedistribution?  (The standard deviation is only suitable under certainconditions, which are often not fulfilled in practice.) Or are we evenconfusing the \emph{predictions} we could make if these assumptionswere true with the actual data? (The moment someone talks about ``95percent anything'' we know it's the latter!)I'd also like to remind you not to discard simple methods until theyhave been \emph{proven} insufficient. Simple solutions are frequentlyrather effective: the marginal benefit that more complicated methodscan deliver is often quite small (and may be in no reasonable relationto the increased cost). More importantly, simple methods have feweropportunities to go wrong or to obscure the obvious.True story: a company was tracking the occurrence of defects overtime. Of course, the actual number of defects varied quite a bit fromone day to the next, and they were looking for a way to obtain anestimate for the typical number of expected defects. The solutionproposed by their IT department involved a compute cluster running aneural network! (I am not making this up.)  In fact, a one-linecalculation (involving a moving average or single exponentialsmoothing) is all that was needed.I think the primary reason for this tendency to make data analysisprojects more complicated than they are is \emph{discomfort}:discomfort with an unfamiliar problem space and uncertainty about howto proceed. This discomfort and uncertainty creates a desire to bringin the ``big guns'': fancy terminology, heavy machinery, largeprojects. In reality, of course, the opposite is true: thecomplexities of the ``solution'' overwhelm the original problem, andnothing gets accomplished.Data analysis does not have to be all that hard. Although there aresituations when elementary methods will no longer be sufficient, theyare much less prevalent than you might expect. In the vast majority ofcases, curiosity and a healthy dose of common sense will serve youwell.The attitude that I am trying to convey can be summarized in a fewpoints:\begin{quote}Simple is better than complex.Cheap is better than expensive.Explicit is better than opaque.Purpose is more important than process.Insight is more important than precision.Understanding is more important than technique.Think more, work less.\end{quote}Although I do acknowledge that the items on the right are necessaryat times, I will give preference to those on the left wheneverpossible.It is in this spirit that I am offering the concepts and techniquesthat make up the rest of this book.\section*{Conventions Used in This Book}The following typographical conventions are used in this book:\begin{unnumlist}\subparagraph{Italic}\item Indicates new terms, URLs, and email addresses\subparagraph{\fontsize{8}{12}\tt Constant width}\item Used to refer to language and script elements\end{unnumlist}\section{Using Code Examples}This book is here to help you get your job done. In general, you may use the code in this bookin your programs and documentation. You do not need to contact us for permission unlessyouÕre reproducing a significant portion of the code. For example, writing a program that usesseveral chunks of code from this book does not require permission. Selling or distributing aCD-ROM of examples from OÕReilly books does require permission. Answering a question byciting this book and quoting example code does not require permission. Incorporating asignificant amount of example code from this book into your productÕs documentation doesrequire permission.We appreciate, but do not require, attribution. An attribution usually includes the title, author,publisher, and ISBN. For example: ``{\it Data Analysis with Open Source Tools}, by Philipp K. Janert. Copyright 2011 Philipp K. Janert, 978-0-596-80235-6.''If you feel your use of code examples falls outside fair use or the permission given above, feelfree to contact us at {\it permissions@oreilly.com.}\vspace*{-4pt}\section*{Safari¨ Books Online}\vbox{{\begin{tabular}{@{}l@{}}\hspace*{30pt}{\lower-.2pt\hbox{\blackfiftyink\fontfamily{Myriad}\bsemiseries\fontsize{15}{17}\selectfont  .}\lower1pt\hbox{\fontfamily{Myriad}\bfseries\fontsize{9}{9}\selectfont>\blackink}}\\[-6pt]{\fontfamily{Myriad}\bsemiseries\fontsize{15}{17}\selectfont Safari}\\[-9pt]\hspace*{7.5pt}{\fontfamily{Myriad}\bsemiseries\fontsize{5}{9}\selectfont Books online}\end{tabular}}}\vspace*{-21pt}\vbox{\leftskip48pt Safari Books Online is an on-demand digital library that lets you easily searchover 7,500 technology and creative reference books and videos to find theanswers you need quickly.}With a subscription, you can read any page and watch any video from our library online. Readbooks on your cell phone and mobile devices. Access new titles before they are available forprint, and get exclusive access to manuscripts in development and post feedback for theauthors. Copy and paste code samples, organize your favorites, download chapters, bookmarkkey sections, create notes, print out pages, and benefit from tons of other time-saving features.O'Reilly Media has uploaded this book to the Safari Books Online service. To have full digitalaccess to this book and others on similar topics from OÕReilly and other publishers, sign up forfree at {\it http://my.safaribooksonline.com}.\vspace*{-4pt}\section{How to Contact Us}Please address comments and questions concerning this book to the publisher:\begin{quote}O'Reilly Media, Inc.1005 Gravenstein Highway NorthSebastopol, CA 95472800-998-9938 (in the United States or Canada)707-829-0515 (international or local)707-829-0104 (fax)\end{quote}We have a web page for this book, where we list errata, examples, and any additionalinformation. You can access this page at:\begin{quote}{\it http://oreilly.com/catalog/9780596802356}\end{quote}To comment or ask technical questions about this book, send email to:\begin{quote}{\it bookquestions@oreilly.com}\end{quote}For more information about our books, conferences, Resource Centers, and the O'ReillyNetwork, see our website at:\begin{quote}{\it http://oreilly.com}\end{quote}% ============================================================\section*{Acknowledgments}It was a pleasure to work with O'Reilly on this project. Inparticular, O'Reilly has been most accommodating with regard to thetechnical challenges raised by my need to include (for an O'Reillybook) an uncommonly large amount of mathematical material in themanuscript.Mike Loukides has accompanied this project as the editor sinceits beginning. I have enjoyed our conversations about life, theuniverse, and everything, and I appreciate his comments about themanuscript---either way.I'd like to thank several of my friends for their help in bringingthis book about:\begin{itemize}\item Elizabeth Robson, for making the connection\item Austin King, for pointing out the obvious\item Scott White, for suffering my questions gladly\item Richard Kreckel, for much-needed advice\end{itemize}As always, special thanks go to PAUL Schrader (Bremen).The manuscript benefited from the feedback I received from variousreviewers. Michael E.\ Driscoll, Zachary Kessin, and Austin King readall or parts of the manuscript and provided valuable comments.I enjoyed personal correspondence with Joseph Adler, Joe Darcy, HilaryMason, Stephen Weston, Scott White, and Brian Zimmer. All verygenerously provided expert advice on specific topics.Particular thanks go to Richard  Kreckel, who provided uncommonlydetailed and insightful feedback on most of the manuscript.During the preparation of this book, the excellent collection at theUniversity of Washington libraries was an especially valuable resourceto me.\clearpageAuthors usually thank their spouses for their ``patience and support''or words to that effect. Unless one has lived through the actualexperience, one cannot fully comprehend how true this is.  Over thelast three years, Angela has endured what must have seemed like anearly continuous stream of whining, frustration, anddesperation---punctuated by occasional outbursts of exhilaration andgrandiosity---all of which before the background of the self-centeredand self-absorbed attitude of a typical author. Her patience andsupport were unfailing.  It's her turn now.%%%\chapter*{About the Author}{}{}%%%After previous careers in physics and software %development, {\bf Philipp K. Janert} currently %provides consulting services for data analysis, %algorithm development, and mathematical modeling. %He has worked for small start-ups and in large %corporate environments, both in the U.S. and %overseas. He prefers simple solutions that work %to complicated ones that don't, and thinks that %purpose is more important than process. Philipp %is the author of ``Gnuplot in Action:  Understanding%Data with Graphs'' (Manning Publications), and has %written for the O'Reilly Network, IBM developerWorks, %and IEEE Software. He is named inventor on a handful %of patents, and is an occasional contributor to CPAN. %He holds a Ph.D. in theoretical physics from the %University of Washington. Visit his company website %at \url{www.principal-value.com.}%%%%{\bf Philipp K. Janert}%%is chief consultant at Principal Value, LLC. He has worked for small start-ups and in large corporate environments---including%%Amazon.com---where he initiated and led several projects to improve order fulfillment processes. Philipp has written about software and%%software development for the O'Reilly Network, IBM developerWorks, IEEE Software, and {\it Linux Magazine}.\vspace*{-6pt}%%%\leaflong{6pt}%%\section*{Colophon}%The animal on the cover of {\it Data Analysis with Open Source Tools} is a common kite, most likely a member of the genus {\it Milvus}. Kites are%medium-size raptors with long wings and forked tails. They are noted for their elegant, soaring flight. They are also called ``gledes''%(for their gliding motion) and, like the flying toys, they appear to ride effortlessly on air currents.%%The genus {\it Milvus} is a group of Old World kites, including three or four species and numerous subspecies. These kites are opportunistic%feeders who hunt small animals, such as birds, fish, rodents, and earthworms, and also eat carrion, including sheep and cow carcasses.%They have been observed to steal prey from other birds. They may live 25 to 30~years in the wild.%%The genus dates to prehistoric times; an Israeli {\it Milvus pygmaeus} specimen is thought to be between 1.8 million and 780,000 years old.%Biblical references to kites probably refer to birds of this genus. In {\it Coriolanus}, Shakespeare calls Rome ``the city of kites and crows,''%commenting on the birds' prevalence in urban areas.%%The most widespread member of the genus is the black kite ({\it Milvus migrans}), found in Europe, Asia, Africa, and Australia. These kites are%very common in many parts of their habitat and are well adapted to city life. Attracted by smoke, they sometimes hunt by capturing small%animals fleeing from fires.%%The other notable member of {\it Milvus} is the red kite ({\it Milvus milvus}), which is slightly larger than the black kite and is distinguished by a%rufous body and tail. Red kites are found only in Europe. They were very common in Britain until 1800, but the population was devastated%by poisoning and habitat loss, and by 1930, fewer than 20 birds remained. Since then, kites have made a comeback in Wales and have been%reintroduced elsewhere in Britain.%%The cover image is from Cassell's {\it Natural History}, Volume III. The cover font is Adobe ITC Garamond; the text font is Linotype Birka; the%heading font is Adobe Myriad Condensed; and the code font is LucasFont's TheSansMonoCondensed.%%\clearpage%%\thispagestyle{empty}%%\cleardoublepage
+talking about the \emph{observed} width of the distribution?  Or are
+we talking about one specific \emph{measure} for this width?  (The
+standard deviation is only one of several that are available.)  Are we
+already making an implicit \emph{assumption} about the nature of the
+distribution?  (The standard deviation is only suitable under certain
+conditions, which are often not fulfilled in practice.) Or are we even
+confusing the \emph{predictions} we could make if these assumptions
+were true with the actual data? (The moment someone talks about ``95
+percent anything'' we know it's the latter!)
+
+I'd also like to remind you not to discard simple methods until they
+have been \emph{proven} insufficient. Simple solutions are frequently
+rather effective: the marginal benefit that more complicated methods
+can deliver is often quite small (and may be in no reasonable relation
+to the increased cost). More importantly, simple methods have fewer
+opportunities to go wrong or to obscure the obvious.
+
+True story: a company was tracking the occurrence of defects over
+time. Of course, the actual number of defects varied quite a bit from
+one day to the next, and they were looking for a way to obtain an
+estimate for the typical number of expected defects. The solution
+proposed by their IT department involved a compute cluster running a
+neural network! (I am not making this up.)  In fact, a one-line
+calculation (involving a moving average or single exponential
+smoothing) is all that was needed.
+
+I think the primary reason for this tendency to make data analysis
+projects more complicated than they are is \emph{discomfort}:
+discomfort with an unfamiliar problem space and uncertainty about how
+to proceed. This discomfort and uncertainty creates a desire to bring
+in the ``big guns'': fancy terminology, heavy machinery, large
+projects. In reality, of course, the opposite is true: the
+complexities of the ``solution'' overwhelm the original problem, and
+nothing gets accomplished.
+
+Data analysis does not have to be all that hard. Although there are
+situations when elementary methods will no longer be sufficient, they
+are much less prevalent than you might expect. In the vast majority of
+cases, curiosity and a healthy dose of common sense will serve you
+well.
+
+The attitude that I am trying to convey can be summarized in a few
+points:
+
+\begin{quote}
+Simple is better than complex.
+
+Cheap is better than expensive.
+
+Explicit is better than opaque.
+
+Purpose is more important than process.
+
+Insight is more important than precision.
+
+Understanding is more important than technique.
+
+Think more, work less.
+\end{quote}
+
+Although I do acknowledge that the items on the right are necessary
+at times, I will give preference to those on the left whenever
+possible.
+
+It is in this spirit that I am offering the concepts and techniques
+that make up the rest of this book.
+
+
+\section*{Conventions Used in This Book}
+
+The following typographical conventions are used in this book:
+\begin{unnumlist}
+\subparagraph{Italic}
+\item Indicates new terms, URLs, and email addresses
+\subparagraph{\fontsize{8}{12}\tt Constant width}
+\item Used to refer to language and script elements
+\end{unnumlist}
+
+
+\section{Using Code Examples}
+This book is here to help you get your job done. In general, you may use the code in this book
+in your programs and documentation. You do not need to contact us for permission unless
+you're reproducing a significant portion of the code. For example, writing a program that uses
+several chunks of code from this book does not require permission. Selling or distributing a
+CD-ROM of examples from O'Reilly books does require permission. Answering a question by
+citing this book and quoting example code does not require permission. Incorporating a
+significant amount of example code from this book into your product's documentation does
+require permission.
+
+
+We appreciate, but do not require, attribution. An attribution usually includes the title, author,
+publisher, and ISBN. For example: ``{\it Data Analysis with Open Source Tools}, by Philipp K. Janert. Copyright 2011 Philipp K. Janert,
+ 978-0-596-80235-6.''
+
+If you feel your use of code examples falls outside fair use or the permission given above, feel
+free to contact us at {\it permissions@oreilly.com.}\vspace*{-4pt}
+
+\section*{Safari¨ Books Online}
+
+\vbox{{\begin{tabular}{@{}l@{}}
+\hspace*{30pt}{\lower-.2pt\hbox{\blackfiftyink\fontfamily{Myriad}\bsemiseries\fontsize{15}{17}\selectfont  .}\lower1pt\hbox{\fontfamily{Myriad}\bfseries\fontsize{9}{9}\selectfont>\blackink}}\\[-6pt]
+{\fontfamily{Myriad}\bsemiseries\fontsize{15}{17}\selectfont Safari}\\[-9pt]
+\hspace*{7.5pt}{\fontfamily{Myriad}\bsemiseries\fontsize{5}{9}\selectfont Books online}
+\end{tabular}}}\vspace*{-21pt}
+
+\vbox{\leftskip48pt Safari Books Online is an on-demand digital library that lets you easily search
+over 7,500 technology and creative reference books and videos to find the
+answers you need quickly.}
+
+With a subscription, you can read any page and watch any video from our library online. Read
+books on your cell phone and mobile devices. Access new titles before they are available for
+print, and get exclusive access to manuscripts in development and post feedback for the
+authors. Copy and paste code samples, organize your favorites, download chapters, bookmark
+key sections, create notes, print out pages, and benefit from tons of other time-saving features.
+
+O'Reilly Media has uploaded this book to the Safari Books Online service. To have full digital
+access to this book and others on similar topics from O'Reilly and other publishers, sign up for
+free at {\it http://my.safaribooksonline.com}.\vspace*{-4pt}
+
+\section{How to Contact Us}
+Please address comments and questions concerning this book to the publisher:
+
+\begin{quote}
+O'Reilly Media, Inc.
+
+1005 Gravenstein Highway North
+
+Sebastopol, CA 95472
+
+800-998-9938 (in the United States or Canada)
+
+707-829-0515 (international or local)
+
+707-829-0104 (fax)
+\end{quote}
+
+We have a web page for this book, where we list errata, examples, and any additional
+information. You can access this page at:
+
+\begin{quote}
+{\it http://oreilly.com/catalog/9780596802356}
+\end{quote}
+
+
+To comment or ask technical questions about this book, send email to:
+
+\begin{quote}
+{\it bookquestions@oreilly.com}
+\end{quote}
+
+For more information about our books, conferences, Resource Centers, and the O'Reilly
+Network, see our website at:
+
+\begin{quote}
+{\it http://oreilly.com}
+\end{quote}
+
+
+% ============================================================
+\section*{Acknowledgments}
+
+It was a pleasure to work with O'Reilly on this project. In
+particular, O'Reilly has been most accommodating with regard to the
+technical challenges raised by my need to include (for an O'Reilly
+book) an uncommonly large amount of mathematical material in the
+manuscript.
+
+Mike Loukides has accompanied this project as the editor since
+its beginning. I have enjoyed our conversations about life, the
+universe, and everything, and I appreciate his comments about the
+manuscript---either way.
+
+I'd like to thank several of my friends for their help in bringing
+this book about:
+
+\begin{itemize}
+\item Elizabeth Robson, for making the connection
+\item Austin King, for pointing out the obvious
+\item Scott White, for suffering my questions gladly
+\item Richard Kreckel, for much-needed advice
+\end{itemize}
+
+As always, special thanks go to PAUL Schrader (Bremen).
+
+The manuscript benefited from the feedback I received from various
+reviewers. Michael E.\ Driscoll, Zachary Kessin, and Austin King read
+all or parts of the manuscript and provided valuable comments.
+
+I enjoyed personal correspondence with Joseph Adler, Joe Darcy, Hilary
+Mason, Stephen Weston, Scott White, and Brian Zimmer. All very
+generously provided expert advice on specific topics.
+
+Particular thanks go to Richard  Kreckel, who provided uncommonly
+detailed and insightful feedback on most of the manuscript.
+
+During the preparation of this book, the excellent collection at the
+University of Washington libraries was an especially valuable resource
+to me.\clearpage
+
+Authors usually thank their spouses for their ``patience and support''
+or words to that effect. Unless one has lived through the actual
+experience, one cannot fully comprehend how true this is.  Over the
+last three years, Angela has endured what must have seemed like a
+nearly continuous stream of whining, frustration, and
+desperation---punctuated by occasional outbursts of exhilaration and
+grandiosity---all of which before the background of the self-centered
+and self-absorbed attitude of a typical author. Her patience and
+support were unfailing.  It's her turn now.
+%
+%
+%\chapter*{About the Author}{}{}
+%
+%
+%After previous careers in physics and software 
+%development, {\bf Philipp K. Janert} currently 
+%provides consulting services for data analysis, 
+%algorithm development, and mathematical modeling. 
+%He has worked for small start-ups and in large 
+%corporate environments, both in the U.S. and 
+%overseas. He prefers simple solutions that work 
+%to complicated ones that don't, and thinks that 
+%purpose is more important than process. Philipp 
+%is the author of ``Gnuplot in Action:  Understanding
+%Data with Graphs'' (Manning Publications), and has 
+%written for the O'Reilly Network, IBM developerWorks, 
+%and IEEE Software. He is named inventor on a handful 
+%of patents, and is an occasional contributor to CPAN. 
+%He holds a Ph.D. in theoretical physics from the 
+%University of Washington. Visit his company website 
+%at \url{www.principal-value.com.}
+%
+%
+%%{\bf Philipp K. Janert}
+%%is chief consultant at Principal Value, LLC. He has worked for small start-ups and in large corporate environments---including
+%%Amazon.com---where he initiated and led several projects to improve order fulfillment processes. Philipp has written about software and
+%%software development for the O'Reilly Network, IBM developerWorks, IEEE Software, and {\it Linux Magazine}.\vspace*{-6pt}
+%
+%%\leaflong{6pt}
+%
+%\section*{Colophon}
+%The animal on the cover of {\it Data Analysis with Open Source Tools} is a common kite, most likely a member of the genus {\it Milvus}. Kites are
+%medium-size raptors with long wings and forked tails. They are noted for their elegant, soaring flight. They are also called ``gledes''
+%(for their gliding motion) and, like the flying toys, they appear to ride effortlessly on air currents.
+%
+%The genus {\it Milvus} is a group of Old World kites, including three or four species and numerous subspecies. These kites are opportunistic
+%feeders who hunt small animals, such as birds, fish, rodents, and earthworms, and also eat carrion, including sheep and cow carcasses.
+%They have been observed to steal prey from other birds. They may live 25 to 30~years in the wild.
+%
+%The genus dates to prehistoric times; an Israeli {\it Milvus pygmaeus} specimen is thought to be between 1.8 million and 780,000 years old.
+%Biblical references to kites probably refer to birds of this genus. In {\it Coriolanus}, Shakespeare calls Rome ``the city of kites and crows,''
+%commenting on the birds' prevalence in urban areas.
+%
+%The most widespread member of the genus is the black kite ({\it Milvus migrans}), found in Europe, Asia, Africa, and Australia. These kites are
+%very common in many parts of their habitat and are well adapted to city life. Attracted by smoke, they sometimes hunt by capturing small
+%animals fleeing from fires.
+%
+%The other notable member of {\it Milvus} is the red kite ({\it Milvus milvus}), which is slightly larger than the black kite and is distinguished by a
+%rufous body and tail. Red kites are found only in Europe. They were very common in Britain until 1800, but the population was devastated
+%by poisoning and habitat loss, and by 1930, fewer than 20 birds remained. Since then, kites have made a comeback in Wales and have been
+%reintroduced elsewhere in Britain.
+%
+%The cover image is from Cassell's {\it Natural History}, Volume III. The cover font is Adobe ITC Garamond; the text font is Linotype Birka; the
+%heading font is Adobe Myriad Condensed; and the code font is LucasFont's TheSansMonoCondensed.
+%
+%\clearpage
+%
+%\thispagestyle{empty}
+%
+%\cleardoublepage
