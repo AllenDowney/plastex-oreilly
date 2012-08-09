@@ -5,6 +5,9 @@ from DOM import Node, Text
 from StringIO import StringIO as UnicodeStringIO
 try: from cStringIO import StringIO
 except: from StringIO import StringIO
+from plasTeX import Logging
+
+log = Logging.getLogger()
 
 # Default TeX categories
 DEFAULT_CATEGORIES = [
@@ -262,6 +265,15 @@ class Tokenizer(object):
 
             if not token:
                 break
+
+            if len(token) > 1:
+                if not hasattr(self, 'already_warned'):
+                    log.warning('Multi-character token: %s', token)
+                    log.warning('This probably means you have non-ASCII')
+                    log.warning(' characters in the input file (like Mac')
+                    log.warning('smart quotes and apostrophes).')
+                    self.already_warned == True
+                token = token[-1]
 
             # ord(token) == 10 is the same as saying token == '\n'
             # but it is much faster.

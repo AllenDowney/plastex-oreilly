@@ -226,6 +226,11 @@ class TreeCleaner(object):
             return
 
         children = node.childNodes
+        if len(children) == 0:
+            # this is probably not valid, but we'll pass it along
+            # for now
+            return
+
         child = children[0]
         if child.nodeName == 'par':
             return
@@ -329,10 +334,10 @@ class Tralics(object):
                                         )
         for i in range(4):
             output = self.process.stdout.readline()
-            print 'enter', output
+            # print 'enter', output
 
         err = self.process.stdout.readline()
-        print 'enter', err
+        # print 'enter', err
         return self
 
     def translate(self, latex):
@@ -354,7 +359,7 @@ class Tralics(object):
 
     def __exit__(self, kind, value, traceback):
         """Terminates the subprocess (for use with the with statement)."""
-        print 'Terminating tralics...'
+        print 'Terminating tralics...',
         self.process.terminate()
         #output = self.process.stdout.readline()
         #print 'close', output
