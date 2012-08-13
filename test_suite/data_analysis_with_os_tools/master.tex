@@ -22,22 +22,6 @@
 % \usepackage[modulo,pagewise]{lineno}
 % \linenumbers
 
-\newif\ifplastex
-\plastexfalse
-
-\ifplastex
-% plastex only things here
-    \usepackage{localdef}
-    \maketitle
-
-\else
-
-% latexonly things here
-\input{header}
-
-\fi
-
-
 %\includeonly{preface,intro,%
 %univariate,bivariate,timeseries,multivariate,session,%
 %guesstimation,scaling,probability,statistics,bigfoot,%
@@ -195,8 +179,25 @@
 %
 %\tableofcontents
 
+\newif\ifplastex
+\plastexfalse
+
+\ifplastex
+% plastex only things here
+    \usepackage{localdef}
+    \maketitle
+
+\else
+
+% latexonly things here
+\input{latexonly}
+
+\fi
+
+\input{header}
+
 \makeatletter
-\Booktitle{P R E F A C E}
+%\Booktitle{P R E F A C E}
 \makeatother
 
 \pagenumbering{roman}
@@ -205,23 +206,23 @@
 % ==================================================
 
 \makeatletter
-\Booktitle{\ifappendix A P P E N D I X\else C H A P T E R \fi\ \ \ifcase \thechapter\or {O N E} \or  {T W O} \or  {T H R E E} \or
-{F O U R} \or  {F I V E} \or  {S I X} \or   {S E V E N} \or   {E I G H T} \or   {N I N E} \or 
-{T E N} \or   {E L E V E N} \or   {T W E L V E}  \or {T H I R T E E N} \or {F O U R T E E N} \or 
-{F I F T E E N} \or   {S I X T E E N} \or   {S E V E N T E E N} \or {E I G H T E E N} \or   {N I N T E E N} \or 
-{A} \or   {B} \or   {C} \fi}
+%\Booktitle{\ifappendix A P P E N D I X\else C H A P T E R \fi\ \ \ifcase \thechapter\or {O N E} \or  {T W O} \or  {T H R E E} \or
+%{F O U R} \or  {F I V E} \or  {S I X} \or   {S E V E N} \or   {E I G H T} \or   {N I N E} \or 
+%{T E N} \or   {E L E V E N} \or   {T W E L V E}  \or {T H I R T E E N} \or {F O U R T E E N} \or 
+%{F I F T E E N} \or   {S I X T E E N} \or   {S E V E N T E E N} \or {E I G H T E E N} \or   {N I N T E E N} \or 
+%{A} \or   {B} \or   {C} \fi}
 \makeatother
 
 
 \mainmatter
-%\include{intro}
+\include{intro}
 
 % ------------------------------
 \part{Graphics: Looking at Data}
 \label{part:graphics}
 
 
-%\include{univariate}
+\include{univariate}
 %\include{bivariate}
 %\include{timeseries}
 %\include{multivariate}

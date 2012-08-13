@@ -1,14 +1,14 @@
 # Before running plastex, add the current directory to PYTHONPATH
 # export PYTHONPATH=$PYTHONPATH:.
 
-debug:
-	rm -rf book/.svn
-	python -m pdb /usr/local/bin/plastex --renderer=DocBook --theme=book --filename=book.xml master.tex
-	rm -rf book/.svn
-
 plastex:
 	rm -rf book/.svn
-	plastex --renderer=DocBook --theme=book --filename=book.xml master.tex
+	plastex --renderer=DocBook --theme=book --filename=book.xml book.tex
+	rm -rf book/.svn
+
+debug:
+	rm -rf book/.svn
+	python -m pdb /usr/local/bin/plastex --renderer=DocBook --theme=book --filename=book.xml book.tex
 	rm -rf book/.svn
 
 xxe:
