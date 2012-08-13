@@ -9,6 +9,7 @@ Same license as the rest of plasTeX.
 
 import codecs
 import os
+import re
 import subprocess
 
 from lxml import etree
@@ -63,6 +64,49 @@ class TreeCleaner(object):
         self.test_quote(node)
         self.test_figure(node)
         self.test_math(node)
+        self.test_id(node)
+        self.test_linkend(node)
+        self.test_ref(node)
+
+    def test_ref(self, node):
+        if node.nodeName not in ['ref']:
+            return
+        
+        self.print_attributes(node)
+        self.print__dict__(node)
+        
+    def test_id(self, node):
+        """For anything that has an ID, replace bad characters."""
+        if not hasattr(node, 'id'):
+            return
+
+        #self.print_attributes(node)
+        #print node.id
+
+        node.id = self.replace_bad_chars(node.id)
+
+    def replace_bad_chars(self, s):
+        s = re.sub(':', '_colon_', s)
+        return s
+
+    def test_linkend(self, node):
+        try:
+            label = node.getAttribute('label')
+        except AttributeError:
+            return
+
+        if label is None:
+            return
+
+        if ':' not in label:
+            return
+
+        label = re.sub(':', '_colon_', label)
+        node.setAttribute('label', label)
+        node.argSource = label
+
+        print node.nodeName, type(label), label
+        
 
     def test_math(self, node):
         """Checks for math tags we can convert to mathphrases.
@@ -91,8 +135,8 @@ class TreeCleaner(object):
 
     def make_mathphrase(self, node):
         """Translates simple math into mathphrase."""
-        print 'before'
-        self.print_tree(node, '')
+        #print 'before'
+        #self.print_tree(node, '')
 
         children = node.childNodes
 
@@ -101,8 +145,8 @@ class TreeCleaner(object):
         phrase = self.document.createElement(node.nodeName + 'phrase')
         phrase.extend(children)
 
-        print 'after'
-        self.print_tree(phrase, '')
+        #print 'after'
+        #self.print_tree(phrase, '')
 
         return phrase
 
@@ -117,11 +161,15 @@ class TreeCleaner(object):
         latex = node.source
         print 'latex', latex
         mathml = self.tralics.translate(latex)
-        print 'mathml', mathml
+
+        print 'mathml'
+        for line in mathml.split():
+            print line
 
         # parse the MathML
         root = etree.fromstring(mathml)
-        print 'dom', root
+
+        # print 'dom', root
 
         # strip the formula tag
         assert root.tag == 'formula'
@@ -129,7 +177,7 @@ class TreeCleaner(object):
 
         # convert from etree.Element to DOM.Node 
         math = self.convert_elements(root)
-        print math.toXML()
+        # print math.toXML()
 
         # wrap the whole thing in the right kind of tag
         tag_dict = dict(math='inlineequation',
@@ -148,7 +196,7 @@ class TreeCleaner(object):
         
         Returns: DOM.Node
         """
-        print root, root.text
+        #print root, root.text
         tag = root.tag.replace('{http://www.w3.org/1998/Math/MathML}', 'mml')
         node = self.document.createElement(tag)
 
@@ -158,7 +206,7 @@ class TreeCleaner(object):
         for child in root:
             node.append(self.convert_elements(child))
 
-        print node
+        #print node
         return node
 
     def is_simple_math(self, node):
@@ -177,18 +225,18 @@ class TreeCleaner(object):
 
         # if it's a bad command, it's not simple
         if node.nodeName in ['sum', 'int']:
-            print node.nodeName
+            #print node.nodeName
             return False
 
         # if it's text, it's simple
         if node.nodeName == '#text':
-            print '#text', node
+            #print '#text', node
             return True
 
         # if it's a math symbol with known Unicode, it's simple;
         # if we don't know the Unicode, it's not
         if isinstance(node, MathSymbol):
-            print 'MathSymbol', node.unicode
+            #print 'MathSymbol', node.unicode
             if node.unicode is not None:
                 return True
             else:
@@ -247,7 +295,7 @@ class TreeCleaner(object):
         for child in node.childNodes:
             print '    ', child.nodeName
 
-    def print_tree(self, node, prefix):
+    def print_tree(self, node, prefix=''):
         if node.nodeName == '#text':
             print prefix + node
         else:
@@ -255,6 +303,16 @@ class TreeCleaner(object):
 
         for child in node.childNodes:
             self.print_tree(child, prefix + '   ')
+
+    def print_attributes(self, node):
+        print node.nodeName
+        for key, val in sorted(node.attributes.iteritems()):
+            print '   ', key, val
+
+    def print__dict__(self, node):
+        print node.nodeName
+        for key, val in sorted(node.__dict__.iteritems()):
+            print '   ', key, val
 
     def test_par(self, node):
         """Checks for things that should not be embedded in par.
@@ -353,8 +411,16 @@ class Tralics(object):
         """
         latex = latex.strip()
         self.process.stdin.write(latex + '\n')
-            
-        output = self.process.stdout.readline()
+           
+        while True:
+            output = self.process.stdout.readline()
+            if output.startswith('<formula'):
+                break
+            if output.startswith('Error'):
+                print 'tralics:', output,
+                output = self.process.stdout.readline()
+                print 'tralics:', output,
+
         return output.strip()
 
     def __exit__(self, kind, value, traceback):

@@ -61,6 +61,9 @@ class DocBook(_Renderer):
         s = re.sub(r'\s*<para>\s*</para>\s*',  r'', s)
         s = re.sub(r'\s*<para>\s*</para>\s*',  r'', s)
 
+        # get rid of empty partintro
+        s = re.sub(r'\s*<partintro>\s*</partintro>\s*',  r'', s)
+
         return s
     
 Renderer = DocBook

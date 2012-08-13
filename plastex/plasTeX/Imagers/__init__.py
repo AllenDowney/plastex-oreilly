@@ -599,6 +599,7 @@ class Imager(object):
         # Make a temporary directory to work in
         tempdir = tempfile.mkdtemp()
         os.chdir(tempdir)
+        log.info('Working in %s.', tempdir)
 
         filename = 'images.tex'
 
@@ -616,10 +617,12 @@ class Imager(object):
             program = self.compiler
 
         cmd = r'%s %s' % (program, filename)
+        log.info('Running "%s".', cmd)
         p = subprocess.Popen(shlex.split(cmd),
                      stdout=subprocess.PIPE,
                      stderr=subprocess.STDOUT,
                      )
+
         while True:
             line = p.stdout.readline()
             done = p.poll()
@@ -627,6 +630,8 @@ class Imager(object):
                 imagelog.info(str(line.strip()))        
             elif done is not None:
                 break
+
+        log.info('Done')
 
         output = None
         for ext in ['.dvi','.pdf','.ps']:
