@@ -156,7 +156,6 @@ class Renderable(object):
             # Locate the rendering callable, and call it with the 
             # current object (i.e. `child`) as its argument.
             func = r.find(names, r.default)
-            print '*****', func, names
             val = func(child)
 
             # If a plain string is returned, we have no idea what 
@@ -176,25 +175,15 @@ class Renderable(object):
                     os.makedirs(directory)
 
                 # Add the layout wrapper if there is one
-                print 'layouts', layouts
                 func = r.find(layouts)
-                print '*****', func, layouts
                 if func is not None:
-                    print '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
-                    print child
-                    print '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
                     val = func(StaticNode(child, val))
-                    print 'after', val[:600]
 
                     # If a plain string is returned, we have no idea what 
                     # the encoding is, but we'll make a guess.
                     if type(val) is not unicode:
                         log.warning('The renderer for %s returned a non-unicode string.  Using the default input encoding.' % type(child).__name__)
                         val = unicode(val, child.config['files']['input-encoding'])
-
-                # ABD
-                print '__unicode__2', val[:600]
-                # ABD
 
                 # Write the file content
                 codecs.open(filename, 'w', 
@@ -532,12 +521,6 @@ class Renderer(dict):
 
         for f in files:
             try:
-                # ABD
-                print 'cleanup', f, encoding, self.encodingErrors
-                s = ''.join(open(f).readlines())
-                print s[:600]
-                # ABD
-
                 s = codecs.open(str(f), 'r', encoding, 
                                 errors=self.encodingErrors).read()
             except IOError, msg:

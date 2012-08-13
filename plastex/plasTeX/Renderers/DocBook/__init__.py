@@ -2,6 +2,14 @@
 import re
 from plasTeX.Renderers.PageTemplate import Renderer as _Renderer
 
+with_mathml = """<!ENTITY % MATHML.prefixed "INCLUDE">
+<!ENTITY % MATHML.prefix "mml">
+<!ENTITY % equation.content "(alt?, (graphic+|mediaobject+|mml:math))">
+<!ENTITY % inlineequation.content "(alt?, (inlinegraphic+|inlinemediaobject+|mml:math))">
+<!ENTITY % mathml PUBLIC "-//W3C//DTD MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/mathml2.dtd">
+%mathml;
+"""
+
 class DocBook(_Renderer):
     """ Renderer for DocBook documents """
     fileExtension = '.xml'
@@ -21,7 +29,13 @@ class DocBook(_Renderer):
                    s,
                    re.I|re.S)
 
-        s = re.sub(r'xml:id', r'id',s)
+        # replace the document header: this is an awful workaround for
+        # a problem with simpleTAL where is mangles the mathml part of
+        # the header (but only on recent versions of Linux
+        s = re.sub(r'put_mathml_stuff_here', with_mathml, s, count=1)
+
+        # replace xml:id with id
+        s = re.sub(r'xml:id', r'id', s)
 
         # replace the first chapter with a preface
         s = re.sub(r'<chapter', r'<preface', s, count=1)

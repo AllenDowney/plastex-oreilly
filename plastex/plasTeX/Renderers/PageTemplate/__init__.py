@@ -15,6 +15,10 @@ from plasTeX.Renderers.PageTemplate.simpletal import simpleTAL, simpleTALES
 from plasTeX.Renderers.PageTemplate.simpletal.simpleTALES import Context as TALContext
 from plasTeX.Renderers.PageTemplate.simpletal.simpleTALUtils import FastStringOutput as StringIO
 
+#from simpletal import simpleTAL, simpleTALES
+#from simpletal.simpleTALES import Context as TALContext
+#from simpletal.simpleTALUtils import FastStringOutput as StringIO
+
 log = plasTeX.Logging.getLogger()
 
 # Support for Python string templates
@@ -41,7 +45,6 @@ def pythontemplate(s, encoding='utf8'):
 def htmltemplate(s, encoding='utf8'):
     template = simpleTAL.compileHTMLTemplate(s)
     def renderhtml(obj):
-        print 'during', obj
         context = TALContext(allowPythonPath=1)
         context.addGlobal('here', obj)
         context.addGlobal('self', obj)
@@ -465,8 +468,6 @@ class PageTemplate(BaseRenderer):
         templateeng = self.engines.get((engine, ttype), 
                             self.engines.get((engine, None)))
      
-        print 'setTemplate', template
-
         try:
             template = templateeng.compile(template)
         except Exception, msg:
@@ -488,12 +489,6 @@ class PageTemplate(BaseRenderer):
             in the file
 
         """
-        # ABD
-        flag = False
-        if filename == '/usr/local/lib/python2.7/dist-packages/plasTeX/Renderers/DocBook/Themes/book/default-layout.xml':
-            flag = True
-        # ABD
-
         template = []
         options = options.copy()
         defaults = {}
@@ -541,11 +536,6 @@ class PageTemplate(BaseRenderer):
         else:
             template = open(filename, 'r').readlines()
     
-        # ABD
-        if flag:
-            print 'parseTemplates', template
-        # ABD
-
         # Purge any awaiting templates
         if template:
             try:
@@ -558,8 +548,6 @@ class PageTemplate(BaseRenderer):
 
     def processFileContent(self, document, s):
         # Add width, height, and depth to images
-        print 'processFileContent', s[:500]
-
         s = re.sub(r'&amp;(\S+)-(width|height|depth);(?:&amp;([a-z]+);)?', 
                    self.setImageData, s) 
 

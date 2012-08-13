@@ -21,4 +21,3 @@ test_repo:
 	rsync -a figs/* $(TEST_REPO)/figs
 	cd $(TEST_REPO); svn ci -m "Testing; orm:commitpdf"
 
-# break /usr/local/lib/python2.7/dist-packages/plasTeX/Renderers/__init__.py:476
