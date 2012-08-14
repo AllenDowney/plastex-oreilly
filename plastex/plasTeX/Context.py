@@ -5,6 +5,7 @@ import plasTeX
 from plasTeX import ismacro, macroName
 from plasTeX.DOM import Node
 from plasTeX.Logging import getLogger
+from plasTeX.tree_cleaner import clean_label
 from Tokenizer import Tokenizer, Token, DEFAULT_CATEGORIES, VERBATIM_CATEGORIES
 
 # Only export the Context singleton
@@ -440,7 +441,7 @@ class Context(object):
         self.ref()
 
         """
-        label = label.strip()
+        label = clean_label(label)
         if not label:
             return
 
@@ -450,8 +451,6 @@ class Context(object):
         if node is not None:
             self.persistentLabels[label] = self.labels[label] = node
             node.id = label
-
-        #print label, ''.join(self.currentlabel.ref[:])
 
         # Resolve any outstanding references to this object
         if self.refs.has_key(label) and self.labels.has_key(label):
@@ -475,7 +474,7 @@ class Context(object):
         self.label()
 
         """
-        label = label.strip()
+        label = clean_label(label)
         if not label:
             return
 

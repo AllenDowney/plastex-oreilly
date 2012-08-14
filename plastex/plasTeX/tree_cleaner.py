@@ -15,6 +15,23 @@ import subprocess
 from lxml import etree
 
 from plasTeX.Base.LaTeX.Math import MathSymbol
+from plasTeX.Logging import getLogger
+
+log = getLogger()
+
+
+def clean_label(s):
+    """Cleans LaTeX labels so they are legal XML.
+
+    Replaces : with ..
+
+    s: string
+
+    Returns: string
+    """
+    s = s.strip()
+    s = re.sub(':', '..', s)
+    return s
 
 
 class TreeCleaner(object):
@@ -64,32 +81,23 @@ class TreeCleaner(object):
         self.test_quote(node)
         self.test_figure(node)
         self.test_math(node)
-        self.test_id(node)
-        self.test_linkend(node)
-        self.test_ref(node)
+        self.test_label(node)
 
-    def test_ref(self, node):
-        if node.nodeName not in ['ref']:
-            return
-        
-        self.print_attributes(node)
-        self.print__dict__(node)
-        
     def test_id(self, node):
-        """For anything that has an ID, replace bad characters."""
+        """For anything that has an ID, clean the label.
+
+        Currently not used; probably not needed.
+        """
         if not hasattr(node, 'id'):
             return
 
-        #self.print_attributes(node)
-        #print node.id
+        if ':' not in node.id:
+            return
 
-        node.id = self.replace_bad_chars(node.id)
+        node.id = clean_label(node.id)
+        log.info('test_id', node.nodeName, node.id)
 
-    def replace_bad_chars(self, s):
-        s = re.sub(':', '_colon_', s)
-        return s
-
-    def test_linkend(self, node):
+    def test_label(self, node):
         try:
             label = node.getAttribute('label')
         except AttributeError:
@@ -101,12 +109,13 @@ class TreeCleaner(object):
         if ':' not in label:
             return
 
-        label = re.sub(':', '_colon_', label)
+        log.warning('No colons in labels, please: %s.', label)
+
+        label = clean_label(label)
         node.setAttribute('label', label)
         node.argSource = label
 
-        print node.nodeName, type(label), label
-        
+        log.info('Replacement label: %s.', label)
 
     def test_math(self, node):
         """Checks for math tags we can convert to mathphrases.
