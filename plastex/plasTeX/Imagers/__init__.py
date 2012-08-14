@@ -599,7 +599,6 @@ class Imager(object):
         # Make a temporary directory to work in
         tempdir = tempfile.mkdtemp()
         os.chdir(tempdir)
-        log.info('Working in %s.', tempdir)
 
         filename = 'images.tex'
 
@@ -618,6 +617,8 @@ class Imager(object):
 
         cmd = r'%s %s' % (program, filename)
         log.info('Running "%s".', cmd)
+        log.info('If this hangs, you might be missing a .sty file.')
+        log.info('Check %s/images.log.', tempdir)
         p = subprocess.Popen(shlex.split(cmd),
                      stdout=subprocess.PIPE,
                      stderr=subprocess.STDOUT,

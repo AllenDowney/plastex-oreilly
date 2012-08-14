@@ -474,9 +474,9 @@ class Renderer(dict):
         # Finish rendering images
         status.info('Rendering images.  This may take a long time...')
         self.imager.close()
-        status.info('Done closing the imager.')
+        status.info('Imager done.')
         self.vectorImager.close()
-        status.info('Done closing the vectorImager.')
+        status.info('vectorImager done.')
 
         # Run any cleanup activities
         status.info('Postprocessing...')

@@ -226,7 +226,7 @@ class TreeCleaner(object):
 
         Returns: boolean
         """
-        #TODO: if there's a superscript and subscript on the same
+        # TODO: if there's a superscript and subscript on the same
         # character, it's not simple
 
         # TODO: expand this list of bad commands, or invert the logic
@@ -341,7 +341,8 @@ class TreeCleaner(object):
 
         # list of nodeNames that should not be embedded in par
         bad_names = set(['itemize', 'description', 'enumerate', 'quote',
-                         'verbatim', 'par', 'figure', 'centerline', 'label'])
+                         'verbatim', 'par', 'figure', 'centerline', 'label',
+                         'table'])
 
         if first.nodeName not in bad_names:
             # print 'Allowing embedded', first.nodeName
