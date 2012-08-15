@@ -233,7 +233,7 @@ class TreeCleaner(object):
         # and enumerate acceptable commands
 
         # if it's a bad command, it's not simple
-        if node.nodeName in ['sum', 'int']:
+        if node.nodeName in ['sum', 'int', 'cases']:
             #print node.nodeName
             return False
 

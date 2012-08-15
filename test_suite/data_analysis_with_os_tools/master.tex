@@ -187,6 +187,19 @@
     \usepackage{localdef}
     \maketitle
 
+% ABD: \paragraph and \subparagraph map to sect4 and sect5, which
+% have to be properly nested in XML.  The author is using them here
+% when he should probably be using the description environment,
+% so I am replacing these commands with textbf
+\newcommand{\myparagraph}[1]{\textbf{#1}}
+\newcommand{\mysubparagraph}[1]{\textbf{#1}}
+\renewcommand{\paragraph}[1]{\textbf{#1}}
+\renewcommand{\subparagraph}[1]{\textbf{#1}}
+
+% ABD:
+\newcommand{\tbl}[2]{#2\caption{#1}}
+
+
 \else
 
 % latexonly things here
@@ -201,7 +214,10 @@
 
 \pagenumbering{roman}
 
-\include{preface}
+%\include{preface} % done
+\chapter{Filler}
+Filler.
+
 % ==================================================
 
 \makeatletter
@@ -214,44 +230,58 @@
 
 
 \mainmatter
-\include{intro}
+
+%\include{intro} % done
+\chapter{Filler}
+Filler.
 
 % ------------------------------
 \part{Graphics: Looking at Data}
 \label{part:graphics}
 
+\chapter{Filler}
+Filler.
 
-\include{univariate}
-%\include{bivariate}
+%\include{univariate} % done
+%\include{bivariate} % done
 %\include{timeseries}
 %\include{multivariate}
 %\include{session}
  
 % ------------------------------
-%\part{Analytics: Modeling Data}
-%\label{part:analytics}
+\part{Analytics: Modeling Data}
+\label{part:analytics}
 
-%\include{guesstimation}
+\chapter{Filler}
+Filler.
+
+%\include{guesstimation} % done
 %\include{scaling}
 %\include{probability}
 %\include{statistics}
 %\include{bigfoot}
 
 % ------------------------------
-%\part{Computation: Mining Data}
-%\label{part:computation}
+\part{Computation: Mining Data}
+\label{part:computation}
 
-%\include{simulation}
+\chapter{Filler}
+Filler.
+
+%\include{simulation} % done
 %\setcounter{chapter}{12}
 %\include{clustering}
 %\include{reduction}
 %\include{moredifferent}
 
 % ------------------------------
-%\part{Applications: Using Data}
-%\label{part:applications}
+\part{Applications: Using Data}
+\label{part:applications}
 
-%\include{buzzwords}
+\chapter{Filler}
+Filler.
+
+%\include{buzzwords} % done
 %\include{business}
 %%\end{document}
 %\include{prediction}

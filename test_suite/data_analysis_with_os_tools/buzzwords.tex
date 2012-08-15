@@ -239,16 +239,16 @@ all service businesses!)
 When it comes to operational reports, there are several ideas to
 consider:
 
-\paragraph{Think ``simple, fast, convenient.''}
+\myparagraph{Think ``simple, fast, convenient.''}
 Reports should be simple to understand, quick (instantaneous) to run,
 and convenient to use.  Convenience dictates that the users \emph{must
   not} be required to fill in an input mask with various parameters.
 The most the user can be expected to do is to select one specific
 report from a fixed list of available ones.
 
-% \paragraph{Provide lots of data, but little embellishment.}
+% \myparagraph{Provide lots of data, but little embellishment.}
 
-\paragraph{Don't waste real estate.}
+\myparagraph{Don't waste real estate.}
 The whole point of having a report is the \emph{data}. Don't waste
 space on other things, especially if they never change. I have seen
 reports in which fully one third of the screen was taken up by a
@@ -260,13 +260,13 @@ they can be short.) Move explanatory material to a different location
 and provide a link to it. Remember: the reason people ran the report
 is to see the \emph{data}.
 
-\paragraph{Make reports easy to read.}
+\myparagraph{Make reports easy to read.}
 In particular, this means putting lots of data onto a single page that
 can be read by scrolling (instead of dividing the data across several
 pages that require reloading those pages).  Use a large enough font
 and consider (gently!) highlighting every second line. Less is more.
 
-\paragraph{Consider expert help for the visual design.}
+\myparagraph{Consider expert help for the visual design.}
 Reports don't have to be ugly.  It may be worth enlisting an expert to
 design and implement a report that \emph{looks} pleasant and is easy
 to use. Good design will emphasize the content and avoid distracting
@@ -275,7 +275,7 @@ skill, and some people are simply better at this task than others.
 Remember: a report's ease of use is not an unnecessary detail but an
 essential quality!\vfill\pagebreak
 
-\paragraph{Provide raw data, and let the user handle filtering and
+\myparagraph{Provide raw data, and let the user handle filtering and
 aggregation.} This is a potentially radical idea: instead of providing a
 complicated input mask whereby the user has to specify a bunch of selection
 criteria and the columns to return, a report can simply return
@@ -292,14 +292,14 @@ implies that the report needs to include additional columns, which are
 required for user-level filtering and aggregation.
 
 %\begin{unnumlist}
-\paragraph{Consider cached reports instead of real-time queries.}
+\myparagraph{Consider cached reports instead of real-time queries.}
 Once the input mask has been removed, the content of a report is
 basically fixed. But once it is fixed, it can be run ahead of time and
 cached---which means that we can return the data to the user
 instantaneously. It also means that the database is hit only once no
 matter how often the report is viewed.
 
-\paragraph{Find out what your users are doing with reports---and then try to provide it
+\myparagraph{Find out what your users are doing with reports---and then try to provide it
 for them.} I cannot tell how often I've witnessed the following scenario. The
 reporting team spends significant time and effort worrying about the
 details and layout of its reports. But a few doors down the hall, the
@@ -320,7 +320,7 @@ not to be recognized in formal ``requirements'' meetings, but they
 become immediately apparent if you spend a couple of hours tracking
 the the users' daily routines.)
 
-\paragraph{Reports are for consumers, not producers.}
+\myparagraph{Reports are for consumers, not producers.}
 A common response to the previous item is that every user seems to
 have his own unique set of needs, and trying to meet all of them would
 lead to a proliferation of different reports.
@@ -338,7 +338,7 @@ important---the producers' or the users'? More broadly: for
 \emph{whom} are the reports intended---for the reporting team or for
 the people looking at them?
 
-\paragraph{Think about the proper metrics to show.}
+\myparagraph{Think about the proper metrics to show.}
 For reports that show some form of summary statistics (as opposed to
 raw counts), think about which quantities to show. Will a mean (\eg,
 ``average time spent in queue'') be sufficient, or is the distribution
@@ -348,7 +348,7 @@ you need to include a measure for the width of the distribution
 Also, don't neglect cumulative information (see Chapter
 \ref{ch:univariate}).
  
-\paragraph{Don't mix drill-down functionality with standard reporting.}
+\myparagraph{Don't mix drill-down functionality with standard reporting.}
 This may be a controversial item. In my opinion, reports are exactly
 that: standard overviews of the status of the system.  Every time I
 run a report, I expect to find the same picture. (The numbers will
@@ -365,7 +365,7 @@ functionality in the reporting system itself and instead deploy the
 resources (\ie, the developers) liberated thereby to address
 drill-down tasks on an ad hoc basis?
 
-\paragraph{Don't let your toolset strangle you.}
+\myparagraph{Don't let your toolset strangle you.}
 Don't let your toolset limit the amount of value you can deliver.
 Many reporting solutions that I have seen can be awfully limiting in
 terms of the kind of information you can display and the formatting
@@ -531,7 +531,7 @@ you might want to consider.
 
 % Either the colons or the periods will have to go in the list below.
 
-\paragraph{Understand the cost of metrics programs.}
+\myparagraph{Understand the cost of metrics programs.}
 Metrics aren't free. They require development effort and deployment
 infrastructure of production-level strength, both of which have costs
 and overhead.  Once in production, these systems will also require
@@ -541,7 +541,7 @@ I think the single biggest mistake is to assume that a successful
 metrics program can be run as an add-on project without additional
 resources.  It can't.
 
-\paragraph{Have realistic expectations for the achievable benefit.}
+\myparagraph{Have realistic expectations for the achievable benefit.}
 The short-term effect of any sort of metrics program is likely to be
 small and possibly nondetectable. Metrics provide visibility and
 \emph{only} visibility, but they don't improve performance. Only the
@@ -556,13 +556,13 @@ of accountability, or even the realization that there \emph{are}
 different levels of performance, can change the way the business runs.
 But these effects take time to materialize.
 
-\paragraph{Start with the actions that the metrics should drive.}
+\myparagraph{Start with the actions that the metrics should drive.}
 When setting out to define a set of metrics to collect, make sure to
 ask yourself: what decision would I make differently in response to
 the value of this metric? If none comes to mind, you don't need to
 collect it!
 
-\paragraph{Don't define what you can't measure.}
+\myparagraph{Don't define what you can't measure.}
 This is a good one.  I remember a metrics program where the set of
 metrics to track had been decided at the executive management level,
 based on what would be ``useful'' to see. Problem was, for a
@@ -570,7 +570,7 @@ significant fraction of those quantities, no data was being collected
 and none could be collected because of limitations in the physical
 processes.
 
-\paragraph{Build appropriate infrastructure.}
+\myparagraph{Build appropriate infrastructure.}
 For a metrics program to be successful, it must be technically
 reliable, and the data must be credible. In other words, the systems
 that support it must be of \emph{production-level quality} in regard
@@ -591,7 +591,7 @@ historical time frames, or whatever it is.
 That being said, if all you need is an ad hoc report, by all means go
 for it.
 
-\paragraph{Steer clear of manually collected metrics.}
+\myparagraph{Steer clear of manually collected metrics.}
 First of all, manually collected metrics are neither reliable nor
 credible (people will forget to enter numbers and, if pressed, will
 make them up). Second, most people will resist having to enter numbers
@@ -599,7 +599,7 @@ make them up). Second, most people will resist having to enter numbers
 acceptance and credibility of the program.  Avoid manually collected
 metrics at all cost.
 
-\paragraph{Beware of aggregates.}\index{aggregates}
+\myparagraph{Beware of aggregates.}\index{aggregates}
 It can be very appealing to aggregate values as much as possible:
 ``Just give me \emph{one number} so that I see how my business is
 doing.'' The problem is that every aggregation step loses information
@@ -614,7 +614,7 @@ drill-downs. I think most of this is unnecessary. All that's required
 is a simple, high-level report.  If details are required, one can
 always dig deeper in an ad hoc fashion.
 
-\paragraph{Think about the math involved.}
+\myparagraph{Think about the math involved.}
 The math required for corporate metrics is rarely advanced, but it
 still offers opportunities for mistakes. A common example occurs
 whenever we are forming a ratio---for example, to calculate the defect
@@ -640,7 +640,7 @@ sufficient analytical background can recognize trouble spots
 \emph{and} make recommendations for how best to deal with them that
 may not be obvious.\vfill\pagebreak
 
-\paragraph{Be careful with statistical methods that might not apply.}
+\myparagraph{Be careful with statistical methods that might not apply.}
 Mean and standard deviation are good representations for the typical
 value and the typical spread only if the distribution of data points
 is roughly symmetrical. In many practical situations, this is
@@ -655,7 +655,7 @@ In general, it is necessary to study the nature of the data
 \emph{before} settling on an appropriate way to summarize it. Again,
 consider expert help if you don't have the competency in-house.
 
-\paragraph{Don't buy what you don't need.}
+\myparagraph{Don't buy what you don't need.}
 It is tempting to ask for a lot of detail that is not really required.
 Generally, it is not necessary to track sales numbers on a millisecond
 basis because we cannot respond to changes at that speed---and even
@@ -670,14 +670,14 @@ vary drastically: daily is probably good enough for sales, but for,
 say, the reactor temperature, a much shorter time scale is certainly
 appropriate!
 
-\paragraph{Don't oversteer.}
+\myparagraph{Don't oversteer.}
 This recommendation is the logical consequence of the previous one.
 Every ``system'' has a certain response time within which it reacts to
 changes. Applying changes more frequently than this response time is
 useless and possibly harmful (because it prevents the system from
 reaching a steady state).
 
-\paragraph{Learn to distinguish trend and variation.}\index{trends!versus
+\myparagraph{Learn to distinguish trend and variation.}\index{trends!versus
 variations} Most metrics will be tracked over time, so what we have learned
 about time-series analysis (see Chapter \ref{ch:timeseries}) applies.
 The most important skill is to develop an understanding for the duration
@@ -688,7 +688,7 @@ sales fluctuate by $\pm 25$ percent from day to day. But if sales fall
 by 5 percent for five days in a row, that could possibly be a warning
 sign.
 
-\paragraph{Don't forget the power of perverted incentives.}
+\myparagraph{Don't forget the power of perverted incentives.}
 \index{performance!metrics and perverted performance}  When metrics are used to manage
 staff performance, this often means changing from a vague yet broad sense of
 ``performance'' to a much narrower focus on specifically those quantities that are being
@@ -704,7 +704,7 @@ making calls per hour the dominant metric, we have implicitly
 deemphasized other important aspects, such as customer satisfaction
 (\ie, quality).
 
-\paragraph{Beware of availability bias.}
+\myparagraph{Beware of availability bias.}
 Some quantities are easier to measure than others and therefore tend
 to receive greater attention. In my experience, productivity is
 generally easier to measure than quality, with all the unfortunate
@@ -713,7 +713,7 @@ consequences this entails.
 % \item \emph{If something isn't tracked, it may not be considered very
 %    important.} 
 
-\paragraph{Just because it can't be measured does not mean it does not
+\myparagraph{Just because it can't be measured does not mean it does not
 exist.}   Some quantities cannot be measured. This includes ``soft'' factors
 such as culture, commitment, and fun; but also some very ``hard'' factors
 like customer satisfaction. You can't measure that---all you can
