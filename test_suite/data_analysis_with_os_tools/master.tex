@@ -109,8 +109,8 @@
 
 \begin{document}
 
-%\maketitle
-%\frontmatter
+\maketitle
+\frontmatter
 %\newpage
 %\vspace*{0.3\textheight}
 %\begin{center}
@@ -184,21 +184,9 @@
 
 \ifplastex
 % plastex only things here
-    \usepackage{localdef}
-    \maketitle
 
-% ABD: \paragraph and \subparagraph map to sect4 and sect5, which
-% have to be properly nested in XML.  The author is using them here
-% when he should probably be using the description environment,
-% so I am replacing these commands with textbf
-\newcommand{\myparagraph}[1]{\textbf{#1}}
-\newcommand{\mysubparagraph}[1]{\textbf{#1}}
-\renewcommand{\paragraph}[1]{\textbf{#1}}
-\renewcommand{\subparagraph}[1]{\textbf{#1}}
-
-% ABD:
+% ABD
 \newcommand{\tbl}[2]{#2\caption{#1}}
-
 
 \else
 
@@ -214,7 +202,7 @@
 
 \pagenumbering{roman}
 
-%\include{preface} % done
+\include{preface} % done
 \chapter{Filler}
 Filler.
 
@@ -231,7 +219,7 @@ Filler.
 
 \mainmatter
 
-%\include{intro} % done
+\include{intro} % done
 \chapter{Filler}
 Filler.
 
@@ -242,11 +230,11 @@ Filler.
 \chapter{Filler}
 Filler.
 
-%\include{univariate} % done
-%\include{bivariate} % done
-%\include{timeseries}
-%\include{multivariate}
-%\include{session}
+\include{univariate} % done
+\include{bivariate} % done
+\include{timeseries} % done
+\include{multivariate} % done
+\include{session} % done
  
 % ------------------------------
 \part{Analytics: Modeling Data}
@@ -255,11 +243,11 @@ Filler.
 \chapter{Filler}
 Filler.
 
-%\include{guesstimation} % done
-%\include{scaling}
-%\include{probability}
-%\include{statistics}
-%\include{bigfoot}
+\include{guesstimation} % done
+\include{scaling} % done
+\include{probability} %done
+\include{statistics} % done
+\include{bigfoot} % done
 
 % ------------------------------
 \part{Computation: Mining Data}
@@ -268,11 +256,11 @@ Filler.
 \chapter{Filler}
 Filler.
 
-%\include{simulation} % done
-%\setcounter{chapter}{12}
-%\include{clustering}
-%\include{reduction}
-%\include{moredifferent}
+\include{simulation} % done
+\setcounter{chapter}{12}
+\include{clustering} % done
+\include{reduction} % done
+\include{moredifferent} % done
 
 % ------------------------------
 \part{Applications: Using Data}
@@ -281,19 +269,18 @@ Filler.
 \chapter{Filler}
 Filler.
 
-%\include{buzzwords} % done
-%\include{business}
-%%\end{document}
-%\include{prediction}
-%\include{epilogue}
+\include{buzzwords} % done
+\include{business} % done
+\include{prediction} % done
+ \include{epilogue} % done
 
 
 % ------------------------------
 
 \appendix
-%\include{tools}
-%\include{calculus}
-%\include{data}
+\include{tools} % done
+\include{calculus} % done
+\include{data} % done
 
 % \chapter{Omitted Topics --- TBD} TBD
 

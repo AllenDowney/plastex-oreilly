@@ -272,7 +272,7 @@ class Tokenizer(object):
                     log.warning('This probably means you have non-ASCII')
                     log.warning(' characters in the input file (like Mac')
                     log.warning('smart quotes and apostrophes).')
-                    self.already_warned == True
+                    self.already_warned = True
                 token = token[-1]
 
             # ord(token) == 10 is the same as saying token == '\n'

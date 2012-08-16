@@ -1,5 +1,7 @@
 import plasTeX.Base as Base
 
+from plastex import Command
+
 def idgen():
     """ Generate a unique ID """
     i = 1
