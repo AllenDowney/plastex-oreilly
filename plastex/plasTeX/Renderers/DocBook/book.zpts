@@ -55,11 +55,3 @@ name: sub
 name:Anchor
 <anchor tal:attributes="id self/id" />
 
-name: includegraphics
-<title></title>
-<mediaobject>
-  <imageobject remap="includegraphics">
-    <imagedata tal:attributes="fileref self/image/url;width self/image/width/in" />
-  </imageobject>
-</mediaobject>
-

@@ -1,5 +1,5 @@
 \documentclass{book}
-
+\usepackage{graphicx}
 
 \title{Test Book}
 \author{Author}
@@ -22,6 +22,18 @@
 \chapter{Chapter}
 
 \newcommand{\tbl}[2]{#2\caption{#1}}
+
+Figure~\ref{nsfg_hist} shows histograms of pregnancy lengths for
+first babies and others.
+\index{pregnancy length}
+\index{length!pregnancy}
+
+\begin{figure}
+% descriptive.py
+\centerline{\includegraphics[scale=0.5]{figs/nsfg_hist.pdf}}
+\caption{Histogram of pregnancy lengths.}
+\label{nsfg_hist}
+\end{figure}
 
 \begin{unnumlist}
 \subparagraph{Accuracy}

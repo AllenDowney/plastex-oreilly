@@ -4,9 +4,9 @@ name: figure figure*
 <span tal:omit-tag="">
   <informalfigure tal:condition="not:self/title"  tal:content="self"></informalfigure>
   <figure tal:condition="self/title" 
-          tal:attributes="id self/title/id" 
-          tal:content="self">
+          tal:attributes="id self/title/id">
     <title tal:content="self/title"></title>
+    <span tal:replace="self"></span>
   </figure>
 </span>
 
