@@ -3,7 +3,7 @@ type: xml
 <metal:block>
    <metal:block tal:condition="self/title">
      <table tal:attributes="id self/title/id" remap="tabular">
-     <caption tal:content="self/title"></caption>
+     <caption><para tal:content="self/title"></para></caption>
      <tr tal:repeat="row self">
      <metal:block tal:repeat="cell row">
        <th tal:condition="cell/isHeader"
