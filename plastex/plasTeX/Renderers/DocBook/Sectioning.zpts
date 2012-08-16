@@ -30,16 +30,10 @@ name:subsubsection
 </sect3>
 
 name:paragraph
-<sect4 remap="paragraph" tal:attributes="id self/id">
-  <title tal:content="self/title"></title>
-    <div tal:replace="self"></div>
-</sect4>
+<para tal:content="self/attributes/text"></para>
 
 name:subparagraph
-<sect5 remap="subparagraph" tal:attributes="id self/id">
-  <title tal:content="self/title"></title>
-    <div tal:replace="self"></div>
-</sect5>
+<para tal:content="self/attributes/text"></para>
 
 name: abstract
 <abstract tal:content="self"></abstract>

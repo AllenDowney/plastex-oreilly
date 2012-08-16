@@ -68,14 +68,12 @@ class index(Base.Command):
         if s1:
             self.secondary = '%s' % s1
 
-class scriptN(Base.Command):
-       unicode = u'\U0001D4A9'
+class paragraph(Command): 
+    args = 'text' 
+    def invoke(self,tex): 
+        Command.invoke(self,tex) 
 
-class uxbar(Base.Command): pass
-class uybar(Base.Command): pass
-class unhat(Base.Command): pass
-class ule(Base.Command): pass
-class minus(Base.Command): pass
-class lowast(Base.Command): pass
-class Erdos(Base.Command): pass
-
+class subparagraph(Command): 
+    args = 'text' 
+    def invoke(self,tex): 
+        Command.invoke(self,tex) 

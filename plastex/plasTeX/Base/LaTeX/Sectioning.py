@@ -326,13 +326,13 @@ class paragraph(StartSection):
     level = Command.PARAGRAPH_LEVEL
     counter = 'paragraph'
 
-class subparagraph(StartSection):
-    level = Command.SUBPARAGRAPH_LEVEL
-    counter = 'subparagraph'
+#class subparagraph(StartSection):
+#    level = Command.SUBPARAGRAPH_LEVEL
+#    counter = 'subparagraph'
 
-class subsubparagraph(StartSection):
-    level = Command.SUBSUBPARAGRAPH_LEVEL
-    counter = 'subsubparagraph'
+#class subsubparagraph(StartSection):
+#    level = Command.SUBSUBPARAGRAPH_LEVEL
+#    counter = 'subsubparagraph'
 
 #
 # C.4.2 The Appendix
