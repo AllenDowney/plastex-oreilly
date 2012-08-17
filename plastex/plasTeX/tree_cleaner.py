@@ -384,6 +384,7 @@ class Tralics(object):
 
         executable: string full path to tralics executable
         """
+        self.process = None
         self.executable = executable
         if not os.path.exists(executable):
             raise ValueError('Unable to locate the executable ' +
@@ -391,6 +392,23 @@ class Tralics(object):
 
     def __enter__(self):
         """Creates the subprocess (for use with the with statement)."""
+        return self
+
+    def __exit__(self, kind, value, traceback):
+        """Terminates the subprocess (for use with the with statement)."""
+        if self.process == None:
+            return
+
+        print 'Terminating tralics...',
+        self.process.terminate()
+        # output = self.process.stdout.readline()
+        # print 'close', output
+        # self.process.stdin.write('y')
+        self.process.wait()
+        print 'Done.'
+
+    def start_tralics(self):
+        """Starts the tralics subprocess."""
         cmd = [self.executable, 
                '-interactivemath',
                '-noconfig',
@@ -407,24 +425,29 @@ class Tralics(object):
 
         err = self.process.stdout.readline()
         # print 'enter', err
-        return self
+
+    def stop_tralics(self):
+        """Stops the tralics subprocess."""
+        self.process.terminate()
+        self.process.wait()
+        self.process = None
 
     def translate(self, latex):
         """Translates a LaTeX math expression into MathML.
-
-        If the expression is display math (starts with '\['), we
-        have to work around some strange Tralics behavior by sending
-        and extra expression and reading an extra line.
 
         latex: string
 
         Returns: string XML
         """
         latex = latex.strip()
+
+        self.start_tralics()
         self.process.stdin.write(latex + '\n')
            
         while True:
+            #print 'Waiting for tralics...',
             output = self.process.stdout.readline()
+
             if output.startswith('<formula'):
                 break
             if output.startswith('Error'):
@@ -432,17 +455,28 @@ class Tralics(object):
                 output = self.process.stdout.readline()
                 print 'tralics:', output,
 
+        self.stop_tralics()
         return output.strip()
 
-    def __exit__(self, kind, value, traceback):
-        """Terminates the subprocess (for use with the with statement)."""
-        print 'Terminating tralics...',
-        self.process.terminate()
-        #output = self.process.stdout.readline()
-        #print 'close', output
-        #self.process.stdin.write('y')
-        self.process.wait()
-        print 'Done.'
+    def translate2(self, latex):
+        """Translates a LaTeX math expression into MathML.
+
+        latex: string
+
+        Returns: string XML
+        """
+        self.start_tralics()
+
+        latex = latex.strip()
+        print 'Waiting for tralics...'
+
+        # this doesn't work because I can't figure out the input sequence
+        # that makes tralics do one translation and then stop.
+        output, error = self.process.communicate(latex + '\n')
+        print 'translate output', output
+        print 'translate error', error
+
+        return output.strip()
 
 
 def main():

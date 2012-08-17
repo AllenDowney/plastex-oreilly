@@ -6,6 +6,9 @@ plastex:
 	plastex --renderer=DocBook --theme=book --filename=book.xml book.tex
 	rm -rf book/.svn
 
+lint:
+	xmllint --xinclude --postvalid --noout book/book.xml
+
 debug:
 	rm -rf book/.svn
 	python -m pdb /usr/local/bin/plastex --renderer=DocBook --theme=book --filename=book.xml book.tex
