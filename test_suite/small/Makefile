@@ -3,7 +3,8 @@
 
 plastex:
 	rm -rf book/.svn
-	plastex --renderer=DocBook --theme=book --filename=book.xml book.tex
+	python preprocess.py book.tex > book.pre.tex
+	plastex --renderer=DocBook --theme=book --filename=book.xml --dir=book book.pre.tex
 	rm -rf book/.svn
 
 lint:

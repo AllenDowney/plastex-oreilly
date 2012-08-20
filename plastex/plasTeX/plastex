@@ -25,11 +25,12 @@ def main(argv):
         print >>sys.stderr, config.usage()
         sys.exit(1)
 
-    if not args:
-        print >>sys.stderr, config.usage()
-        sys.exit(1)
-
-    file = args.pop(0)
+    # if there's no filename, take input from stdin
+    # added by ABD
+    if args:
+        file = args.pop(0)
+    else:
+        file = sys.stdin
 
     # Create document instance that output will be put into
     document = plasTeX.TeXDocument(config=config)

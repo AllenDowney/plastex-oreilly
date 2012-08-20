@@ -95,20 +95,36 @@ class TreeCleaner(object):
         self.test_math(node)
         self.test_label(node)
         self.test_index(node)
+        #self.test_ref(node)
 
-    def test_text(self, node):
-        """Checks for ....
+    def test_ref(self, node):
+        """Removed redundant text from \ref commands.
 
         node: Node
         """
-        if node.nodeName not in ['#text']:
+        if node.nodeName not in ['ref']:
             return
 
-        if len(node.strip()) > 0:
-            return
+        print '------------ref'
+        self.print_attributes(node)
 
-        print 'text "%s"' % node
-        self.remove(node)
+        parent = node.parentNode
+        self.print_tree(parent)
+
+        for i, sib in enumerate(parent):
+            if sib == node:
+                index = i
+
+        print 'index', index
+        bad_list = ['Chapter', 'Section', 'Figure', 'Exercise', 'Example']
+
+        for i in range(0, index):
+            older_sib = parent[i]
+            if older_sib in bad_list:
+                for j in range(i, index):
+                    parent.pop(i)
+
+        self.print_tree(parent)
 
     def test_index(self, node):
         """Checks for ....
@@ -130,23 +146,7 @@ class TreeCleaner(object):
                 if sib.strip():
                     return
 
-        print 'index-------------------------------'
-
-        termstring = node.attributes['termstring']
-        print 'termstring', unicode(termstring)
-        print 'parent', parent
-        for sib in siblings:
-            print '    ', sib
-
-        grandparent = parent.parentNode
-        print 'grandparent', grandparent
-
-
         self.replace(parent, siblings)
-
-        #self.print_tree(grandparent)
-
-        print '-------------------------------'
 
     def test_id(self, node):
         """For anything that has an ID, clean the label.
@@ -374,8 +374,7 @@ class TreeCleaner(object):
 
     def print_tree(self, node, prefix=''):
         if node.nodeName == '#text':
-            #print prefix + node
-            print prefix + '#text', len(node)
+            print prefix + '#text', len(node), node[:20]
         else:
             print prefix + node.nodeName
 
