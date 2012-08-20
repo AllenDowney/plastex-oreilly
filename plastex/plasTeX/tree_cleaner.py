@@ -38,6 +38,7 @@ class TreeCleaner(object):
     def __init__(self, tex, document):
         self.tex = tex
         self.document = document
+        self.document.contains_mml = False
 
         with Tralics() as self.tralics:
             self.clean()
@@ -53,7 +54,9 @@ class TreeCleaner(object):
         fp.close()
 
         print '-----------------------'
-        self.walk(self.document, self.test_node)
+        # Nope, turns out we don't want to remove whitespace
+        # self.walk(self.document, self.pass_one)
+        self.walk(self.document, self.pass_two)
         print '-----------------------'
 
         fp = codecs.open('plastex.after', 'w', encoding='utf-8')
@@ -70,7 +73,16 @@ class TreeCleaner(object):
             self.walk(child, func)
         func(node)
 
-    def test_node(self, node):
+    def pass_one(self, node):
+        """Checks for problems and fixes them.
+
+        Checks for things that should not be embedded in par.
+
+        node: Node
+        """
+        self.test_text(node)
+
+    def pass_two(self, node):
         """Checks for problems and fixes them.
 
         Checks for things that should not be embedded in par.
@@ -82,6 +94,47 @@ class TreeCleaner(object):
         self.test_figure(node)
         self.test_math(node)
         self.test_label(node)
+        self.test_index(node)
+
+    def test_text(self, node):
+        """Checks for ....
+
+        node: Node
+        """
+        if node.nodeName not in ['#text']:
+            return
+
+        if len(node.strip()) > 0:
+            return
+
+        print 'text "%s"' % node
+        self.remove(node)
+
+    def test_index(self, node):
+        """Checks for ....
+
+        node: Node
+        """
+        if node.nodeName not in ['index']:
+            return
+
+        return
+        print 'index-------------------------------'
+
+        parent = node.parentNode
+        grandparent = parent.parentNode
+        greatgrandparent = grandparent.parentNode
+
+        self.print_tree(grandparent)
+        self.print_attributes(node)
+
+        # if one of the siblings is a text node, it's ok
+        siblings = parent.childNodes
+        for sib in siblings:
+            if sib.nodeName == '#text':
+                return
+
+        print '-------------------------------'
 
     def test_id(self, node):
         """For anything that has an ID, clean the label.
@@ -166,6 +219,8 @@ class TreeCleaner(object):
 
         Returns: tree of DOM.Element
         """
+        self.document.contains_mml = True
+
         # use tralics to generate MathML
         latex = node.source
         print 'latex', latex
@@ -307,7 +362,8 @@ class TreeCleaner(object):
 
     def print_tree(self, node, prefix=''):
         if node.nodeName == '#text':
-            print prefix + node
+            #print prefix + node
+            print prefix + '#text', len(node)
         else:
             print prefix + node.nodeName
 
@@ -357,6 +413,15 @@ class TreeCleaner(object):
         node: Node
         """
         self.replace(node, node.childNodes)
+
+    def remove(self, child):
+        """Removes a child from its parent node.
+
+        Modifies the parent of child.
+
+        child: Node
+        """
+        self.replace(child, [])
 
     def replace(self, child, replacements):
         """Replaces a node with a list of nodes.
