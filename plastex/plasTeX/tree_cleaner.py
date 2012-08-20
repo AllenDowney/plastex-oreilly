@@ -118,21 +118,33 @@ class TreeCleaner(object):
         if node.nodeName not in ['index']:
             return
 
-        return
-        print 'index-------------------------------'
-
+        # if the parent is not a par, it's ok
         parent = node.parentNode
-        grandparent = parent.parentNode
-        greatgrandparent = grandparent.parentNode
+        if parent.nodeName not in ['par']:
+            return
 
-        self.print_tree(grandparent)
-        self.print_attributes(node)
-
-        # if one of the siblings is a text node, it's ok
+        # if one of the siblings is a non-empty text node, it's ok
         siblings = parent.childNodes
         for sib in siblings:
             if sib.nodeName == '#text':
-                return
+                if sib.strip():
+                    return
+
+        print 'index-------------------------------'
+
+        termstring = node.attributes['termstring']
+        print 'termstring', unicode(termstring)
+        print 'parent', parent
+        for sib in siblings:
+            print '    ', sib
+
+        grandparent = parent.parentNode
+        print 'grandparent', grandparent
+
+
+        self.replace(parent, siblings)
+
+        #self.print_tree(grandparent)
 
         print '-------------------------------'
 

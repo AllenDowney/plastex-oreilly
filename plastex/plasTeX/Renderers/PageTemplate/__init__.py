@@ -15,6 +15,8 @@ from plasTeX.Renderers.PageTemplate.simpletal import simpleTAL, simpleTALES
 from plasTeX.Renderers.PageTemplate.simpletal.simpleTALES import Context as TALContext
 from plasTeX.Renderers.PageTemplate.simpletal.simpleTALUtils import FastStringOutput as StringIO
 
+from plasTeX.Base.LaTeX import Document
+
 #from simpletal import simpleTAL, simpleTALES
 #from simpletal.simpleTALES import Context as TALContext
 #from simpletal.simpleTALUtils import FastStringOutput as StringIO

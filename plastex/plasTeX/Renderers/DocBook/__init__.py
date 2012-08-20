@@ -22,6 +22,7 @@ class DocBook(_Renderer):
 
     def processFileContent(self, document, s):
         s = _Renderer.processFileContent(self, document, s)
+        s = s.strip()
 
         # Force XHTML syntax on empty tags
         s = re.sub(r'(<(?:hr|br|img|link|meta|col)\b.*?)\s*/?\s*(>)',
