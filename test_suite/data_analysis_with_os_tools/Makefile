@@ -28,3 +28,6 @@ test_repo:
 	rsync -a book/ $(TEST_REPO)
 	rsync -a figs/* $(TEST_REPO)/figs
 	cd $(TEST_REPO); svn ci -m "Testing; orm:commitpdf"
+
+dropbox:
+	rsync -a book /home/downey/Dropbox/plastex-oreilly

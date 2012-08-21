@@ -63,6 +63,14 @@ class Filist(list):
             if n:
                 self[i] = line
 
+    def clean_lines(self, func):
+        """Traverse the lines and replace pattern with replace.
+
+        func: function applied to each line
+        """
+        for i, line in enumerate(self):
+            self[i] = func(line)
+
     def prefile(self, filename):
         """prepend the contents of the given file"""
         ft = Filist(filename)
@@ -99,13 +107,75 @@ def cp(source, dest):
     ft.writeto(dest)
     return ft
 
+
+def encode_utf8_to_iso88591(utf8_text):
+    '''
+    This is a modified version of code from
+    http://www.jamesmurty.com/2011/12/30/python-code-utf8-to-latin1/
+
+    Encode and return the given UTF-8 text as LaTeX commands.
+
+    If the given value is not a string it is returned unchanged.
+
+    References:
+    en.wikipedia.org/wiki/Quotation_mark_glyphs#Quotation_marks_in_Unicode
+    en.wikipedia.org/wiki/Copyright_symbol
+    en.wikipedia.org/wiki/Registered_trademark_symbol
+    en.wikipedia.org/wiki/Sound_recording_copyright_symbol
+    en.wikipedia.org/wiki/Service_mark_symbol
+    en.wikipedia.org/wiki/Trademark_symbol
+    '''
+    if not isinstance(utf8_text, basestring):
+        return utf8_text
+
+    # Replace "smart" and other single-quote like things
+    utf8_text = re.sub(
+        u'[\u2018]',
+        "`", utf8_text)
+
+    utf8_text = re.sub(
+        u'[\u2019]',
+        "'", utf8_text)
+
+    # Replace "smart" and other double-quote like things
+    utf8_text = re.sub(
+        u'[\u201c]',
+        "``", utf8_text)
+
+    utf8_text = re.sub(
+        u'[\u201d]',
+        "''", utf8_text)
+
+    # Replace copyright symbol
+    utf8_text = re.sub(u'[\u00a9\u24b8\u24d2]', r'\copyright', utf8_text)
+
+    # Replace registered trademark symbol
+    utf8_text = re.sub(u'[\u00ae\u24c7]', 
+                       r'\textsuperscript{\textregistered}',
+                       utf8_text)
+
+    # Replace sound recording copyright symbol
+    utf8_text = re.sub(u'[\u2117\u24c5\u24df]', r'\textcircledP', utf8_text)
+
+    # Replace trademark symbol
+    utf8_text = re.sub(u'[\u2122]', r'\texttrademark', utf8_text)
+
+    return utf8_text
+
+
 def main(name, filename, *argv):
     # print the contents of the given file
     ft = Filist(filename)
-    ft.sub_lines(r'Chapter~\\ref', r'~\\ref')
-    ft.sub_lines(r'Section~\\ref', r'~\\ref')
-    ft.sub_lines(r'Figure~\\ref', r'~\\ref')
-    ft.sub_lines(r'Exercise~\\ref', r'~\\ref')
+
+    # TODO: this is not working.  I need to investigate what the
+    # special chars are that are in the Data Analysis files
+    # ft.clean_lines(encode_utf8_to_iso88591)
+
+    # TODO: if this pattern is split across lines, it will not get caught.
+    ft.sub_lines(r'Chapter.\\ref', r'\\ref')
+    ft.sub_lines(r'Section.\\ref', r'\\ref')
+    ft.sub_lines(r'Figure.\\ref', r'\\ref')
+    ft.sub_lines(r'Exercise.\\ref', r'\\ref')
     print ft
 
 

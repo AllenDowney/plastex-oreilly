@@ -3,7 +3,7 @@
 
 plastex:
 	rm -rf book/.svn
-	python preprocess.py book.tex > book.pre.tex
+	python ../preprocess.py book.tex > book.pre.tex
 	plastex --renderer=DocBook --theme=book --filename=book.xml --dir=book book.pre.tex
 	rm -rf book/.svn
 
