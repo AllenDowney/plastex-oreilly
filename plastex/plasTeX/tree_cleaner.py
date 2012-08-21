@@ -54,8 +54,7 @@ class TreeCleaner(object):
         fp.close()
 
         print '-----------------------'
-        # Nope, turns out we don't want to remove whitespace
-        # self.walk(self.document, self.pass_one)
+        self.walk(self.document, self.pass_one)
         self.walk(self.document, self.pass_two)
         print '-----------------------'
 
@@ -80,7 +79,11 @@ class TreeCleaner(object):
 
         node: Node
         """
-        self.test_text(node)
+        self.test_quote(node)
+        self.test_par(node)
+
+        # Nope, turns out we don't want to remove whitespace
+        # self.test_text(node)
 
     def pass_two(self, node):
         """Checks for problems and fixes them.
@@ -89,64 +92,38 @@ class TreeCleaner(object):
 
         node: Node
         """
-        self.test_par(node)
-        self.test_quote(node)
+        self.test_index(node)
         self.test_figure(node)
         self.test_math(node)
         self.test_label(node)
-        self.test_index(node)
-        #self.test_ref(node)
-
-    def test_ref(self, node):
-        """Removed redundant text from \ref commands.
-
-        node: Node
-        """
-        if node.nodeName not in ['ref']:
-            return
-
-        print '------------ref'
-        self.print_attributes(node)
-
-        parent = node.parentNode
-        self.print_tree(parent)
-
-        for i, sib in enumerate(parent):
-            if sib == node:
-                index = i
-
-        print 'index', index
-        bad_list = ['Chapter', 'Section', 'Figure', 'Exercise', 'Example']
-
-        for i in range(0, index):
-            older_sib = parent[i]
-            if older_sib in bad_list:
-                for j in range(i, index):
-                    parent.pop(i)
-
-        self.print_tree(parent)
 
     def test_index(self, node):
-        """Checks for ....
+        """Checks for indexterms in a par by themselves.
 
         node: Node
         """
-        if node.nodeName not in ['index']:
+        if node.nodeName not in ['par']:
             return
 
-        # if the parent is not a par, it's ok
-        parent = node.parentNode
-        if parent.nodeName not in ['par']:
+        children = node.childNodes
+
+        # if there are no index commands, it's ok
+        flag = False
+        for child in children:
+            if child.nodeName in ['index']:
+                flag = True
+                break
+
+        if not flag:
             return
 
         # if one of the siblings is a non-empty text node, it's ok
-        siblings = parent.childNodes
-        for sib in siblings:
-            if sib.nodeName == '#text':
-                if sib.strip():
+        for child in children:
+            if child.nodeName == '#text':
+                if child.strip():
                     return
 
-        self.replace(parent, siblings)
+        self.replace(node, children)
 
     def test_id(self, node):
         """For anything that has an ID, clean the label.
@@ -163,6 +140,7 @@ class TreeCleaner(object):
         log.info('test_id', node.nodeName, node.id)
 
     def test_label(self, node):
+        """For anything that has a label, cleans the label."""
         try:
             label = node.getAttribute('label')
         except AttributeError:
@@ -272,7 +250,6 @@ class TreeCleaner(object):
         
         Returns: DOM.Node
         """
-        #print root, root.text
         tag = root.tag.replace('{http://www.w3.org/1998/Math/MathML}', 'mml')
         node = self.document.createElement(tag)
 
@@ -282,7 +259,6 @@ class TreeCleaner(object):
         for child in root:
             node.append(self.convert_elements(child))
 
-        #print node
         return node
 
     def is_simple_math(self, node):
@@ -367,6 +343,38 @@ class TreeCleaner(object):
             node.pop(-1)
         node.insert(0, par)
 
+    def test_ref(self, node):
+        """Removes redundant text from \ref commands.
+
+        DOESN'T WORK!
+
+        node: Node
+        """
+        if node.nodeName not in ['ref']:
+            return
+
+        print '------------ref'
+        self.print_attributes(node)
+
+        parent = node.parentNode
+        self.print_tree(parent)
+
+        for i, sib in enumerate(parent):
+            if sib == node:
+                index = i
+
+        print 'index', index
+        bad_list = ['Chapter', 'Section', 'Figure', 'Exercise', 'Example']
+
+        for i in range(0, index):
+            older_sib = parent[i]
+            for term in bad_list:
+                if older_sib.endswith(term):
+                    for j in range(i, index):
+                        parent.pop(i)
+
+        self.print_tree(parent)
+
     def print_node(self, node):
         print node.nodeName
         for child in node.childNodes:
@@ -443,6 +451,7 @@ class TreeCleaner(object):
         replacement: list of Nodes
         """
         parent = child.parentNode
+
         for i, node in enumerate(parent):
             if node == child:
                 parent.pop(i)
