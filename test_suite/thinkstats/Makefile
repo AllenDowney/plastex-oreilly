@@ -6,6 +6,9 @@ plastex:
 	plastex --renderer=DocBook --theme=book --filename=book.xml book.tex
 	rm -rf book/.svn
 
+lint:
+	xmllint --xinclude --postvalid --noout book/book.xml
+
 xxe:
 	# install xxe from http://www.xmlmind.com/xmleditor/download.shtml
 	~/xxe-perso-5_3_0/bin/xxe book/book.xml

@@ -118,12 +118,65 @@ class TreeCleaner(object):
             return
 
         # if one of the siblings is a non-empty text node, it's ok
-        for child in children:
+        if self.is_legit_par(node):
+            return
+
+        print 'Floating inderterm...',
+
+        sib = node.nextSibling
+        if self.is_legit_par(sib):
+            print 'Moving down'
+            self.move_contents(node, sib)
+            return
+
+        sib = node.previousSibling
+        if self.is_legit_par(sib):
+            print 'Moving up'
+            self.move_contents(node, sib)
+            return
+
+        print 'Hoisting'
+        self.replace(node, children)
+
+    def move_contents(self, node, dest):
+        """Move the contents of node into dest.
+
+        node: source Node
+        dest: destination Node
+        """
+        children = node.childNodes
+        self.remove(node)
+
+        for i, child in enumerate(children):
+            dest.insert(i, child)
+
+    def is_legit_par(self, node):
+        """Checks whether a paragraph contains any non-whitespace text.
+
+        node: Node
+        """
+        if node is None:
+            return False
+
+        if node.nodeName != 'par':
+            return False
+
+        for child in node.childNodes:
             if child.nodeName == '#text':
                 if child.strip():
-                    return
+                    return True
+        return False
 
-        self.replace(node, children)
+    def get_sibling(self, target, offset=1):
+        """Finds a sibling of the given node.
+
+        target: the node whose sibling to find
+        offset: which sibling to get, relative to target
+        """
+        parent = target.parentNode
+        for i, node in enumerate(parent):
+            if node == target:
+                return parent[i+offset]
 
     def test_id(self, node):
         """For anything that has an ID, clean the label.
@@ -165,13 +218,15 @@ class TreeCleaner(object):
 
         node: Node
         """
-        if node.nodeName not in ['math', 'displaymath']:
+        if node.nodeName not in ['math', 'displaymath',
+                                 'eqnarray', 'eqnarray*']:
             return
 
         # translate complicated math into MathML
         if self.is_simple_math(node):
             new_node = self.make_mathit(node)
         else:
+            print 'test_math', node.nodeName
             new_node = self.make_mathml(node)
 
         self.replace(node, [new_node])
@@ -234,8 +289,11 @@ class TreeCleaner(object):
         # print math.toXML()
 
         # wrap the whole thing in the right kind of tag
-        tag_dict = dict(math='inlineequation',
-                        displaymath='informalequation')
+        tag_dict = {'math' : 'inlineequation',
+                    'displaymath' : 'informalequation',
+                    'eqnarray' : 'informalequation',
+                    'eqnarray*' : 'informalequation',
+                    }
 
         tag = tag_dict[node.nodeName]
         result = self.document.createElement(tag)
@@ -277,7 +335,7 @@ class TreeCleaner(object):
 
         # if it's a bad command, it's not simple
         if node.nodeName in ['sum', 'int', 'frac', 'cases', 'matrix', 
-                             'pmatrix']:
+                             'pmatrix', 'eqnarray', 'eqnarray*']:
             #print node.nodeName
             return False
 
