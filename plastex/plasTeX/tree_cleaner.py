@@ -121,7 +121,7 @@ class TreeCleaner(object):
         if self.is_legit_par(node):
             return
 
-        print 'Floating inderterm...',
+        print 'Floating indexterm...',
 
         sib = node.nextSibling
         if self.is_legit_par(sib):
