@@ -79,6 +79,7 @@ class TreeCleaner(object):
 
         node: Node
         """
+        self.test_math(node)
         self.test_quote(node)
         self.test_par(node)
 
@@ -94,7 +95,6 @@ class TreeCleaner(object):
         """
         self.test_index(node)
         self.test_figure(node)
-        self.test_math(node)
         self.test_label(node)
 
     def test_index(self, node):
@@ -224,9 +224,10 @@ class TreeCleaner(object):
 
         # translate complicated math into MathML
         if self.is_simple_math(node):
+            print 'test_math simple', node.nodeName
             new_node = self.make_mathit(node)
         else:
-            print 'test_math', node.nodeName
+            print 'test_math not simple', node.nodeName
             new_node = self.make_mathml(node)
 
         self.replace(node, [new_node])
