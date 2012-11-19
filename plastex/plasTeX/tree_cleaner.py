@@ -53,10 +53,10 @@ class TreeCleaner(object):
         fp.write(self.document.toXML())
         fp.close()
 
-        print '-----------------------'
-        self.walk(self.document, self.pass_one)
-        self.walk(self.document, self.pass_two)
-        print '-----------------------'
+        #print '-----------------------'
+        #self.walk(self.document, self.pass_one)
+        #self.walk(self.document, self.pass_two)
+        #print '-----------------------'
 
         fp = codecs.open('plastex.after', 'w', encoding='utf-8')
         fp.write(self.document.toXML())
@@ -121,21 +121,21 @@ class TreeCleaner(object):
         if self.is_legit_par(node):
             return
 
-        print 'Floating indexterm...',
+        #print 'Floating indexterm...',
 
         sib = node.nextSibling
         if self.is_legit_par(sib):
-            print 'Moving down'
+            #print 'Moving down'
             self.move_contents(node, sib)
             return
 
         sib = node.previousSibling
         if self.is_legit_par(sib):
-            print 'Moving up'
+            #print 'Moving up'
             self.move_contents(node, sib)
             return
 
-        print 'Hoisting'
+        #print 'Hoisting'
         self.replace(node, children)
 
     def move_contents(self, node, dest):
@@ -224,10 +224,10 @@ class TreeCleaner(object):
 
         # translate complicated math into MathML
         if self.is_simple_math(node):
-            print 'test_math simple', node.nodeName
+            #print 'test_math simple', node.nodeName
             new_node = self.make_mathit(node)
         else:
-            print 'test_math not simple', node.nodeName
+            #print 'test_math not simple', node.nodeName
             new_node = self.make_mathml(node)
 
         self.replace(node, [new_node])
@@ -269,12 +269,12 @@ class TreeCleaner(object):
 
         # use tralics to generate MathML
         latex = node.source
-        print 'latex', latex
+        #print 'latex', latex
         mathml = self.tralics.translate(latex)
 
-        print 'mathml'
-        for line in mathml.split():
-            print line
+        #print 'mathml'
+        #for line in mathml.split():
+        #    print line
 
         # parse the MathML
         root = etree.fromstring(mathml)
@@ -412,17 +412,17 @@ class TreeCleaner(object):
         if node.nodeName not in ['ref']:
             return
 
-        print '------------ref'
-        self.print_attributes(node)
+        #print '------------ref'
+        #self.print_attributes(node)
 
         parent = node.parentNode
-        self.print_tree(parent)
+        #self.print_tree(parent)
 
         for i, sib in enumerate(parent):
             if sib == node:
                 index = i
 
-        print 'index', index
+        #print 'index', index
         bad_list = ['Chapter', 'Section', 'Figure', 'Exercise', 'Example']
 
         for i in range(0, index):
@@ -432,7 +432,7 @@ class TreeCleaner(object):
                     for j in range(i, index):
                         parent.pop(i)
 
-        self.print_tree(parent)
+        #self.print_tree(parent)
 
     def print_node(self, node):
         print node.nodeName
@@ -543,13 +543,13 @@ class Tralics(object):
         if self.process == None:
             return
 
-        print 'Terminating tralics...',
+        #print 'Terminating tralics...',
         self.process.terminate()
         # output = self.process.stdout.readline()
         # print 'close', output
         # self.process.stdin.write('y')
         self.process.wait()
-        print 'Done.'
+        #print 'Done.'
 
     def start_tralics(self):
         """Starts the tralics subprocess."""
@@ -612,13 +612,13 @@ class Tralics(object):
         self.start_tralics()
 
         latex = latex.strip()
-        print 'Waiting for tralics...'
+        #print 'Waiting for tralics...'
 
         # this doesn't work because I can't figure out the input sequence
         # that makes tralics do one translation and then stop.
         output, error = self.process.communicate(latex + '\n')
-        print 'translate output', output
-        print 'translate error', error
+        #print 'translate output', output
+        #print 'translate error', error
 
         return output.strip()
 
