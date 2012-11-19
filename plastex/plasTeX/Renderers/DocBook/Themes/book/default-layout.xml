@@ -1,7 +1,7 @@
 <span tal:condition="self/ownerDocument/contains_mml" tal:omit-tag="">
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
-"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [put_mathml_stuff_here]>
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" put_mathml_stuff_here>
 </span>
 <span tal:condition="not:self/ownerDocument/contains_mml" tal:omit-tag="">
 <?xml version="1.0" encoding="UTF-8"?>

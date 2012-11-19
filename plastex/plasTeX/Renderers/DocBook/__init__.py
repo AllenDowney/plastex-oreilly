@@ -2,12 +2,12 @@
 import re
 from plasTeX.Renderers.PageTemplate import Renderer as _Renderer
 
-with_mathml = """<!ENTITY % MATHML.prefixed "INCLUDE">
+with_mathml = """[<!ENTITY % MATHML.prefixed "INCLUDE">
 <!ENTITY % MATHML.prefix "mml">
 <!ENTITY % equation.content "(alt?, (graphic+|mediaobject+|mml:math))">
 <!ENTITY % inlineequation.content "(alt?, (inlinegraphic+|inlinemediaobject+|mml:math))">
 <!ENTITY % mathml PUBLIC "-//W3C//DTD MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/mathml2.dtd">
-%mathml;
+%mathml;]
 """
 
 class DocBook(_Renderer):
