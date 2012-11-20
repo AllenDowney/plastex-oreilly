@@ -54,8 +54,8 @@ class TreeCleaner(object):
         fp.close()
 
         #print '-----------------------'
-        #self.walk(self.document, self.pass_one)
-        #self.walk(self.document, self.pass_two)
+        self.walk(self.document, self.pass_one)
+        self.walk(self.document, self.pass_two)
         #print '-----------------------'
 
         fp = codecs.open('plastex.after', 'w', encoding='utf-8')

@@ -102,10 +102,10 @@ For example, this table shows the suits and the corresponding integer
 codes:
 
 \begin{tabular}{l c l}
-Spades & \mymapsto & 3 \\
-Hearts & \mymapsto & 2 \\
-Diamonds & \mymapsto & 1 \\
-Clubs & \mymapsto & 0
+Spades & $\mapsto$ & 3 \\
+Hearts & $\mapsto$ & 2 \\
+Diamonds & $\mapsto$ & 1 \\
+Clubs & $\mapsto$ & 0
 \end{tabular}
 
 
@@ -118,11 +118,11 @@ And here's an equation array:
 %
 
 \section{Comparing tuples}
-\index{floatingindexterm2}
-\index{comparison!tuple}
-\index{tuple!comparison}
-\index{sort method}
-\index{method!sort}
+%\index{floatingindexterm2}
+%\index{comparison!tuple}
+%\index{tuple!comparison}
+%\index{sort method}
+%\index{method!sort}
 
 The relational operators work with tuples and other sequences;
 Python starts by comparing the first element from each
@@ -155,10 +155,10 @@ with one or more sort keys preceding the elements from the sequence,
 \end{description}
 
 \label{DSU}
-\index{DSU pattern}
-\index{pattern!DSU}
-\index{decorate-sort-undecorate pattern}
-\index{pattern!decorate-sort-undecorate}
+%\index{DSU pattern}
+%\index{pattern!DSU}
+%\index{decorate-sort-undecorate pattern}
+%\index{pattern!decorate-sort-undecorate}
 
 For example, suppose you have a list of words and you want to
 sort them from longest to shortest:
@@ -183,9 +183,9 @@ tuple is a word preceded by its length.
 {\tt sort} compares the first element, length, first, and
 only considers the second element to break ties.  The keyword argument
 {\tt reverse=True} tells {\tt sort} to go in decreasing order.
-\index{keyword argument}
-\index{argument!keyword}
-\index{traversal}
+%\index{keyword argument}
+%\index{argument!keyword}
+%\index{traversal}
 
 The second loop traverses the list of tuples and builds a list of
 words in descending order of length.
@@ -200,16 +200,16 @@ random order.  Hint: see the {\tt random} function in the
 {\tt random} module.
 Solution: \url{http://thinkpython.com/code/unstable_sort.py}.
 
-\index{random module}
-\index{module!random}
-\index{random function}
-\index{function!random}
+%\index{random module}
+%\index{module!random}
+%\index{random function}
+%\index{function!random}
 
 \end{exercise}
 
 \begin{exercise}
-\index{len function}
-\index{function!len}
+%\index{len function}
+%\index{function!len}
 
 Python provides a built-in function called {\tt len} that
 returns the length of a string, so the value of \verb"len('allen')" is 5.
@@ -230,7 +230,8 @@ of the display.
 \section*{Why I wrote this book}
 \label{this_section}
 
-Here are some references: Chapter~\ref{preface} and Section~\ref{this_section}
+Here are some references: Chapter~\ref{preface} 
+%and Section~\ref{this_section}
 
 {\em Think Stats: Probability and Statistics for Programmers} is a
 textbook for a new kind of introductory prob-stat class.  
