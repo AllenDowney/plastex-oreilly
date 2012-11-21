@@ -285,7 +285,6 @@ class Array(Environment):
                 if item.attributes and item.attributes.has_key('colspan'):
                     self.attributes['colspan'] = item.attributes['colspan']
                     self.hasmulticol = True
-                    print self
                 if hasattr(item, 'colspec') and not isinstance(item, Array):
                     self.colspec = item.colspec
                 if hasattr(item, 'isHeader'):
@@ -449,7 +448,6 @@ class Array(Environment):
             for r, row in enumerate(self):
                 for c, cell in enumerate(row):
                     if cell.hasmulticol:
-                        print cell
                         self.hasmulticol = True
 
                     colspan = cell.attributes.get('colspan', 0)
