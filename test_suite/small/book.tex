@@ -89,6 +89,40 @@
 \label{preface}
 \index{floatingindexterm1}
 
+\begin{table}
+\vspace*{-6pt}
+\def\a{\hphantom{0}}
+\def\vrl{\smash{\vrule height43.8pt  width.25pt depth5pt}}
+\def\vvrl{\smash{\vrule height58.6pt  width.25pt depth5pt}}
+\tbl{Defect rates: what value should go into the lower-right
+  corner?\label{tbl:avgaverages}}{%
+\begin{tabular}{c@{\hskip9pt}c@{\hskip9pt}c@{\hskip9pt}c@{\hskip9pt}c@{\hskip9pt}c@{\hskip9pt}c}
+\toprule
+\TCH{Item type}   & & \TCH{Units produced} &&\TCH{Defective units} && \TCH{Defect rate} \\\colrule
+A         && \a\a2              && 1               && 0.5\a  \\
+B         && \a\a1              && 1               && 1.0\a \\
+C         &\vrl& 100            &\vrl& 1               && 0.01 \\\colrule
+\multicolumn{5}{l}{\textbf{Total defect rate}}   &\vvrl& \textbf{???}  \\
+\botrule
+\end{tabular}}
+\end{table}
+
+
+\begin{table}
+\def\a{\hphantom{0}}
+\def\vrl{\smash{\vrule height48.6pt  width.25pt depth5pt}}
+\tbl{Simpson's paradox: applications and admissions 
+  by gender of applicant.\label{tbl:simpson}}{%
+\begin{tabular}{l@{\hskip9pt}c@{\hskip9pt}c@{\hskip9pt}c@{\hskip9pt}c@{\hskip9pt}c@{\hskip9pt}c}\toprule
+ && \TCH{Male} & & \TCH{Female} &&\TCH{Overall} \\\colrule
+Department A    && 80/100 $=$ 0.8\hphantom{0}  && $\hphantom{00}$9/10 $=$ 0.9\hphantom{0}    && 89/110 $=$ 0.81 \\
+Department B    && $\hphantom{00}$5/10 $=$ 0.5\hphantom{0}  && 60/100 $=$ 0.6\hphantom{0}    && 65/110 $=$ 0.59\hspace*{1.2pt}\\\colrule
+\textbf{Total}  && {\bfseries 85}$\mathbf{/}${\bfseries 110} $\mathbf{=}$ {\bfseries 0.77} && {\bfseries 69}$\mathbf{/}${\bfseries
+110} $\mathbf{=}$ {\bfseries 0.63} &&
+\\\botrule
+\end{tabular}}
+\end{table}
+
 
 Fermat's Last Theorem says that there are no integers
 $a$, $b$, and $c$ such that

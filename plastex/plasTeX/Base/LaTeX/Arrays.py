@@ -280,10 +280,12 @@ class Array(Environment):
                 self.endToken = None
 
             # Check for multicols
-            hasmulticol = False
+            self.hasmulticol = False
             for item in self:
                 if item.attributes and item.attributes.has_key('colspan'):
                     self.attributes['colspan'] = item.attributes['colspan']
+                    self.hasmulticol = True
+                    print self
                 if hasattr(item, 'colspec') and not isinstance(item, Array):
                     self.colspec = item.colspec
                 if hasattr(item, 'isHeader'):
@@ -440,15 +442,23 @@ class Array(Environment):
         the table rather than just saying how many columns are spanned.
 
         """
+        self.hasmulticol = False
+
         # Link cells to colspec
         if self.colspec:
             for r, row in enumerate(self):
                 for c, cell in enumerate(row):
+                    if cell.hasmulticol:
+                        print cell
+                        self.hasmulticol = True
+
                     colspan = cell.attributes.get('colspan', 0)
                     if colspan > 1:
                         try:
                             cell.colspecStart = self.colspec[c]
                             cell.colspecEnd = self.colspec[c+colspan-1]
+                            cell.namest = 'c%d' % (c+1)
+                            cell.nameend = 'c%d' % (c+colspan)
                         except IndexError:
                             if hasattr(cell, 'colspecStart'):
                                 del cell.colspecStart
@@ -464,6 +474,7 @@ class Array(Environment):
                     numcols += cell.attributes.get('colspan', 1)
                 cols.append(numcols)
             self.numCols = max(cols)
+            self.colNames = ['c%d' % (i+1) for i in range(self.numCols)]
 
     def applyBorders(self):
         """

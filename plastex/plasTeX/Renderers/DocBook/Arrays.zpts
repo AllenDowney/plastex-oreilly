@@ -3,17 +3,21 @@ type: xml
 <metal:block>
    <metal:block tal:condition="self/title">
      <table tal:attributes="id self/title/id" remap="tabular">
-     <caption><para tal:content="self/title"></para></caption>
+     <title tal:content="self/title"></title>
      <tgroup tal:attributes="cols self/numCols">
+     <metal:block tal:condition="self/hasmulticol"
+     		  tal:repeat="colname self/colNames">
+       <colspec tal:attributes="colname colname" />
+     </metal:block>
      <tbody>
      <row tal:repeat="row self">
      <metal:block tal:repeat="cell row">
        <th tal:condition="cell/isHeader"
-           tal:attributes="colspan cell/attributes/colspan"
+           tal:attributes="namest cell/namest;nameend cell/nameend"
            tal:content="cell">
        </th>
        <entry tal:condition="not:cell/isHeader"
-           tal:attributes="colspan cell/attributes/colspan"
+           tal:attributes="namest cell/namest;nameend cell/nameend"
            tal:content="cell">
        </entry>
      </metal:block>
@@ -25,15 +29,19 @@ type: xml
    <metal:block tal:condition="not:self/title">
      <informaltable remap="tabular">
      <tgroup tal:attributes="cols self/numCols">
+     <metal:block tal:condition="self/hasmulticol"
+     		  tal:repeat="colname self/colNames">
+       <colspec tal:attributes="colname colname" />
+     </metal:block>
      <tbody>
      <row tal:repeat="row self">
      <metal:block tal:repeat="cell row">
        <th tal:condition="cell/isHeader"
-           tal:attributes="colspan cell/attributes/colspan"
+           tal:attributes="namest cell/namest;nameend cell/nameend"
            tal:content="cell">
        </th>
        <entry tal:condition="not:cell/isHeader"
-           tal:attributes="colspan cell/attributes/colspan"
+           tal:attributes="namest cell/namest;nameend cell/nameend"
            tal:content="cell">
        </entry>
      </metal:block>
