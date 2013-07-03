@@ -65,6 +65,9 @@ class DocBook(_Renderer):
         # get rid of empty partintro
         s = re.sub(r'\s*<partintro>\s*</partintro>\s*',  r'', s)
 
+        # get rid of redundant references
+        s = re.sub(r'\w*.<xref',  r'<xref', s)
+
         return s
     
 Renderer = DocBook

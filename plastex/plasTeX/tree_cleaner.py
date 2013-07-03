@@ -218,7 +218,7 @@ class TreeCleaner(object):
 
         node: Node
         """
-        if node.nodeName not in ['math', 'displaymath',
+        if node.nodeName not in ['math', 'displaymath', 'ensuremath',
                                  'eqnarray', 'eqnarray*']:
             return
 
@@ -269,25 +269,36 @@ class TreeCleaner(object):
 
         # use tralics to generate MathML
         latex = node.source
-        #print 'latex', latex
+
+        # the following is a hack to work around a problem with
+        # \ensuremath, which generates spurious \mathit commands.
+        # I couldn't find the source of the problem, so I'm cleaning
+        # it up here.  Sadly, this will cause a problem if the \mathit
+        # was needed.
+        latex = re.sub(r'\mathit', r'', latex)
+
+        # this is another hack to replace a right quote with an
+        # apostrophe
+        latex = re.sub(unichr(8217), "'", latex)
+
+        print 'LATEX', latex
         mathml = self.tralics.translate(latex)
 
-        #print 'mathml'
+        print 'MATHML', mathml
         #for line in mathml.split():
         #    print line
 
         # parse the MathML
         root = etree.fromstring(mathml)
 
-        # print 'dom', root
-
         # strip the formula tag
         assert root.tag == 'formula'
         root = root[0]
 
+        print 'DOM', etree.tostring(root, pretty_print=True)
+
         # convert from etree.Element to DOM.Node 
         math = self.convert_elements(root)
-        # print math.toXML()
 
         # wrap the whole thing in the right kind of tag
         tag_dict = {'math' : 'inlineequation',
@@ -300,6 +311,7 @@ class TreeCleaner(object):
         result = self.document.createElement(tag)
         result.append(math)
 
+        print 'XML', result.toXML()
         return result
 
     def convert_elements(self, root):
@@ -314,6 +326,9 @@ class TreeCleaner(object):
 
         if root.text is not None:
             node.append(self.document.createTextNode(root.text))
+
+        for name, value in root.attrib.iteritems():
+            node.setAttribute(name, value)
 
         for child in root:
             node.append(self.convert_elements(child))
@@ -334,9 +349,12 @@ class TreeCleaner(object):
         # TODO: expand this list of bad commands, or invert the logic
         # and enumerate acceptable commands
 
+        bad_commands = ['sum', 'int', 'frac', 'cases', 'matrix', 
+                             'pmatrix', 'eqnarray', 'eqnarray*',
+                        'bar', 'hat', 'sqrt', 'binom', 'mathcal']
+
         # if it's a bad command, it's not simple
-        if node.nodeName in ['sum', 'int', 'frac', 'cases', 'matrix', 
-                             'pmatrix', 'eqnarray', 'eqnarray*']:
+        if node.nodeName in bad_commands:
             #print node.nodeName
             return False
 
@@ -584,6 +602,7 @@ class Tralics(object):
         Returns: string XML
         """
         latex = latex.strip()
+        latex = latex.encode('utf-8', 'strict')
 
         self.start_tralics()
         self.process.stdin.write(latex + '\n')
@@ -600,26 +619,6 @@ class Tralics(object):
                 print 'tralics:', output,
 
         self.stop_tralics()
-        return output.strip()
-
-    def translate2(self, latex):
-        """Translates a LaTeX math expression into MathML.
-
-        latex: string
-
-        Returns: string XML
-        """
-        self.start_tralics()
-
-        latex = latex.strip()
-        #print 'Waiting for tralics...'
-
-        # this doesn't work because I can't figure out the input sequence
-        # that makes tralics do one translation and then stop.
-        output, error = self.process.communicate(latex + '\n')
-        #print 'translate output', output
-        #print 'translate error', error
-
         return output.strip()
 
 

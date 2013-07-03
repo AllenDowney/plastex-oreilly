@@ -26,6 +26,9 @@ name: it
 name: mathit
 <emphasis role="math" tal:content="self"></emphasis>
 
+name: mathrm
+<emphasis role="roman" tal:content="self"></emphasis>
+
 name: inlineequation
 <inlineequation tal:content="self"></inlineequation>
 
