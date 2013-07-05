@@ -280,13 +280,10 @@ class TreeCleaner(object):
         # this is another hack to replace a right quote with an
         # apostrophe
         latex = re.sub(unichr(8217), "'", latex)
+        #print 'LATEX', latex
 
-        print 'LATEX', latex
         mathml = self.tralics.translate(latex)
-
-        print 'MATHML', mathml
-        #for line in mathml.split():
-        #    print line
+        #print 'MATHML', mathml
 
         # parse the MathML
         root = etree.fromstring(mathml)
@@ -295,7 +292,7 @@ class TreeCleaner(object):
         assert root.tag == 'formula'
         root = root[0]
 
-        print 'DOM', etree.tostring(root, pretty_print=True)
+        #print 'DOM', etree.tostring(root, pretty_print=True)
 
         # convert from etree.Element to DOM.Node 
         math = self.convert_elements(root)
@@ -311,7 +308,7 @@ class TreeCleaner(object):
         result = self.document.createElement(tag)
         result.append(math)
 
-        print 'XML', result.toXML()
+        #print 'XML', result.toXML()
         return result
 
     def convert_elements(self, root):
@@ -321,6 +318,17 @@ class TreeCleaner(object):
         
         Returns: DOM.Node
         """
+        good_attributes = set([
+            ('mmlmath', 'mode'),
+            ('mmlmfenced', 'close'),
+            ('mmlmfenced', 'open'),
+            ('mmlmfenced', 'separators'),
+            ('mmlmfrac', 'linethickness'),
+            ('mmlmi', 'mathvariant'),
+            ('mmlmo', 'form'),
+            ('mmlmspace', 'width'),
+            ])
+
         tag = root.tag.replace('{http://www.w3.org/1998/Math/MathML}', 'mml')
         node = self.document.createElement(tag)
 
@@ -329,6 +337,11 @@ class TreeCleaner(object):
 
         for name, value in root.attrib.iteritems():
             node.setAttribute(name, value)
+
+            pair = tag, name
+            if pair not in good_attributes:
+                log.warning('MathML attribute might not get rendered:')
+                print "tag, attribute = ('%s', '%s')" % pair
 
         for child in root:
             node.append(self.convert_elements(child))

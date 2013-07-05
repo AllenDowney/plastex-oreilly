@@ -83,22 +83,22 @@ type: xml
 
 
 name: mmlmath
-<mml:math overflow="scroll" xmlns:mml="http://www.w3.org/1998/Math/MathML" tal:content="self"></mml:math>
+<mml:math overflow="scroll" xmlns:mml="http://www.w3.org/1998/Math/MathML" tal:content="self" tal:attributes="mode self/attributes/mode"></mml:math>
 
 name: mmlmi
-<mml:mi tal:content="self"></mml:mi>
+<mml:mi tal:content="self" tal:attributes="mathvariant self/attributes/mathvariant"></mml:mi>
 
 name: mmlmn
 <mml:mn tal:content="self"></mml:mn>
 
 name: mmlmo
-<mml:mo tal:content="self"></mml:mo>
+<mml:mo tal:content="self" tal:attributes="form self/attributes/form"></mml:mo>
 
 name: mmlmtext
 <mml:mtext tal:content="self"></mml:mtext>
 
 name: mmlmspace
-<mml:mspace tal:content="self"></mml:mspace>
+<mml:mspace tal:content="self" tal:attributes="width self/attributes/width"></mml:mspace>
 
 name: mmlms
 <mml:ms tal:content="self"></mml:ms>
@@ -110,7 +110,7 @@ name: mmlmrow
 <mml:mrow tal:content="self"></mml:mrow>
 
 name: mmlmfrac
-<mml:mfrac tal:content="self"></mml:mfrac>
+<mml:mfrac tal:content="self" tal:attributes="linethickness self/attributes/linethickness"></mml:mfrac>
 
 name: mmlmsqrt
 <mml:msqrt tal:content="self"></mml:msqrt>
@@ -131,7 +131,7 @@ name: mmlmphantom
 <mml:mphantom tal:content="self"></mml:mphantom>
 
 name: mmlmfenced
-<mml:mfenced tal:content="self"></mml:mfenced>
+<mml:mfenced tal:content="self" tal:attributes="open self/attributes/open; close self/attributes/close; separators self/attributes/separators" ></mml:mfenced>
 
 name: mmlmenclose
 <mml:menclose tal:content="self"></mml:menclose>
