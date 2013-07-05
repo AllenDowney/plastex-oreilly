@@ -225,7 +225,9 @@ class TreeCleaner(object):
         # translate complicated math into MathML
         if self.is_simple_math(node):
             #print 'test_math simple', node.nodeName
-            new_node = self.make_mathit(node)
+            # new_node = self.make_mathit(node)
+            # EXPERIMENT: always make MathML!
+            new_node = self.make_mathml(node)
         else:
             #print 'test_math not simple', node.nodeName
             new_node = self.make_mathml(node)
@@ -270,6 +272,11 @@ class TreeCleaner(object):
         # use tralics to generate MathML
         latex = node.source
 
+        # if plastex is being clever and giving me just part
+        # of an expression, don't translate it yet
+        if node.parentNode.nodeName in ['math', 'displaymath']:
+            return node
+
         # the following is a hack to work around a problem with
         # \ensuremath, which generates spurious \mathit commands.
         # I couldn't find the source of the problem, so I'm cleaning
@@ -299,6 +306,7 @@ class TreeCleaner(object):
 
         # wrap the whole thing in the right kind of tag
         tag_dict = {'math' : 'inlineequation',
+                    'ensuremath' : 'inlineequation',
                     'displaymath' : 'informalequation',
                     'eqnarray' : 'informalequation',
                     'eqnarray*' : 'informalequation',
