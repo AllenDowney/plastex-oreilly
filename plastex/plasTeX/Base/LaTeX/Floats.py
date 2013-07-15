@@ -33,6 +33,13 @@ class Float(Environment):
         
     def digest(self, tokens):
         res = Environment.digest(self, tokens)
+
+        loc = self.attributes['loc']
+        if loc and 'h' in loc:
+            self.float = False
+        else:
+            self.float = True
+
         # Apply captions to objects
         if self.macroMode == self.MODE_BEGIN:
             # Locate all caption nodes and nodes that are 

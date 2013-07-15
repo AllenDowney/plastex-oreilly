@@ -224,10 +224,9 @@ class TreeCleaner(object):
 
         # translate complicated math into MathML
         if self.is_simple_math(node):
-            #print 'test_math simple', node.nodeName
-            # new_node = self.make_mathit(node)
-            # EXPERIMENT: always make MathML!
-            new_node = self.make_mathml(node)
+            #print 'test_math simple'
+            #self.print_tree(node)
+            new_node = self.make_mathit(node)
         else:
             #print 'test_math not simple', node.nodeName
             new_node = self.make_mathml(node)
@@ -316,6 +315,16 @@ class TreeCleaner(object):
         result = self.document.createElement(tag)
         result.append(math)
 
+        # math.setAttribute('displaystyle', 'true')
+
+        #if tag == 'informalequation':
+        #    wrapper = self.document.createElement('mmlstyle')
+        #    wrapper.setAttribute('displaystyle', 'true')
+        #    wrapper.append(math)
+        #    # print wrapper.toXML()
+        #else:
+        #    wrapper = math
+
         #print 'XML', result.toXML()
         return result
 
@@ -364,6 +373,8 @@ class TreeCleaner(object):
 
         Returns: boolean
         """
+        # The following is an older more complex series of tests
+
         # TODO: if there's a superscript and subscript on the same
         # character, it's not simple
 
@@ -381,8 +392,8 @@ class TreeCleaner(object):
 
         # if it's text, it's simple
         if node.nodeName == '#text':
-            #print '#text', node
-            return True
+            # print '#text', node 
+            return re.match(r'^\w*$', node) != None
 
         # if it's a math symbol with known Unicode, it's simple;
         # if we don't know the Unicode, it's not

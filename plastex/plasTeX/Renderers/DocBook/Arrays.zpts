@@ -27,7 +27,7 @@ type: xml
      </table>
    </metal:block>
    <metal:block tal:condition="not:self/title">
-     <informaltable remap="tabular">
+     <informaltable remap="tabular" Frame="all" Rowsep="1" Colsep="1">
      <tgroup tal:attributes="cols self/numCols">
      <metal:block tal:condition="self/hasmulticol"
      		  tal:repeat="colname self/colNames">

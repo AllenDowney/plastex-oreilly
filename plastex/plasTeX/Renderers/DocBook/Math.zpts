@@ -83,7 +83,7 @@ type: xml
 
 
 name: mmlmath
-<mml:math overflow="scroll" xmlns:mml="http://www.w3.org/1998/Math/MathML" tal:content="self" tal:attributes="mode self/attributes/mode"></mml:math>
+<mml:math overflow="scroll" xmlns:mml="http://www.w3.org/1998/Math/MathML" tal:content="self" tal:attributes="mode self/attributes/mode; displaystyle self/attributes/displaystyle"></mml:math>
 
 name: mmlmi
 <mml:mi tal:content="self" tal:attributes="mathvariant self/attributes/mathvariant"></mml:mi>
@@ -119,7 +119,7 @@ name: mmlmroot
 <mml:mroot tal:content="self"></mml:mroot>
 
 name: mmlmstyle
-<mml:mstyle tal:content="self"></mml:mstyle>
+<mml:mstyle tal:content="self" tal:attributes="displaystyle self/attributes/displaystyle"></mml:mstyle>
 
 name: mmlmerror
 <mml:merror tal:content="self"></mml:merror>
