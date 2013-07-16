@@ -1,17 +1,31 @@
-Branch of plastex that generates DocBook 4.5 that meets O'Reilly
+Branch of plasTeX that generates DocBook 4.5 that meets O'Reilly
 style guidelines.
 
-Authors of plastex: Kevin Smith and Tim Arnold
+Authors of plasTeX: Kevin Smith and Tim Arnold
 
 Author of this branch: Allen Downey
 
 
-To run a test, clone this repo and cd into it.  Then:
+On a fresh Ubuntu install, run:
 
-cd test_suite/small
+sudo apt-get update
+sudo apt-get install texlive texlive-latex-extra hevea git-core make g++ python-lxml python-imaging dvipng libxml2-utils emacs
+
+
+Get and make plasTeX:
+
+git clone https://AllenDowney@github.com/oreillymedia/plastex-oreilly
+cd plastex-oreilly/
+make tralics
+make install_plastex
+echo ‘export PYTHONPATH=$PYTHONPATH:.’ >> ~/.bashrc
+. ~/.bashrc
+
+
+To run a test:
+
+cd plastex-oreilly/test_suite/small
 make install
 make
-make xxe
+make lint
 
-
-To install xxe, see http://www.xmlmind.com/xmleditor/download.shtml
