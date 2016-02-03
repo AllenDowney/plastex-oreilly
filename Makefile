@@ -8,3 +8,4 @@ install_plastex:
 
 test_math:
 	cd test_suite/math; make
+
