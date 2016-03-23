@@ -527,7 +527,7 @@ class TreeCleaner(object):
         # list of nodeNames that should not be embedded in par
         bad_names = set(['itemize', 'description', 'enumerate', 'quote',
                          'verbatim', 'par', 'figure', 'centerline', 'label',
-                         'table'])
+                         'table', 'center'])
 
         if first.nodeName not in bad_names:
             # print 'Allowing embedded', first.nodeName
