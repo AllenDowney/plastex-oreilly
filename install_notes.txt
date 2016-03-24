@@ -1,0 +1,13 @@
+sudo apt-get update
+sudo apt-get install texlive texlive-latex-extra hevea
+sudo apt-get install git-core make g++ python-lxml python-imaging dvipng libxml2-utils python-lxml
+sudo apt-get install emacs  (not needed for plastex; I use it for debugging)
+git clone https://AllenDowney@github.com/oreillymedia/plastex-oreilly
+cd plastex-oreilly/
+make tralics
+make install_plastex
+echo ‘export PYTHONPATH=$PYTHONPATH:.’ >> ~/.bashrc
+. ~/.bashrc
+cd test_suite/small
+make
+make lint
