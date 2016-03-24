@@ -34,7 +34,7 @@ class Float(Environment):
     def digest(self, tokens):
         res = Environment.digest(self, tokens)
 
-        loc = self.attributes['loc']
+        loc = self.attributes.get('loc')
         if loc and 'h' in loc:
             self.float = False
         else:

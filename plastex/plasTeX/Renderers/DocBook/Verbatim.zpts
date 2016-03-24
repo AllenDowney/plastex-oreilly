@@ -1,5 +1,5 @@
 name: verbatim
-<literallayout class="monospaced" tal:content="self"></literallayout>
+<programlisting tal:content="self"></programlisting>
 
 name: verbatimtab
 <literallayout class="monospaced" tal:content="self"></literallayout>
