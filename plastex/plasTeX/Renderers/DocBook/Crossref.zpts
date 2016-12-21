@@ -4,9 +4,7 @@ type:xml
 
 name: pageref
 type:xml
-<link 
-   tal:attributes="linkend self/idref/label/id" 
-   tal:content="self/idref/label/ref">*</link>
+<xref tal:attributes="linkend self/idref/label/id" />
 
 name: label
 type:xml
